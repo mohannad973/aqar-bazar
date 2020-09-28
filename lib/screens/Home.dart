@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/models/slider_images.dart';
+import 'package:aqar_bazar/screens/search_screen.dart';
 import 'package:aqar_bazar/widgets/best_deals.dart';
 import 'package:aqar_bazar/widgets/exploreList.dart';
 import 'package:flutter/material.dart';
@@ -151,29 +152,27 @@ class _HomeState extends State<Home> {
           ),
         ];
       },
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 15.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: _icons
-                    .asMap()
-                    .entries
-                    .map((MapEntry map) => _iconRow(map.key))
-                    .toList(),
-              ),
-              ExploreList(),
-              SizedBox(height: 15),
-              BestDeals(),
-            ],
-          ),
+      body: ListView(children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 15.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: _icons
+                  .asMap()
+                  .entries
+                  .map((MapEntry map) => _iconRow(map.key))
+                  .toList(),
+            ),
+            ExploreList(),
+            SizedBox(height: 15),
+            BestDeals(),
+          ],
         ),
-      ),
+      ]),
     );
   }
 
@@ -187,7 +186,10 @@ class _HomeState extends State<Home> {
         floatingActionButton: FloatingActionButton(
           elevation: 4.0,
           child: Icon(Icons.search),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SearchScreen()));
+          },
         ),
         bottomNavigationBar: BottomAppBar(
           shape: CircularNotchedRectangle(),

@@ -33,6 +33,7 @@ class ExploreList extends StatelessWidget {
           height: MediaQuery.of(context).size.height / 6,
           child: Center(
             child: ListView.builder(
+                physics: ClampingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
                   Places destination = destinations[index];

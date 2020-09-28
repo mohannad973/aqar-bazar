@@ -29,11 +29,232 @@ class _PropertyPageState extends State<PropertyPage> {
                   propertyInfo: widget.propertyInfo),
               pinned: true,
             ),
-            SliverList(
-                delegate: SliverChildListDelegate([
-              ExploreList(),
-              BestDeals(),
-            ]))
+            SliverToBoxAdapter(
+                child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.propertyInfo.name,
+                          style: TextStyle(color: Colors.black87, fontSize: 30),
+                        ),
+                        Text(
+                          widget.propertyInfo.price,
+                          style: TextStyle(color: Colors.black87, fontSize: 30),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          widget.propertyInfo.shortAddress,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300, fontSize: 12),
+                        ),
+                        Icon(
+                          Icons.location_on,
+                          size: 18,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        Text(
+                          widget.propertyInfo.location,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w300, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18.0,
+                      vertical: 8.0,
+                    ),
+                    child: Divider(
+                      thickness: 1,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                    child: Text(
+                      'Summary',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                    child: RichText(
+                      text: TextSpan(
+                          style: TextStyle(color: Colors.grey[600]),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text:
+                                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor nulla pariatur. Excepteur sint.. ',
+                            ),
+                            TextSpan(
+                                text: ' read more',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ))
+                          ]),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                    child: Divider(
+                      thickness: 1,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Photos',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'See All',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Icon(
+                              Icons.navigate_next,
+                              color: Theme.of(context).primaryColor,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 5,
+                    child: ListView.builder(
+                      itemCount: bestDeals.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        var destination = bestDeals[index];
+                        return Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 5),
+                          width: 200,
+                          child: Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            color: Colors.blue,
+                            child: Stack(
+                              alignment: Alignment.bottomLeft,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(15),
+                                  child: Image.asset(
+                                    destination.image,
+                                    fit: BoxFit.cover,
+                                    width: 300,
+                                    height:
+                                        MediaQuery.of(context).size.height / 6,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Center(
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+                      child: AspectRatio(
+                        aspectRatio: 1.5,
+                        child: Container(
+                          child: Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 0,
+                                      vertical: 8.0,
+                                    ),
+                                    child: Text(
+                                      'Details',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Text('Room Count'),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: Text('2'),
+                                      ),
+                                    ])
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )),
           ],
         ),
       ),
@@ -58,26 +279,6 @@ class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
         Image.asset(
           propertyInfo.image,
           fit: BoxFit.cover,
-        ),
-        Positioned(
-          left: 15,
-          bottom: 15,
-          child: Opacity(
-            opacity: shrinkOffset / expandedHeight,
-            child: Text(
-              propertyInfo.name,
-              style: TextStyle(
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                        color: Colors.black,
-                        blurRadius: 2,
-                        offset: Offset(0, 3.0))
-                  ],
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
         ),
         Positioned(
           top: expandedHeight / 1.8 - shrinkOffset,
