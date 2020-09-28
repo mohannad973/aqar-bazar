@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:aqar_bazar/screens/landing.dart';
 import 'package:flutter/services.dart';
 
+import 'screens/landing.dart';
+
+
+
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -11,7 +15,7 @@ void main() {
       accentColor: Color(0xffECF9F8),
     ),
     routes: {
-      '/': (context) => Home(),
+      '/': (context) => OnBoardingPage(),
       '/home': (context) => Home(),
     },
   ));
