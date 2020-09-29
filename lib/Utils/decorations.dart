@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+
 InputDecoration passwordDecoration() {
   return InputDecoration(
-
     fillColor: Colors.grey[200],
     filled: true,
     enabledBorder: OutlineInputBorder(
@@ -22,7 +22,6 @@ InputDecoration passwordDecoration() {
   );
 }
 
-
 InputDecoration inputDecoration() {
   return InputDecoration(
     fillColor: Colors.grey[200],
@@ -42,10 +41,12 @@ InputDecoration inputDecoration() {
   );
 }
 
-
-TextStyle textStyleBold(){
+TextStyle textStyleBold() {
   return TextStyle(
-      color: Colors.black,
-      fontSize: 18,
-      fontWeight: FontWeight.bold);
+      color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold);
+}
+
+TextStyle textStyleSemiBold() {
+  return TextStyle(
+      color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600);
 }
