@@ -1,12 +1,10 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:aqar_bazar/screens/change_password/change_password_screen.dart';
 import 'package:aqar_bazar/screens/invite_friends/invite_friends_screen.dart';
 import 'package:aqar_bazar/screens/profile/profile_list_item.dart';
 import 'package:aqar_bazar/screens/settings/settings_screen.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -120,4 +118,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ));
   }
 }
-

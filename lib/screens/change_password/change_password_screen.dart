@@ -50,8 +50,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold),
                             ),
-
-
                             SizedBox(
                               height: 30,
                             ),
@@ -59,32 +57,29 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               child: Column(
                                 children: [
                                   TextFormField(
-                                    decoration: inputDecoration()
-                                        .copyWith(hintText: "new password"),
-                                      obscureText:true
-                                  ),
+                                      decoration: inputDecoration()
+                                          .copyWith(hintText: "new password"),
+                                      obscureText: true),
                                   SizedBox(
                                     height: 15,
                                   ),
                                   TextFormField(
-                                    decoration: inputDecoration()
-                                        .copyWith(hintText: "confirm password"),
-                                      obscureText:true
-                                  ),
+                                      decoration: inputDecoration().copyWith(
+                                          hintText: "confirm password"),
+                                      obscureText: true),
                                   SizedBox(
                                     height: 15,
                                   ),
                                   RaisedButton.icon(
-                                    onPressed: (){
-                                      Navigator.of(context).pop();
-                                    },
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
                                       padding: EdgeInsets.symmetric(
                                           horizontal: MediaQuery.of(context)
-                                              .size
-                                              .width /
+                                                  .size
+                                                  .width /
                                               3,
                                           vertical: 10),
-
                                       icon: Icon(
                                         Icons.lock,
                                         color: Colors.white,
@@ -96,7 +91,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                       color: Colors.lightBlue,
                                       shape: RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(15.0),
+                                            BorderRadius.circular(15.0),
                                       ))
                                 ],
                               ),
@@ -109,14 +104,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
     );
   }
 }
-
-
-
-
