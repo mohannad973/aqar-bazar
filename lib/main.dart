@@ -11,7 +11,7 @@ void main() {
       accentColor: Color(0xffECF9F8),
     ),
     routes: {
-      '/': (context) => Home(),
+      '/': (context) => OnBoardingPage(),
       '/home': (context) => Home(),
     },
   ));

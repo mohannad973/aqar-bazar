@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/models/slider_images.dart';
+import 'package:aqar_bazar/screens/profile/profile_screen.dart';
 import 'package:aqar_bazar/screens/search_screen.dart';
 import 'package:aqar_bazar/widgets/best_deals.dart';
 import 'package:aqar_bazar/widgets/exploreList.dart';
@@ -203,9 +204,13 @@ class _HomeState extends State<Home> {
                 onPressed: () {},
               ),
               IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () {},
-              ),
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()));
+                  }),
             ],
           ),
         ),
