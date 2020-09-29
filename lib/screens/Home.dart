@@ -1,3 +1,4 @@
+
 import 'package:aqar_bazar/models/slider_images.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
 import 'package:aqar_bazar/screens/search_screen.dart';
@@ -6,6 +7,8 @@ import 'package:aqar_bazar/widgets/exploreList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'filter/filter.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -189,7 +192,7 @@ class _HomeState extends State<Home> {
           child: Icon(Icons.search),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SearchScreen()));
+                MaterialPageRoute(builder: (context) => FilterScreen()));
           },
         ),
         bottomNavigationBar: BottomAppBar(
