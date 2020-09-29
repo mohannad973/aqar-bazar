@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/places.dart';
+import 'package:aqar_bazar/screens/Property%20types/house.dart';
 import 'package:aqar_bazar/widgets/best_deals.dart';
 import 'package:aqar_bazar/widgets/exploreList.dart';
 
@@ -290,7 +291,25 @@ class _PropertyPageState extends State<PropertyPage> {
                                             MediaQuery.of(context).size.width /
                                                 4,
                                         vertical: 12),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      var list = widget.propertyInfo;
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => HouseScreen(
+                                                  propertyInfo: Property(
+                                                      name: list.name,
+                                                      image: list.image,
+                                                      moreImages:
+                                                          list.moreImages,
+                                                      price: list.price,
+                                                      propertType:
+                                                          list.propertType,
+                                                      location: list.location,
+                                                      shortAddress:
+                                                          list.shortAddress,
+                                                      rating: list.rating))));
+                                    },
                                     child: Text(
                                       'Book Now',
                                       style: TextStyle(
