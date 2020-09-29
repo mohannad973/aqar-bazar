@@ -54,7 +54,7 @@ List<Property> bestDeals = [
     propertType: 1,
   ),
   Property(
-    image: 'assets/images/explore_list_images/hotel2.png',
+    image: 'assets/images/building2.jpg',
     location: 'City Center',
     price: '\$ 400',
     rating: 'Highly recomended',
@@ -69,7 +69,7 @@ List<Property> bestDeals = [
     propertType: 1,
   ),
   Property(
-    image: 'assets/images/explore_list_images/hotel2.png',
+    image: 'assets/images/beechwood-home.png',
     location: 'City Center',
     price: '\$ 400',
     rating: 'Highly recomended',

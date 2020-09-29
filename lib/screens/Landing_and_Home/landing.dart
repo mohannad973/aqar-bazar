@@ -1,8 +1,8 @@
-import 'package:aqar_bazar/screens/login.dart';
+import 'package:aqar_bazar/screens/Auth/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:aqar_bazar/screens/signup.dart';
+import 'package:aqar_bazar/screens/Auth/signup.dart';
 
 class OnBoardingPage extends StatefulWidget {
   @override
