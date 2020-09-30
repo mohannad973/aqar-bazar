@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/models/places.dart';
+import 'package:aqar_bazar/screens/property_list_screen/property_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -47,28 +48,37 @@ class ExploreList extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         color: Colors.blue,
-                        child: Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Image.asset(
-                                destination.imageUrl,
-                                fit: BoxFit.cover,
-                                width: 300,
-                                height: MediaQuery.of(context).size.height / 6,
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PropertyListScreen()),
+                            );
+                          },
+                          child: Stack(
+                            alignment: Alignment.bottomLeft,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.asset(
+                                  destination.imageUrl,
+                                  fit: BoxFit.cover,
+                                  width: 300,
+                                  height: MediaQuery.of(context).size.height / 6,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(destination.city,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(destination.city,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                              )
+                            ],
+                          ),
                         ),
                       ));
                 },

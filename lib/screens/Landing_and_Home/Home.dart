@@ -1,5 +1,6 @@
 
 import 'package:aqar_bazar/models/slider_images.dart';
+import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
 import 'package:aqar_bazar/screens/search_screen.dart';
 import 'package:aqar_bazar/widgets/best_deals.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'filter/filter.dart';
+
 
 class Home extends StatefulWidget {
   @override

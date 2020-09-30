@@ -1,3 +1,5 @@
+
+import 'package:aqar_bazar/screens/Common_quistion/Common_quistion_screen.dart';
 import 'package:aqar_bazar/screens/change_password/change_password_screen.dart';
 import 'package:aqar_bazar/screens/invite_friends/invite_friends_screen.dart';
 import 'package:aqar_bazar/screens/profile/profile_list_item.dart';
@@ -92,7 +94,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      profileListItem('Help Center', LineAwesomeIcons.info),
+                      InkWell(child: profileListItem('Help Center', LineAwesomeIcons.info),onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CommonQuestionScreen()),
+                        );
+                      },),
                       SizedBox(
                         height: 20,
                       ),

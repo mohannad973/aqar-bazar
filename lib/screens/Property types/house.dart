@@ -245,11 +245,14 @@ class ImageSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Swiper(
       itemBuilder: (BuildContext contextn, int index) {
-        return Image.asset(
-          bestDeals[index].image,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 2,
-          fit: BoxFit.fitHeight,
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(25),
+          child: Image.asset(
+            bestDeals[index].image,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height / 2,
+            fit: BoxFit.fitHeight,
+          ),
         );
       },
       itemCount: bestDeals.length,

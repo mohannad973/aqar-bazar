@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/landing.dart';
 import 'package:flutter/services.dart';
 
-import 'screens/Landing_and_Home/landing.dart';
+
+
+
 
 void main() {
   runApp(MaterialApp(
