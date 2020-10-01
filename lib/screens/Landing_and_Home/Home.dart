@@ -1,4 +1,3 @@
-
 import 'package:aqar_bazar/models/slider_images.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
 import 'package:aqar_bazar/screens/search_screen.dart';

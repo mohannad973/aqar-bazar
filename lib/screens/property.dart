@@ -25,7 +25,7 @@ class _PropertyPageState extends State<PropertyPage> {
         child: CustomScrollView(
           slivers: [
             SliverPersistentHeader(
-              delegate: CustomSliverAppBar(
+              delegate: FullScreenCustomSliverAppBar(
                   expandedHeight: MediaQuery.of(context).size.height,
                   propertyInfo: widget.propertyInfo),
               pinned: true,
@@ -341,11 +341,11 @@ class _PropertyPageState extends State<PropertyPage> {
   }
 }
 
-class CustomSliverAppBar extends SliverPersistentHeaderDelegate {
+class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   Property propertyInfo;
 
-  CustomSliverAppBar(
+  FullScreenCustomSliverAppBar(
       {@required this.expandedHeight, @required this.propertyInfo});
 
   @override
