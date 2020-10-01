@@ -15,31 +15,31 @@ class Places {
 List<Places> destinations = [
   Places(
     imageUrl: 'assets/images/beechwood-home.jpg',
-    city: 'Venice',
+    city: 'Hotels',
     country: 'Italy',
     description: 'Visit Venice for an amazing and unforgettable adventure.',
   ),
   Places(
     imageUrl: 'assets/images/index.jpeg',
-    city: 'Paris',
+    city: 'Apartments',
     country: 'France',
     description: 'Visit Paris for an amazing and unforgettable adventure.',
   ),
   Places(
     imageUrl: 'assets/images/building.jpeg',
-    city: 'New Delhi',
+    city: 'villa',
     country: 'India',
     description: 'Visit New Delhi for an amazing and unforgettable adventure.',
   ),
   Places(
     imageUrl: 'assets/images/beechwood-home.jpg',
-    city: 'Sao Paulo',
+    city: 'house',
     country: 'Brazil',
     description: 'Visit Sao Paulo for an amazing and unforgettable adventure.',
   ),
   Places(
     imageUrl: 'assets/images/building2.jpg',
-    city: 'New York City',
+    city: 'office',
     country: 'United States',
     description: 'Visit New York for an amazing and unforgettable adventure.',
   ),
