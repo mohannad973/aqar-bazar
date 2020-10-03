@@ -1,3 +1,4 @@
+import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
@@ -110,7 +111,7 @@ class _SignUpState extends State<SignUp> {
                                       onPressed: () {
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
-                                              builder: (_) => Home()),
+                                              builder: (_) => NewHome()),
                                         );
                                       },
                                       icon: Icon(

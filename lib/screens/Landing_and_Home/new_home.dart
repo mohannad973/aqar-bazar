@@ -1,6 +1,7 @@
 import 'package:aqar_bazar/Utils/colors.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/slider_images.dart';
+import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
 import 'package:aqar_bazar/widgets/best_deals.dart';
 import 'package:aqar_bazar/widgets/exploreList.dart';
@@ -62,9 +63,114 @@ class _NewHomeState extends State<NewHome> {
 
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldKey,
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.all(8.0),
+            children: [
+              Center(
+                child: DrawerHeader(
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    width: width / 5,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                child: ListTile(
+                  leading: Text(
+                    'Home',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey[600],
+                        letterSpacing: 0.5),
+                  ),
+                  trailing: Icon(Icons.home, color: iconColor()),
+                ),
+                onTap: () {},
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Divider(),
+              ),
+              GestureDetector(
+                child: ListTile(
+                  leading: Text(
+                    'My Bookings',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey[600],
+                        letterSpacing: 0.5),
+                  ),
+                  trailing: Icon(Icons.book, color: iconColor()),
+                ),
+                onTap: () {},
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Divider(),
+              ),
+              GestureDetector(
+                child: ListTile(
+                  leading: Text(
+                    'Contact Us',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey[600],
+                        letterSpacing: 0.5),
+                  ),
+                  trailing: Icon(Icons.mail, color: iconColor()),
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ContactUs()));
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Divider(),
+              ),
+              GestureDetector(
+                child: ListTile(
+                  leading: Text(
+                    'About us',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey[600],
+                        letterSpacing: 0.5),
+                  ),
+                  trailing: Icon(Icons.info, color: iconColor()),
+                ),
+                onTap: () {},
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Divider(),
+              ),
+              GestureDetector(
+                child: ListTile(
+                  leading: Text(
+                    'Log out',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey[600],
+                        letterSpacing: 0.5),
+                  ),
+                  trailing: Icon(Icons.logout, color: iconColor()),
+                ),
+                onTap: () {},
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Divider(),
+              ),
+            ],
+          ),
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           backgroundColor: iconColor(),
@@ -87,7 +193,9 @@ class _NewHomeState extends State<NewHome> {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.menu),
-                onPressed: () {},
+                onPressed: () {
+                  _scaffoldKey.currentState.openDrawer();
+                },
               ),
               IconButton(
                   icon: Icon(Icons.settings),
@@ -300,34 +408,45 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
           },
         ),
         Positioned(
-          bottom: expandedHeight - 80 - shrinkOffset,
+          bottom: expandedHeight - 100 - shrinkOffset,
           left: width / 10,
-          child: Center(
-            child: Container(
-              height: 45,
-              width: width / 1.2,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(100),
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 5,
-                        color: Colors.black54,
-                        offset: Offset(5.0, 8)),
-                  ]),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 12.0),
-                child: Row(
-                  children: [
-                    Icon(Icons.search, color: iconColor()),
-                    SizedBox(
-                      width: 20,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FilterScreen()));
+            },
+            child: Positioned(
+              bottom: expandedHeight - shrinkOffset,
+              left: width / 10,
+              child: Center(
+                child: Container(
+                  height: 45,
+                  width: width / 1.2,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 5,
+                            color: Colors.black54,
+                            offset: Offset(5.0, 8)),
+                      ]),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.search, color: iconColor()),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          'Start Borwsing',
+                          style:
+                              TextStyle(fontSize: 16, color: Colors.grey[600]),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Start Borwsing',
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),

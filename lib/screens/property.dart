@@ -1,11 +1,6 @@
 import 'dart:ui';
-
 import 'package:aqar_bazar/models/best_deals_model.dart';
-import 'package:aqar_bazar/models/places.dart';
 import 'package:aqar_bazar/screens/Property%20types/house.dart';
-import 'package:aqar_bazar/widgets/best_deals.dart';
-import 'package:aqar_bazar/widgets/exploreList.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -469,11 +464,9 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  // TODO: implement maxExtent
   double get maxExtent => expandedHeight;
 
   @override
-  // TODO: implement minExtent
   double get minExtent => kToolbarHeight + 100;
 
   @override

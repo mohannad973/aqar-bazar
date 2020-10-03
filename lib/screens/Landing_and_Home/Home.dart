@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -101,7 +99,8 @@ class _HomeState extends State<Home> {
                     style: TextStyle(
                       fontSize: 10,
                     ),
-                    decoration: inputDecoration().copyWith(hintText: 'Search'),
+                    decoration:
+                        homeInputDecoration().copyWith(hintText: 'Search'),
                   ),
                 ),
               ),
@@ -222,7 +221,7 @@ class _HomeState extends State<Home> {
   }
 }
 
-InputDecoration inputDecoration() {
+InputDecoration homeInputDecoration() {
   return InputDecoration(
     prefixIcon: Icon(Icons.search),
     contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 15),

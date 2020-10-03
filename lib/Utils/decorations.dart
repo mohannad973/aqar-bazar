@@ -25,6 +25,7 @@ InputDecoration passwordDecoration() {
 InputDecoration inputDecoration() {
   return InputDecoration(
     fillColor: Colors.grey[200],
+    contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 15),
     filled: true,
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Colors.grey[400], width: 0.5),
