@@ -1,9 +1,7 @@
 import 'package:aqar_bazar/screens/filter/price_range_slider.dart';
 import 'package:aqar_bazar/screens/filter/property_type_model.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-
+import 'package:flutter/services.dart';
 
 class FilterScreen extends StatefulWidget {
   @override
@@ -28,10 +26,19 @@ class _FilterScreenState extends State<FilterScreen> {
     PropertyTypeModel(name: "house", iconData: Icons.home),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          "Filter",
+          style: TextStyle(
+              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -40,13 +47,6 @@ class _FilterScreenState extends State<FilterScreen> {
             children: [
               SizedBox(
                 height: 50,
-              ),
-              Text(
-                "Filter",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 20,
@@ -108,7 +108,6 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
               Row(
                 children: [
-
                   SizedBox(
                     width: 20,
                   ),
@@ -118,7 +117,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     style: TextStyle(
                         color: Colors.black,
                         fontSize:
-                        MediaQuery.of(context).size.width > 360 ? 18 : 16,
+                            MediaQuery.of(context).size.width > 360 ? 18 : 16,
                         fontWeight: FontWeight.normal),
                   ),
                 ],
@@ -140,13 +139,16 @@ class _FilterScreenState extends State<FilterScreen> {
                 endIndent: 20,
               ),
               priceBarFilter(),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text("Number of Bedrooms",
                         style: TextStyle(
                           fontSize: 15,
@@ -161,10 +163,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     Navigator.of(context).pop();
                   },
                   padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context)
-                          .size
-                          .width /
-                          3,
+                      horizontal: MediaQuery.of(context).size.width / 3,
                       vertical: 10),
                   icon: Icon(
                     Icons.filter_list,
@@ -176,10 +175,11 @@ class _FilterScreenState extends State<FilterScreen> {
                   ),
                   color: Colors.lightBlue,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                    BorderRadius.circular(15.0),
+                    borderRadius: BorderRadius.circular(15.0),
                   )),
-              SizedBox(height: 20,)
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),
@@ -380,7 +380,6 @@ class _FilterScreenState extends State<FilterScreen> {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-
                 Text(
                   'Price Range',
                   textAlign: TextAlign.left,
@@ -402,67 +401,16 @@ class _FilterScreenState extends State<FilterScreen> {
           const SizedBox(
             height: 8,
           ),
-
         ],
       ),
     );
   }
 
   Widget dropDownRoomCount() {
-   return Padding(
-     padding: const EdgeInsets.all(20.0),
-     child: Container(
-       width: MediaQuery.of(context).size.width*0.8,
-       decoration: BoxDecoration(
-         borderRadius: BorderRadius.circular(10),
-         boxShadow: [
-           BoxShadow(
-               blurRadius: 1,
-               spreadRadius: 1,
-               offset: Offset(0, 4),
-               color: Color.fromRGBO(226, 229, 235, 1))
-         ],
-       ),
-
-
-       child: DropdownButton(
-           hint: new Text("Select City"),
-           dropdownColor: Color.fromRGBO(226, 229, 235, 1),
-           isExpanded: true,
-            value: roomValue,
-            items: [
-              DropdownMenuItem(
-                child: Text("0 - 5"),
-                value: 1,
-              ),
-              DropdownMenuItem(
-                child: Text("5 - 10"),
-                value: 2,
-              ),
-              DropdownMenuItem(
-                  child: Text("10 - 15"),
-                  value: 3
-              ),
-              DropdownMenuItem(
-                  child: Text("15 - 20"),
-                  value: 4
-              )
-            ],
-            onChanged: (value) {
-              setState(() {
-                roomValue = value;
-              });
-            }),
-     ),
-   );
-
-  }
-
-  Widget dropDownSelectCity() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Container(
-        width: MediaQuery.of(context).size.width*0.8,
+        width: MediaQuery.of(context).size.width * 0.8,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
@@ -473,38 +421,75 @@ class _FilterScreenState extends State<FilterScreen> {
                 color: Color.fromRGBO(226, 229, 235, 1))
           ],
         ),
-
-
-        child: DropdownButton(
-
-            dropdownColor: Color.fromRGBO(226, 229, 235, 1),
-            isExpanded: true,
-            value: cityValue,
-            items: [
-              DropdownMenuItem(
-                child: Text("Ankara"),
-                value: 1,
-              ),
-              DropdownMenuItem(
-                child: Text("Istanbul"),
-                value: 2,
-              ),
-              DropdownMenuItem(
-                  child: Text("Tunceli"),
-                  value: 3
-              ),
-              DropdownMenuItem(
-                  child: Text("Cankiri"),
-                  value: 4
-              )
-            ],
-            onChanged: (value) {
-              setState(() {
-                cityValue = value;
-              });
-            }),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: DropdownButton(
+              hint: new Text("Select City"),
+              dropdownColor: Color.fromRGBO(226, 229, 235, 1),
+              isExpanded: true,
+              value: roomValue,
+              items: [
+                DropdownMenuItem(
+                  child: Text("0 - 5"),
+                  value: 1,
+                ),
+                DropdownMenuItem(
+                  child: Text("5 - 10"),
+                  value: 2,
+                ),
+                DropdownMenuItem(child: Text("10 - 15"), value: 3),
+                DropdownMenuItem(child: Text("15 - 20"), value: 4)
+              ],
+              onChanged: (value) {
+                setState(() {
+                  roomValue = value;
+                });
+              }),
+        ),
       ),
     );
+  }
 
+  Widget dropDownSelectCity() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 1,
+                spreadRadius: 1,
+                offset: Offset(0, 4),
+                color: Color.fromRGBO(226, 229, 235, 1))
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: DropdownButton(
+              dropdownColor: Color.fromRGBO(226, 229, 235, 1),
+              isExpanded: true,
+              value: cityValue,
+              items: [
+                DropdownMenuItem(
+                  child: Text("Ankara"),
+                  value: 1,
+                ),
+                DropdownMenuItem(
+                  child: Text("Istanbul"),
+                  value: 2,
+                ),
+                DropdownMenuItem(child: Text("Tunceli"), value: 3),
+                DropdownMenuItem(child: Text("Cankiri"), value: 4)
+              ],
+              onChanged: (value) {
+                setState(() {
+                  cityValue = value;
+                });
+              }),
+        ),
+      ),
+    );
   }
 }

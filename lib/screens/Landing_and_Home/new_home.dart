@@ -1,16 +1,17 @@
 import 'package:aqar_bazar/Utils/colors.dart';
+import 'package:aqar_bazar/Utils/decorations.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/slider_images.dart';
 import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
+import 'package:aqar_bazar/screens/Landing_and_Home/models/categories.dart';
+import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
-import 'package:aqar_bazar/widgets/best_deals.dart';
-import 'package:aqar_bazar/widgets/exploreList.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../property.dart';
-import 'filter/filter.dart';
 
 class NewHome extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class NewHome extends StatefulWidget {
 
 class _NewHomeState extends State<NewHome> {
   int _selectedIndex = 0;
+
   List<IconData> _icons = [
     FontAwesomeIcons.hotel,
     FontAwesomeIcons.houseUser,
@@ -173,15 +175,14 @@ class _NewHomeState extends State<NewHome> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
-          backgroundColor: iconColor(),
+          backgroundColor: Theme.of(context).primaryColor,
           elevation: 4.0,
           child: Icon(
-            Icons.search,
+            FontAwesomeIcons.list,
             color: Theme.of(context).accentColor,
           ),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => FilterScreen()));
+            _modalBottomSheet(context);
           },
         ),
         bottomNavigationBar: BottomAppBar(
@@ -192,13 +193,26 @@ class _NewHomeState extends State<NewHome> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.menu),
+                icon: Icon(Icons.menu, color: Theme.of(context).primaryColor),
                 onPressed: () {
                   _scaffoldKey.currentState.openDrawer();
                 },
               ),
               IconButton(
-                  icon: Icon(Icons.settings),
+                icon: Icon(Icons.search, color: Theme.of(context).primaryColor),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FilterScreen()));
+                },
+              ),
+              SizedBox(width: 25),
+              IconButton(
+                icon: Icon(Icons.book, color: Theme.of(context).primaryColor),
+                onPressed: () {},
+              ),
+              IconButton(
+                  icon: Icon(Icons.settings,
+                      color: Theme.of(context).primaryColor),
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -218,14 +232,25 @@ class _NewHomeState extends State<NewHome> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: _icons
-                        .asMap()
-                        .entries
-                        .map((MapEntry map) => _iconRow(map.key))
-                        .toList(),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.globeAmericas,
+                        size: 20,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        'Explore',
+                        style: textStyleSemiBold()
+                            .copyWith(fontSize: 25, color: Colors.black87),
+                      ),
+                      Divider(),
+                    ],
                   ),
                 ),
               ),
@@ -344,6 +369,59 @@ class _NewHomeState extends State<NewHome> {
   }
 }
 
+void _modalBottomSheet(context) {
+  double _avatarRadius = 40;
+  showModalBottomSheet(
+      context: context,
+      builder: (BuildContext buildContext) {
+        return Container(
+          child: new Wrap(
+            children: <Widget>[
+              Column(
+                children: [
+                  Center(
+                      child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.white,
+                          radius: _avatarRadius,
+                          child: Image.asset(
+                            'assets/images/logo1.png',
+                            height: _avatarRadius - 10,
+                          ))),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 12),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: catModal.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              Text(
+                                catModal[index].categoryName,
+                                style: textStyleSemiBold()
+                                    .copyWith(fontWeight: FontWeight.w400),
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
+                              index != catModal.length
+                                  ? Divider()
+                                  : SizedBox(
+                                      height: 8,
+                                    ),
+                            ],
+                          );
+                        }),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      });
+}
+
 class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   HomeScreenCustomSliverAppBar({@required this.expandedHeight});
@@ -352,22 +430,19 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
+    double _circleAvatarRad = 50;
     List<SliderImages> _images = [
       SliderImages(
         title: 'Hey there',
-        imageUrl:
-            'https://images.unsplash.com/photo-1502117859338-fd9daa518a9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+        imageUrl: 'assets/images/home1.jpg',
       ),
       SliderImages(
         title: 'This is a beautiful Image',
-        imageUrl:
-            'https://images.unsplash.com/photo-1502943693086-33b5b1cfdf2f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
+        imageUrl: 'assets/images/home4.png',
       ),
       SliderImages(
         title: 'this is another Great Image',
-        imageUrl:
-            'https://images.unsplash.com/photo-1543922596-b3bbaba80649?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+        imageUrl: 'assets/images/home5.png',
       )
     ];
     return Stack(
@@ -380,19 +455,39 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
           itemWidth: MediaQuery.of(context).size.width,
           pagination: SwiperPagination(
             builder: DotSwiperPaginationBuilder(
-              activeColor: iconColor(),
-            ),
+                activeColor: Theme.of(context).primaryColor),
             margin: EdgeInsets.all(50),
           ),
           autoplay: true,
           itemCount: _images.length,
           itemBuilder: (BuildContext context, int index) {
             return Stack(children: [
-              Image.network(
+              Image.asset(
                 _images[index].imageUrl,
                 width: width,
                 height: height / 2,
                 fit: BoxFit.cover,
+              ),
+              Container(
+                width: width,
+                height: height / 2,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.transparent, Colors.black12],
+                    stops: [0, 10],
+                    begin: Alignment.topRight,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: expandedHeight - 150 - shrinkOffset,
+                left: 30,
+                child: Opacity(
+                  opacity: (1 - shrinkOffset / expandedHeight),
+                  child: Text(_images[index].title,
+                      style:
+                          TextStyle(color: Colors.white, fontSize: width / 18)),
+                ),
               ),
               Positioned(
                 top: expandedHeight - 150 - shrinkOffset,
@@ -409,46 +504,19 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
         ),
         Positioned(
           bottom: expandedHeight - 100 - shrinkOffset,
-          left: width / 10,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FilterScreen()));
-            },
-            child: Positioned(
-              bottom: expandedHeight - shrinkOffset,
-              left: width / 10,
-              child: Center(
-                child: Container(
-                  height: 45,
-                  width: width / 1.2,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 5,
-                            color: Colors.black54,
-                            offset: Offset(5.0, 8)),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.search, color: iconColor()),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'Start Borwsing',
-                          style:
-                              TextStyle(fontSize: 16, color: Colors.grey[600]),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+          left: width / 4,
+          right: width / 4,
+          top: 15,
+          child: Center(
+            child: CircleAvatar(
+              radius: _circleAvatarRad,
+              backgroundColor: Colors.white,
+              child: Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Image.asset(
+                    'assets/images/logo1.png',
+                    height: _circleAvatarRad - 10,
+                  )),
             ),
           ),
         ),
