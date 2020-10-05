@@ -6,7 +6,6 @@ import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/categories.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -91,7 +90,8 @@ class _NewHomeState extends State<NewHome> {
                         color: Colors.grey[600],
                         letterSpacing: 0.5),
                   ),
-                  trailing: Icon(Icons.home, color: iconColor()),
+                  trailing:
+                      Icon(Icons.home, color: Theme.of(context).primaryColor),
                 ),
                 onTap: () {},
               ),
@@ -108,7 +108,8 @@ class _NewHomeState extends State<NewHome> {
                         color: Colors.grey[600],
                         letterSpacing: 0.5),
                   ),
-                  trailing: Icon(Icons.book, color: iconColor()),
+                  trailing:
+                      Icon(Icons.book, color: Theme.of(context).primaryColor),
                 ),
                 onTap: () {},
               ),
@@ -125,7 +126,8 @@ class _NewHomeState extends State<NewHome> {
                         color: Colors.grey[600],
                         letterSpacing: 0.5),
                   ),
-                  trailing: Icon(Icons.mail, color: iconColor()),
+                  trailing:
+                      Icon(Icons.mail, color: Theme.of(context).primaryColor),
                 ),
                 onTap: () {
                   Navigator.push(context,
@@ -145,7 +147,8 @@ class _NewHomeState extends State<NewHome> {
                         color: Colors.grey[600],
                         letterSpacing: 0.5),
                   ),
-                  trailing: Icon(Icons.info, color: iconColor()),
+                  trailing:
+                      Icon(Icons.info, color: Theme.of(context).primaryColor),
                 ),
                 onTap: () {},
               ),
@@ -162,7 +165,8 @@ class _NewHomeState extends State<NewHome> {
                         color: Colors.grey[600],
                         letterSpacing: 0.5),
                   ),
-                  trailing: Icon(Icons.logout, color: iconColor()),
+                  trailing:
+                      Icon(Icons.logout, color: Theme.of(context).primaryColor),
                 ),
                 onTap: () {},
               ),

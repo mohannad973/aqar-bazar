@@ -438,7 +438,22 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
                                   horizontal:
                                       MediaQuery.of(context).size.width / 4,
                                   vertical: 12),
-                              onPressed: () {},
+                              onPressed: () {
+                                var list = propertyInfo;
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HouseScreen(
+                                            propertyInfo: Property(
+                                                name: list.name,
+                                                image: list.image,
+                                                moreImages: list.moreImages,
+                                                price: list.price,
+                                                propertType: list.propertType,
+                                                location: list.location,
+                                                shortAddress: list.shortAddress,
+                                                rating: list.rating))));
+                              },
                               child: Text(
                                 'Book Now',
                                 style: TextStyle(
@@ -459,6 +474,22 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
             ),
           ),
         ),
+        Positioned(
+            top: 15,
+            left: 15,
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Center(
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ))
       ],
     );
   }

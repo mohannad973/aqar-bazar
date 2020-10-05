@@ -20,6 +20,10 @@ class _HouseScreenState extends State<HouseScreen> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
       // backgroundColor: Theme.of(context).primaryColorLight,
       body: Column(
         children: [
