@@ -1,5 +1,6 @@
 import 'package:aqar_bazar/Utils/decorations.dart';
 import 'package:aqar_bazar/providers/preferences_provider.dart';
+import 'package:aqar_bazar/screens/settings/preferences_model.dart';
 import 'package:aqar_bazar/screens/settings/settings_item.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
@@ -11,7 +12,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  List<String> countries = ["Turkey", "Emarates", "Syria"];
+  List<Country> countries = [];
+  List<Currency> currencyList=[];
+
   int _selected;
 
   @override
@@ -19,6 +22,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // TODO: implement initState
     super.initState();
     print("999999999"+Provider.of<PreferencesProvider>(context,listen:false).currencyList.toString());
+
+    countries = Provider.of<PreferencesProvider>(context,listen:false).countryList;
+    currencyList = Provider.of<PreferencesProvider>(context,listen:false).currencyList;
 
 
   }
@@ -30,7 +36,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Column(
+      body:
+      Provider.of<PreferencesProvider>(context).isLoading()
+          ? Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.blue,
+        ),
+      )
+          :
+      Column(
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 20),
@@ -143,7 +157,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     itemCount: countries.length,
                     itemBuilder: (BuildContext context, int index) {
                       return RadioListTile(
-                          title: Text(countries[index]),
+                          title: Text(countries[index].name),
                           value: index,
                           groupValue: _selected,
                           onChanged: (value) {
