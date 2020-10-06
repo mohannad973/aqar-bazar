@@ -2,6 +2,7 @@ import 'package:aqar_bazar/Utils/colors.dart';
 import 'package:aqar_bazar/Utils/decorations.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/slider_images.dart';
+import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/categories.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
@@ -9,6 +10,7 @@ import 'package:aqar_bazar/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../property.dart';
 
@@ -205,6 +207,8 @@ class _NewHomeState extends State<NewHome> {
               IconButton(
                 icon: Icon(Icons.search, color: Theme.of(context).primaryColor),
                 onPressed: () {
+                  Provider.of<SearchParamsProvider>(context, listen: false)
+                      .getSearchParams();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => FilterScreen()));
                 },
@@ -383,15 +387,17 @@ void _modalBottomSheet(context) {
             children: <Widget>[
               Column(
                 children: [
-                  Center(
-                      child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.white,
-                          radius: _avatarRadius,
-                          child: Image.asset(
-                            'assets/images/logo1.png',
-                            height: _avatarRadius - 10,
-                          ))),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
+                    child: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Image.asset(
+                        'assets/images/logo1.png',
+                        height: _avatarRadius - 10,
+                      ),
+                    )),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 12),

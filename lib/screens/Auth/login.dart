@@ -1,6 +1,8 @@
+import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 
 import '../Landing_and_Home/Home.dart';
 
@@ -10,6 +12,12 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  String email = '';
+  String password = '';
+  BuildContext scaffoldContext;
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +80,7 @@ class _LogInState extends State<LogIn> {
                                   TextFormField(
                                     decoration: inputDecoration()
                                         .copyWith(hintText: "Email"),
+                                    controller: emailController,
                                   ),
                                   SizedBox(
                                     height: 15,
@@ -79,36 +88,59 @@ class _LogInState extends State<LogIn> {
                                   TextFormField(
                                     decoration: inputDecoration()
                                         .copyWith(hintText: "Password"),
+                                    controller: passwordController,
                                   ),
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  RaisedButton.icon(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3,
-                                          vertical: 10),
-                                      onPressed: () {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (_) => NewHome()),
-                                        );
-                                      },
-                                      icon: Icon(
-                                        Icons.person_add,
-                                        color: Colors.white,
-                                      ),
-                                      label: Text(
-                                        "Sign in",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      color: Colors.lightBlue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ))
+                                  Provider.of<LogInProvider>(context,
+                                              listen: false)
+                                          .isLoading()
+                                      ? CircularProgressIndicator(
+                                          backgroundColor: Colors.blue,
+                                        )
+                                      : RaisedButton.icon(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  3,
+                                              vertical: 10),
+                                          onPressed: () async {
+                                            final String email =
+                                                emailController.text.trim();
+                                            final String password =
+                                                passwordController.text.trim();
+                                            final bool user = await Provider.of<
+                                                        LogInProvider>(context,
+                                                    listen: false)
+                                                .logIn(email, password);
+
+                                            if (user) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        NewHome()),
+                                              );
+                                            } else {
+                                              // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Wrong"),));
+                                            }
+                                          },
+                                          icon: Icon(
+                                            Icons.person_add,
+                                            color: Colors.white,
+                                          ),
+                                          label: Text(
+                                            "Sign in",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                          color: Colors.lightBlue,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
+                                          ))
                                 ],
                               ),
                             )
