@@ -1,7 +1,7 @@
 import 'package:aqar_bazar/models/slider_images.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
-import 'package:aqar_bazar/screens/search_screen.dart';
+
 import 'package:aqar_bazar/widgets/best_deals.dart';
 import 'package:aqar_bazar/widgets/exploreList.dart';
 import 'package:flutter/material.dart';

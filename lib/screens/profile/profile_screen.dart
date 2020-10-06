@@ -1,4 +1,4 @@
-
+import 'package:aqar_bazar/providers/preferences_provider.dart';
 import 'package:aqar_bazar/screens/Common_quistion/Common_quistion_screen.dart';
 import 'package:aqar_bazar/screens/change_password/change_password_screen.dart';
 import 'package:aqar_bazar/screens/invite_friends/invite_friends_screen.dart';
@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -94,13 +95,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      InkWell(child: profileListItem('Help Center', LineAwesomeIcons.info),onTap: (){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CommonQuestionScreen()),
-                        );
-                      },),
+                      InkWell(
+                        child: profileListItem(
+                            'Help Center', LineAwesomeIcons.info),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CommonQuestionScreen()),
+                          );
+                        },
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -110,11 +115,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SettingsScreen()),
-                            );
+                            Provider.of<PreferencesProvider>(context,listen: false)
+                                .getPreferences();
+                            if (Provider.of<PreferencesProvider>(context,listen: false)
+                                    .preferencesResponse !=
+                                null) {
+                              print(
+                                  "/////////////////////***********//////32168" +
+                                      Provider.of<PreferencesProvider>(context,listen: false)
+                                          .languagesList
+                                          .toString());
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SettingsScreen()),
+                              );
+                            }
                           },
                           child: profileListItem('Settings', Icons.settings)),
                     ],

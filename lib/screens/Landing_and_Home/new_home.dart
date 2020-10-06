@@ -168,7 +168,7 @@ class _NewHomeState extends State<NewHome> {
                         letterSpacing: 0.5),
                   ),
                   trailing:
-                      Icon(Icons.logout, color: Theme.of(context).primaryColor),
+                      Icon(Icons.cancel, color: Theme.of(context).primaryColor),
                 ),
                 onTap: () {},
               ),

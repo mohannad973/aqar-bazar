@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/providers/login_provider.dart';
+import 'package:aqar_bazar/providers/preferences_provider.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,9 @@ void main() {
       ChangeNotifierProvider<SearchParamsProvider>(
           create: (_) => SearchParamsProvider()),
       ChangeNotifierProvider<LogInProvider>(create: (_) => LogInProvider()),
+      ChangeNotifierProvider<PreferencesProvider>(
+        create: (_) => PreferencesProvider(),
+      )
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,

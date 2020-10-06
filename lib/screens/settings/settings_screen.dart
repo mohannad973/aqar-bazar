@@ -1,7 +1,9 @@
 import 'package:aqar_bazar/Utils/decorations.dart';
+import 'package:aqar_bazar/providers/preferences_provider.dart';
 import 'package:aqar_bazar/screens/settings/settings_item.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -9,12 +11,17 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  List<String> countries = [
-    "Turkey",
-    "Emarates",
-    "Syria"
-  ];
+  List<String> countries = ["Turkey", "Emarates", "Syria"];
   int _selected;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("999999999"+Provider.of<PreferencesProvider>(context,listen:false).currencyList.toString());
+
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   InkWell(
                     child: settingsItem("Country", Icons.location_city),
                     onTap: () {
-_showDialog();
+                      _showDialog();
                     },
                   ),
                   Divider(
@@ -97,9 +104,8 @@ _showDialog();
     );
   }
 
-
-  _showDialog(){
-   AlertDialog dialog = AlertDialog(
+  _showDialog() {
+    AlertDialog dialog = AlertDialog(
       title: Text("Pick Country"),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -137,7 +143,6 @@ _showDialog();
                     itemCount: countries.length,
                     itemBuilder: (BuildContext context, int index) {
                       return RadioListTile(
-
                           title: Text(countries[index]),
                           value: index,
                           groupValue: _selected,
@@ -148,13 +153,12 @@ _showDialog();
                           });
                     }),
               ),
-            
             ],
           ),
         ),
       ),
     );
-   
-   showDialog(context: context,child: dialog);
+
+    showDialog(context: context, child: dialog);
   }
 }

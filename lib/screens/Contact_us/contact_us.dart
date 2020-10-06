@@ -123,7 +123,7 @@ class _ContactUsState extends State<ContactUs> {
                         );
                       },
                       icon: Icon(
-                        Icons.outgoing_mail,
+                        Icons.message,
                         color: Colors.white,
                       ),
                       label: Text(

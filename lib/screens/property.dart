@@ -1,8 +1,13 @@
 import 'dart:ui';
 import 'package:aqar_bazar/models/best_deals_model.dart';
-import 'package:aqar_bazar/screens/Property%20types/house.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
+import 'Property types/house.dart';
+import 'Property types/house.dart';
+import 'Property types/house.dart';
+
 
 class PropertyPage extends StatefulWidget {
   Property propertyInfo;

@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/screens/Auth/models/log_in_response.dart';
+import 'package:aqar_bazar/screens/settings/preferences_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,6 +14,11 @@ class Api{
   Future search({String furnished , String type , String city , String rooms , String bathrooms , String category , String price , String capacity}){
       var url = baseUrl +"/v1/search?furnished={$furnished}&type_id={$type}&city_id ={$city}&rooms={$rooms}&bathrooms={$bathrooms}&category={$capacity}&price range={$price}&capacity ={$capacity}";
       return http.get(url);
+  }
+
+  Future getPreferences(){
+    var url = baseUrl +"/v1/getPreferences";
+    return   http.get(url);
   }
 
   Future login(String email, String password) async {

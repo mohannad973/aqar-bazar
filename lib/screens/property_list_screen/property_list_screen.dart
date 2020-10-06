@@ -5,6 +5,7 @@ import 'package:aqar_bazar/screens/property_list_screen/property_item_card.dart'
 import 'package:aqar_bazar/screens/property_list_screen/property_model.dart';
 import 'package:flutter/material.dart';
 
+import '../Property types/house.dart';
 import '../property.dart';
 
 class PropertyListScreen extends StatefulWidget {
