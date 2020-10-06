@@ -61,7 +61,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/explore_list_images/
-    - assets/images/Home_Page_Slider_Images/
+    
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
