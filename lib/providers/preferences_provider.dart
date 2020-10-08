@@ -72,62 +72,6 @@ class PreferencesProvider with ChangeNotifier{
     return loading;
   }
 
-//   Api api = new Api();
-//
-//   PreferencesResponse preferencesResponse = PreferencesResponse();
-//   List<Country> countriesList =[];
-//   List<Language> languagesList =[];
-//   List<Currency> currencyList = [];
-//
-// List<String> test = [];
-//
-//
-//   Future<PreferencesResponse> getPreferences() async{
-//     currencyList.clear();
-//     countriesList.clear();
-//     languagesList.clear();
-//     try{
-//
-//       Response response =await api.getPreferences();
-//
-//       if(response !=null){
-//         preferencesResponse = preferencesResponseFromJson(response.body);
-//
-//         print("888888888888"+preferencesResponse.currencies[0][0]);
-//         test.add(preferencesResponse.currencies[0][0]);
-//
-//         for(int i =0; i<preferencesResponse.languages.length ; i++){
-//           languagesList.add(Language(name: preferencesResponse.languages[i][0],id: preferencesResponse.languages[i][1]));
-//         }
-//         for(int i =0; i<preferencesResponse.countries.length ; i++){
-//           countriesList.add(Country(name: preferencesResponse.countries[i][0],id: preferencesResponse.countries[i][1]));
-//         }
-//         for(int i =0; i<preferencesResponse.currencies.length ; i++){
-//           currencyList.add(Currency(name: preferencesResponse.currencies[i][0],id: preferencesResponse.currencies[i][1]));
-//         }
-//
-//         notifyListeners();
-//         return preferencesResponse;
-//       }
-//
-//       if (preferencesResponse == null) {
-//         notifyListeners();
-//
-//         return preferencesResponse;
-//       }
-//       notifyListeners();
-//       return preferencesResponse;
-//
-//
-//
-//
-//
-//
-//     }catch(e){
-//       print("preferences Error"+e.toString());
-//       return null;
-//     }
-//   }
 
 
 }

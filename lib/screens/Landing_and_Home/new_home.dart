@@ -2,11 +2,16 @@ import 'package:aqar_bazar/Utils/colors.dart';
 import 'package:aqar_bazar/Utils/decorations.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/slider_images.dart';
+import 'package:aqar_bazar/providers/property_parameters_provider.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
+import 'package:aqar_bazar/providers/search_result_provider.dart';
 import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/categories.dart';
+import 'package:aqar_bazar/screens/Landing_and_Home/models/property_parameters_model.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
+import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
+import 'package:aqar_bazar/screens/property_list_screen/property_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,6 +33,33 @@ class _NewHomeState extends State<NewHome> {
     FontAwesomeIcons.car,
     FontAwesomeIcons.carBattery
   ];
+
+  List<Category> categoriesList =[];
+
+  List<Datum> homeProperties=[];
+
+
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+
+
+    Provider.of<PropertyParametersProvider>(context, listen: false)
+        .getPropertyParameters();
+    categoriesList =
+        Provider.of<PropertyParametersProvider>(context, listen: false)
+            .categoriesList;
+
+   homeProperties = Provider.of<SearchResultProvider>(context,listen: false).data;
+
+   print(",...........,,,,,,,,,,,,,............"+homeProperties.toString());
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Widget _iconRow(int index) {
@@ -188,7 +220,7 @@ class _NewHomeState extends State<NewHome> {
             color: Theme.of(context).accentColor,
           ),
           onPressed: () {
-            _modalBottomSheet(context);
+            _modalBottomSheet(context, categoriesList);
           },
         ),
         bottomNavigationBar: BottomAppBar(
@@ -230,7 +262,13 @@ class _NewHomeState extends State<NewHome> {
             ],
           ),
         ),
-        body: Material(
+        body:  Provider.of<SearchResultProvider>(context).isLoading()
+            ? Center(
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.blue,
+          ),
+        )
+            : Material(
           child: CustomScrollView(
             slivers: [
               SliverPersistentHeader(
@@ -267,20 +305,20 @@ class _NewHomeState extends State<NewHome> {
                 (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      var list = bestDeals[index];
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PropertyPage(
-                                    propertyInfo: Property(
-                                      name: list.name,
-                                      image: list.image,
-                                      location: list.location,
-                                      shortAddress: list.shortAddress,
-                                      price: list.price,
-                                      propertType: list.propertType,
-                                    ),
-                                  )));
+                      // var list = bestDeals[index];
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => PropertyPage(
+                      //               propertyInfo: Property(
+                      //                 name: list.name,
+                      //                 image: list.image,
+                      //                 location: list.location,
+                      //                 shortAddress: list.shortAddress,
+                      //                 price: list.price,
+                      //                 propertType: list.propertType,
+                      //               ),
+                      //             )));
                     },
                     child: Container(
                         child: Card(
@@ -292,8 +330,8 @@ class _NewHomeState extends State<NewHome> {
                         children: [
                           ClipRRect(
                               borderRadius: BorderRadius.circular(15),
-                              child: Image.asset(
-                                bestDeals[index].image,
+                              child: Image.network(
+                                homeProperties[index].thumbnail,
                               )),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -310,16 +348,20 @@ class _NewHomeState extends State<NewHome> {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    Text(
-                                      bestDeals[index].name,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width/3,
+                                      child: Text(
+                                        homeProperties[index].title,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                     ),
                                   ],
                                 ),
                                 Text(
-                                  bestDeals[index].price,
+                                  homeProperties[index].price.toString(),
                                   style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 22,
@@ -340,7 +382,7 @@ class _NewHomeState extends State<NewHome> {
                                       size: 15,
                                       color: Colors.red[900],
                                     ),
-                                    Text(bestDeals[index].shortAddress,
+                                    Text(homeProperties[index].address,
                                         style:
                                             TextStyle(color: Colors.red[900])),
                                   ],
@@ -353,7 +395,7 @@ class _NewHomeState extends State<NewHome> {
                                       color: Colors.green[600],
                                     ),
                                     Text(
-                                      bestDeals[index].rating,
+                                      homeProperties[index].rate.toString(),
                                       style:
                                           TextStyle(color: Colors.green[600]),
                                     ),
@@ -367,7 +409,7 @@ class _NewHomeState extends State<NewHome> {
                     )),
                   );
                 },
-                childCount: bestDeals.length,
+                childCount: homeProperties.length,
               ))
             ],
           ),
@@ -377,7 +419,7 @@ class _NewHomeState extends State<NewHome> {
   }
 }
 
-void _modalBottomSheet(context) {
+void _modalBottomSheet(context, List<Category> catList) {
   double _avatarRadius = 40;
   showModalBottomSheet(
       context: context,
@@ -403,19 +445,29 @@ void _modalBottomSheet(context) {
                         vertical: 15, horizontal: 12),
                     child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: catModal.length,
+                        itemCount: catList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
                             children: [
-                              Text(
-                                catModal[index].categoryName,
-                                style: textStyleSemiBold()
-                                    .copyWith(fontWeight: FontWeight.w400),
+                              GestureDetector(
+                                child: Text(
+                                  catList[index].name,
+                                  style: textStyleSemiBold()
+                                      .copyWith(fontWeight: FontWeight.w400),
+                                ),
+                                onTap: () {
+                                  Provider.of<SearchResultProvider>(context,listen: false)
+                                      .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => PropertyListScreen()));
+                                  print("*/*/*/**/*/" +
+                                      catList[index].id.toString());
+                                },
                               ),
                               SizedBox(
                                 height: 8,
                               ),
-                              index != catModal.length
+                              index != catList.length
                                   ? Divider()
                                   : SizedBox(
                                       height: 8,
@@ -434,7 +486,9 @@ void _modalBottomSheet(context) {
 
 class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
+
   HomeScreenCustomSliverAppBar({@required this.expandedHeight});
+
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {

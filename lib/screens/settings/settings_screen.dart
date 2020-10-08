@@ -14,6 +14,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   List<Country> countries = [];
   List<Currency> currencyList=[];
+  List<Language> languageList=[];
 
   int _selected;
 
@@ -25,6 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     countries = Provider.of<PreferencesProvider>(context,listen:false).countryList;
     currencyList = Provider.of<PreferencesProvider>(context,listen:false).currencyList;
+    languageList = Provider.of<PreferencesProvider>(context,listen:false).languagesList;
 
 
   }
@@ -77,7 +79,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     indent: 10,
                     endIndent: 10,
                   ),
-                  settingsItem("Currency", Icons.attach_money),
+                  InkWell(
+                    onTap: (){
+                      _showCurrencyDialog();
+                    },
+                      child: settingsItem("Currency", Icons.attach_money)),
+                  Divider(
+                    color: Colors.grey,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  InkWell(
+                    onTap: (){
+                      _showLanguageDialog();
+                    },
+                    child: settingsItem(
+                        "Language", LineAwesomeIcons.angle_right),
+                  ),
+
                   Divider(
                     color: Colors.grey,
                     indent: 10,
@@ -96,13 +115,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     indent: 10,
                     endIndent: 10,
                   ),
-                  settingsItem(
-                      "Give Us Feedbacks", LineAwesomeIcons.angle_right),
-                  Divider(
-                    color: Colors.grey,
-                    indent: 10,
-                    endIndent: 10,
-                  ),
+
                   settingsItem("Log out", LineAwesomeIcons.angle_right),
                   Divider(
                     color: Colors.grey,
@@ -158,6 +171,122 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       return RadioListTile(
                           title: Text(countries[index].name),
+                          value: index,
+                          groupValue: _selected,
+                          onChanged: (value) {
+                            setState(() {
+                              _selected = index;
+                            });
+                          });
+                    }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    showDialog(context: context, child: dialog);
+  }
+
+  _showCurrencyDialog() {
+    AlertDialog dialog = AlertDialog(
+      title: Text("Pick Currency"),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('CANCEL'),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          textColor: Colors.blue,
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+        ),
+        FlatButton(
+          child: const Text('OK'),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          textColor: Colors.blue,
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+        ),
+      ],
+      content: SingleChildScrollView(
+        child: Container(
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Divider(),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.4,
+                ),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: currencyList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return RadioListTile(
+                          title: Text(currencyList[index].name),
+                          value: index,
+                          groupValue: _selected,
+                          onChanged: (value) {
+                            setState(() {
+                              _selected = index;
+                            });
+                          });
+                    }),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    showDialog(context: context, child: dialog);
+  }
+
+  _showLanguageDialog() {
+    AlertDialog dialog = AlertDialog(
+      title: Text("Pick Language"),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('CANCEL'),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          textColor: Colors.blue,
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+        ),
+        FlatButton(
+          child: const Text('OK'),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          textColor: Colors.blue,
+          onPressed: () {
+            Navigator.pop(context, true);
+          },
+        ),
+      ],
+      content: SingleChildScrollView(
+        child: Container(
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Divider(),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.4,
+                ),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: languageList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return RadioListTile(
+                          title: Text(languageList[index].name),
                           value: index,
                           groupValue: _selected,
                           onChanged: (value) {

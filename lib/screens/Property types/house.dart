@@ -68,6 +68,7 @@ class _HouseScreenState extends State<HouseScreen> {
               child: Column(
                 children: [
                   Text(
+
                     widget.propertyInfo.name,
                     style: textStyleSemiBold()
                         .copyWith(color: Colors.black, fontSize: 28),

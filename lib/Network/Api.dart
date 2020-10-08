@@ -12,7 +12,10 @@ class Api{
   }
 
   Future search({String furnished , String type , String city , String rooms , String bathrooms , String category , String price , String capacity}){
-      var url = baseUrl +"/v1/search?furnished={$furnished}&type_id={$type}&city_id ={$city}&rooms={$rooms}&bathrooms={$bathrooms}&category={$capacity}&price range={$price}&capacity ={$capacity}";
+
+    print("from api class 989786"+ furnished);
+      var url = baseUrl +"/v1/search";
+      print("uuuuuuuurrrrrrrl"+url);
       return http.get(url);
   }
 
@@ -20,6 +23,14 @@ class Api{
     var url = baseUrl +"/v1/getPreferences";
     return   http.get(url);
   }
+
+
+
+  Future getPropertyParameters(){
+    var url = baseUrl +"/v1/propertyParameters";
+    return   http.get(url);
+  }
+
 
   Future login(String email, String password) async {
     try {

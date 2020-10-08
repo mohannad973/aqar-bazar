@@ -36,9 +36,7 @@ class SearchResultModel {
 
   @override
   String toString() {
-    // TODO: implement toString
-
-    return 'searchresponse{name: $data}';
+    return 'SearchResultModel{data: $data, links: $links, meta: $meta}';
   }
 }
 
@@ -88,6 +86,11 @@ class Datum {
         "created_at": createdAt,
         "promote_link": promoteLink,
       };
+
+  @override
+  String toString() {
+    return 'Datum{id: $id, title: $title, thumbnail: $thumbnail, rate: $rate, address: $address, price: $price, viewLink: $viewLink, createdAt: $createdAt, promoteLink: $promoteLink}';
+  }
 }
 
 class Links {

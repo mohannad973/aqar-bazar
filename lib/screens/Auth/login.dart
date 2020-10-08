@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/providers/login_provider.dart';
+import 'package:aqar_bazar/providers/search_result_provider.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -117,6 +118,8 @@ class _LogInState extends State<LogIn> {
                                                 .logIn(email, password);
 
                                             if (user) {
+                                              Provider.of<SearchResultProvider>(context,listen: false)
+                                                  .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

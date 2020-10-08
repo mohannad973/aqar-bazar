@@ -1,7 +1,13 @@
+import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-Widget propertyCard(BuildContext context,String url) {
+Widget propertyCard(BuildContext context,Datum propertyItem) {
+
+
+ var price = propertyItem.price;
+ var width = MediaQuery.of(context).size.width;
+ var height = MediaQuery.of(context).size.height;
 
   return Container(
 
@@ -29,46 +35,53 @@ Widget propertyCard(BuildContext context,String url) {
             children: [
               Container(
                 height: 165,
-                width: MediaQuery.of(context).size.width * 0.4,
+                width: width * 0.3,
                 child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Image.asset(url)),
+                    fit: BoxFit.fill,
+
+                    child: Image.network(propertyItem.thumbnail)),
               ),
               SizedBox(
                 width: 10,
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text("All New Villa "),
-                  Text("description"),
-                  Text("location"),
-                  Row(children: [
-                    Icon(Icons.hotel,color: Colors.blue,),
-                    Text("1"),
-                    Icon(Icons.beach_access),
-                    Text("2")
-                  ],),
-                  SmoothStarRating(
-                      allowHalfRating: false,
-                      onRated: (v) {
-                      },
-                      starCount: 5,
-                      rating: 4.5,
-                      size: 20.0,
-                      isReadOnly:true,
-                      color: Colors.blue,
-                      borderColor: Colors.blue,
-                      spacing:0.0
-                  )
+              Container(
+                width: width*0.4,
+                child: Column(
+
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(propertyItem.title),
+
+                    Text(propertyItem.address),
+                    // Row(children: [
+                    //   Icon(Icons.hotel,color: Colors.blue,),
+                    //   Text("1"),
+                    //   Icon(Icons.beach_access),
+                    //   Text("2")
+                    // ],),
+                    SmoothStarRating(
+
+                        allowHalfRating: false,
+                        onRated: (v) {
+                        },
+                        starCount: 5,
+                        rating: propertyItem.rate.toDouble(),
+                        size: 20.0,
+                        isReadOnly:true,
+                        color: Colors.blue,
+                        borderColor: Colors.blue,
+                        spacing:0.0
+                    )
 
 
-                ],
+                  ],
+                ),
               ),
               Spacer(),
               Padding(
+
                 padding: const EdgeInsets.all(8.0),
-                child: Text(" \$250",style: TextStyle(fontSize: 20,color: Colors.green),),
+                child: Text(" \$$price",style: TextStyle(fontSize: 20,color: Colors.green),),
               )
             ],
           ),

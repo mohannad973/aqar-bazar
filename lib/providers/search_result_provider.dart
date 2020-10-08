@@ -7,6 +7,8 @@ class SearchResultProvider with ChangeNotifier {
   bool loading = false;
 
   Api api = new Api();
+
+  List<Datum> data = [];
   SearchResultModel searchResult = SearchResultModel();
 
   Future<SearchResultModel> search(
@@ -19,6 +21,8 @@ class SearchResultProvider with ChangeNotifier {
       String price,
       String capacity}) async {
     setLoading(true);
+
+    print("teeeeeeest");
     try {
       Response response = await api.search(
           furnished: furnished,
@@ -33,11 +37,16 @@ class SearchResultProvider with ChangeNotifier {
       if (response != null) {
         searchResult = searchResultModeFromJson(response.body);
 
+        data = searchResult.data;
+
+
+        print("inside the provider 000"+searchResult.toString());
         setLoading(false);
         return searchResult;
       }
 
       if (searchResult == null) {
+        print("inside the provider 000"+searchResult.toString());
         setLoading(false);
 
         return searchResult;
@@ -45,6 +54,7 @@ class SearchResultProvider with ChangeNotifier {
       setLoading(false);
       return searchResult;
     } catch (e) {
+      print("inside the provider 111"+e.runtimeType.toString());
       setLoading(false);
       return null;
     }
