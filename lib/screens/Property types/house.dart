@@ -1,5 +1,6 @@
 import 'package:aqar_bazar/Utils/colors.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
+import 'package:aqar_bazar/payment_screen/proceed_payment.dart';
 import 'package:aqar_bazar/screens/property_list_screen/property_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -226,7 +227,7 @@ class _HouseScreenState extends State<HouseScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              PropertyListScreen()));
+                                              ProceedPayment()));
                                 },
                                 child: Text(
                                   'Book Now',

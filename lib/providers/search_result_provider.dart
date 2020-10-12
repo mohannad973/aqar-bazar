@@ -38,7 +38,7 @@ class SearchResultProvider with ChangeNotifier {
         searchResult = searchResultModeFromJson(response.body);
 
         data = searchResult.data;
-
+        notifyListeners();
 
         print("inside the provider 000"+searchResult.toString());
         setLoading(false);
@@ -49,12 +49,14 @@ class SearchResultProvider with ChangeNotifier {
         print("inside the provider 000"+searchResult.toString());
         setLoading(false);
 
+        notifyListeners();
         return searchResult;
       }
       setLoading(false);
       return searchResult;
     } catch (e) {
-      print("inside the provider 111"+e.runtimeType.toString());
+      print("inside the provider 111"+e.toString());
+      notifyListeners();
       setLoading(false);
       return null;
     }

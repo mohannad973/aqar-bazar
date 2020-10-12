@@ -17,6 +17,8 @@ class _LogInState extends State<LogIn> {
   String password = '';
   BuildContext scaffoldContext;
 
+
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   @override
@@ -118,8 +120,8 @@ class _LogInState extends State<LogIn> {
                                                 .logIn(email, password);
 
                                             if (user) {
-                                              Provider.of<SearchResultProvider>(context,listen: false)
-                                                  .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
+                                              // Provider.of<SearchResultProvider>(context,listen: false)
+                                              //     .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
