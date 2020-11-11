@@ -20,4 +20,20 @@ class SessionManager {
   }
 
 
+  final String sessionToken = "SESSION_TOKEN";
+
+  Future<void> setSessionToken(String session) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(this.sessionToken, session);
+  }
+
+//get value from shared preferences
+  Future<String> getSessionToken() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String session;
+    session = pref.getString(this.sessionToken) ?? null;
+    return session;
+  }
+
+
 }

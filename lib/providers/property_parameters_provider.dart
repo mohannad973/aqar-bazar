@@ -17,6 +17,7 @@ class PropertyParametersProvider with ChangeNotifier{
 
 
   Future<PropertyParametersModel> getPropertyParameters() async {
+    print('test2');
     setLoading(true);
     try {
       Response response = await api.getPropertyParameters();

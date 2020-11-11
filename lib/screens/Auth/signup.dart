@@ -1,6 +1,8 @@
+import 'package:aqar_bazar/providers/register_provider.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 
 import '../Landing_and_Home/Home.dart';
 
@@ -10,10 +12,18 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController passwordConfirmationController =
+      TextEditingController();
+
   TextStyle defaultStyle = TextStyle(
     color: Colors.grey,
   );
   TextStyle linkStyle = TextStyle(color: Colors.blue);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +40,7 @@ class _SignUpState extends State<SignUp> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: AspectRatio(
-                  aspectRatio: 0.8,
+                  aspectRatio: 0.7,
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
@@ -70,64 +80,112 @@ class _SignUpState extends State<SignUp> {
                             SizedBox(
                               height: 15,
                             ),
-                            Form(
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    decoration: inputDecoration()
-                                        .copyWith(hintText: "Full Name"),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  TextFormField(
-                                    decoration: inputDecoration()
-                                        .copyWith(hintText: "Email"),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  TextFormField(
-                                    decoration: inputDecoration()
-                                        .copyWith(hintText: "Password"),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  TextFormField(
-                                    decoration: inputDecoration()
-                                        .copyWith(hintText: "Repeat Passowrd"),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  RaisedButton.icon(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              3,
-                                          vertical: 10),
-                                      onPressed: () {
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (_) => NewHome()),
-                                        );
-                                      },
-                                      icon: Icon(
-                                        Icons.person_add,
-                                        color: Colors.white,
-                                      ),
-                                      label: Text(
-                                        "Sign Up",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      color: Colors.lightBlue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ))
-                                ],
+                            Expanded(
+                              child: Form(
+                                child: Column(
+                                  children: [
+                                    TextFormField(
+                                      decoration: inputDecoration()
+                                          .copyWith(hintText: "First Name"),
+                                      controller: firstNameController,
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    TextFormField(
+                                      decoration: inputDecoration()
+                                          .copyWith(hintText: "Last Name"),
+                                      controller: lastNameController,
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    TextFormField(
+                                      decoration: inputDecoration()
+                                          .copyWith(hintText: "Email"),
+                                      controller: emailController,
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    TextFormField(
+                                      decoration: inputDecoration()
+                                          .copyWith(hintText: "Password"),
+                                      controller: passwordController,
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    TextFormField(
+                                      decoration: inputDecoration().copyWith(
+                                          hintText: "Repeat Passowrd"),
+                                      controller:
+                                          passwordConfirmationController,
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Provider.of<RegisterProvider>(context,
+                                                listen: false)
+                                            .isLoading()
+                                        ? CircularProgressIndicator(
+                                            backgroundColor: Colors.blue,
+                                          )
+                                        : RaisedButton.icon(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width /
+                                                        3,
+                                                vertical: 10),
+                                            onPressed: () async{
+                                              final String email =
+                                                  emailController.text.trim();
+                                              final String password =
+                                                  passwordController.text
+                                                      .trim();
+                                              final String fName =
+                                              firstNameController.text.trim();
+                                              final String lNAme =
+                                              lastNameController.text.trim();
+                                              final String passwordConfirm =
+                                              passwordConfirmationController.text.trim();
+
+                                              bool user =await Provider.of<RegisterProvider>(context,listen: false).register(email, password, fName, lNAme, passwordConfirm);
+
+
+                                              if (user) {
+                                                Navigator.of(context).pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (_) => NewHome()),
+                                                );
+                                              } else {
+                                                print(user.toString());
+                                                 // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Wrong"),));
+                                              }
+
+                                              // Navigator.of(context).pushReplacement(
+                                              //   MaterialPageRoute(
+                                              //       builder: (_) => NewHome()),
+                                              // );
+                                            },
+                                            icon: Icon(
+                                              Icons.person_add,
+                                              color: Colors.white,
+                                            ),
+                                            label: Text(
+                                              "Sign Up",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                            color: Colors.lightBlue,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15.0),
+                                            ))
+                                  ],
+                                ),
                               ),
                             )
                           ],

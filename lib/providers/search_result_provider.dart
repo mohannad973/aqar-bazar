@@ -20,10 +20,12 @@ class SearchResultProvider with ChangeNotifier {
       String category,
       String price,
       String capacity}) async {
+    print('test4');
     setLoading(true);
 
     print("teeeeeeest");
     try {
+      print('test5');
       Response response = await api.search(
           furnished: furnished,
           type: type,
@@ -35,6 +37,8 @@ class SearchResultProvider with ChangeNotifier {
           capacity: capacity);
 
       if (response != null) {
+        print('test6');
+        print('result testing : '+ response.body);
         searchResult = searchResultModeFromJson(response.body);
 
         data = searchResult.data;
@@ -46,15 +50,18 @@ class SearchResultProvider with ChangeNotifier {
       }
 
       if (searchResult == null) {
+        print('test7');
         print("inside the provider 000"+searchResult.toString());
         setLoading(false);
 
         notifyListeners();
         return searchResult;
       }
+      print('test8');
       setLoading(false);
       return searchResult;
     } catch (e) {
+      print('test9');
       print("inside the provider 111"+e.toString());
       notifyListeners();
       setLoading(false);

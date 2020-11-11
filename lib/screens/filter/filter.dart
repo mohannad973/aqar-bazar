@@ -4,6 +4,7 @@ import 'package:aqar_bazar/screens/filter/price_range_slider.dart';
 import 'package:aqar_bazar/screens/filter/property_params_model.dart';
 import 'package:aqar_bazar/screens/filter/property_type_model.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ class _FilterScreenState extends State<FilterScreen> {
   int _rentTypeSelectedIndex = 0;
   int _furnishedTypeSelectedIndex = 0;
   int _propertyTypeSelectedIndex = 0;
+  int _sellingTypeIndex = 0;
   int roomValue = 1;
   String cityValue;
 
@@ -26,6 +28,8 @@ class _FilterScreenState extends State<FilterScreen> {
   String roomCountValue;
 
   String furnishedValue;
+
+  String sellTypeValue;
 
   List<SellingTypes> _rentType = [];
 
@@ -39,6 +43,8 @@ class _FilterScreenState extends State<FilterScreen> {
 
   List<Furnished> _furnishedList = [];
 
+  List<PropertyType> _propertyTypeList = [];
+
   String _chosenValue;
 
   RangeValues _values = const RangeValues(100, 600);
@@ -50,6 +56,13 @@ class _FilterScreenState extends State<FilterScreen> {
     PropertyTypeModel(name: "Office", iconData: Icons.hot_tub),
     PropertyTypeModel(name: "Hotel Room", iconData: Icons.home),
   ];
+
+  final Map<int, Widget> propertyTypes = const <int, Widget>{
+    0: Text('rent'),
+    1: Text('buy')
+  };
+
+  int propertySelectedIndex = 0;
 
   @override
   void initState() {
@@ -73,6 +86,10 @@ class _FilterScreenState extends State<FilterScreen> {
 
     _furnishedList =
         Provider.of<SearchParamsProvider>(context, listen: false).furnishedList;
+
+    _propertyTypeList =
+        Provider.of<SearchParamsProvider>(context, listen: false)
+            .propertyTypeList;
   }
 
   @override
@@ -103,64 +120,84 @@ class _FilterScreenState extends State<FilterScreen> {
                     SizedBox(
                       height: 20,
                     ),
+
                     Container(
-                      height: 60,
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 1,
-                              spreadRadius: 1,
-                              offset: Offset(0, 4),
-                              color: Color.fromRGBO(226, 229, 235, 1))
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: _rentType
-                            .asMap()
-                            .entries
-                            .map((MapEntry map) => _iconRow(map.key, _rentType))
-                            .toList(),
+                      height: 28,
+                      width: MediaQuery.of(context).size.width,
+                      child: Expanded(
+                        child: CupertinoSegmentedControl(
+                          groupValue: _sellingTypeIndex,
+                          onValueChanged: (int i) {
+                            setState(() {
+                              _sellingTypeIndex = i;
+                            });
+                          },
+                          children: propertyTypes,
+                        ),
                       ),
                     ),
+
+                    // Container(
+                    //   height: 60,
+                    //   width: MediaQuery.of(context).size.width * 0.8,
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(10),
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //           blurRadius: 1,
+                    //           spreadRadius: 1,
+                    //           offset: Offset(0, 4),
+                    //           color: Color.fromRGBO(226, 229, 235, 1))
+                    //     ],
+                    //   ),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //     children: _rentType
+                    //         .asMap()
+                    //         .entries
+                    //         .map((MapEntry map) => _iconRow(map.key, _rentType))
+                    //         .toList(),
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          'property type',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: MediaQuery.of(context).size.width > 360
-                                  ? 18
-                                  : 16,
-                              fontWeight: FontWeight.normal),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: propertyList
-                          .asMap()
-                          .entries
-                          .map((MapEntry map) => _propertyType(map.key))
-                          .toList(),
-                    ),
-                    Divider(
-                      color: Colors.grey,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
+
+
+                    // Row(
+                    //   children: [
+                    //     SizedBox(
+                    //       width: 20,
+                    //     ),
+                    //     Text(
+                    //       'property type',
+                    //       textAlign: TextAlign.left,
+                    //       style: TextStyle(
+                    //           color: Colors.black,
+                    //           fontSize: MediaQuery.of(context).size.width > 360
+                    //               ? 18
+                    //               : 16,
+                    //           fontWeight: FontWeight.normal),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //   children: propertyList
+                    //       .asMap()
+                    //       .entries
+                    //       .map((MapEntry map) => _propertyType(map.key))
+                    //       .toList(),
+                    // ),
+                    // Divider(
+                    //   color: Colors.grey,
+                    //   indent: 20,
+                    //   endIndent: 20,
+                    // ),
+                    dropDownSellType(),
                     dropDownFurnished(),
                     dropDownSelectCity(),
                     dropDownSelectPrice(),
@@ -572,6 +609,43 @@ class _FilterScreenState extends State<FilterScreen> {
             onChanged: (value) {
               setState(() {
                 furnishedValue = value.toString();
+              });
+            }),
+      ),
+    );
+  }
+
+  Widget dropDownSellType() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 1,
+                spreadRadius: 1,
+                offset: Offset(0, 4),
+                color: Color.fromRGBO(226, 229, 235, 1))
+          ],
+        ),
+        child: DropdownButton(
+            hint: Text("type"),
+            dropdownColor: Color.fromRGBO(226, 229, 235, 1),
+            isExpanded: true,
+            underline: Container(),
+            value: sellTypeValue,
+            items:
+            _propertyTypeList.map<DropdownMenuItem<String>>((PropertyType value) {
+              return DropdownMenuItem<String>(
+                value: value.id.toString(),
+                child: Center(child: Text(value.name)),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                sellTypeValue = value.toString();
               });
             }),
       ),

@@ -8,6 +8,7 @@ import 'package:aqar_bazar/providers/search_result_provider.dart';
 import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/categories.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/property_parameters_model.dart';
+import 'package:aqar_bazar/screens/Landing_and_Home/widgets/best_deals.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
@@ -17,7 +18,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import '../property.dart';
+import '../property/property.dart';
 
 class NewHome extends StatefulWidget {
   @override
@@ -34,19 +35,16 @@ class _NewHomeState extends State<NewHome> {
     FontAwesomeIcons.carBattery
   ];
 
-  List<Category> categoriesList =[];
+  List<Category> categoriesList = [];
 
-  List<Datum> homeProperties=[];
-
-
-
+  List<Datum> homeProperties = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-
+    print('test1');
 
     Provider.of<PropertyParametersProvider>(context, listen: false)
         .getPropertyParameters();
@@ -54,13 +52,8 @@ class _NewHomeState extends State<NewHome> {
         Provider.of<PropertyParametersProvider>(context, listen: false)
             .categoriesList;
 
-   //homeProperties = Provider.of<SearchResultProvider>(context,listen: false).data;
-
-
-
-
+    //homeProperties = Provider.of<SearchResultProvider>(context,listen: false).data;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -264,168 +257,188 @@ class _NewHomeState extends State<NewHome> {
             ],
           ),
         ),
-        body:
-            FutureBuilder(
-              future: Provider.of<SearchResultProvider>(context,listen: false).search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: ""),
-              builder: (BuildContext context, AsyncSnapshot snapshot){
-                if (snapshot.data == null) {
-                  return Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.blue,
-                      ));
-                }else{
-                 return Material(
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverPersistentHeader(
-                          delegate:
-                          HomeScreenCustomSliverAppBar(expandedHeight: height / 2),
-                          pinned: true,
-                        ),
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  FontAwesomeIcons.globeAmericas,
-                                  size: 20,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  'Explore',
-                                  style: textStyleSemiBold()
-                                      .copyWith(fontSize: 25, color: Colors.black87),
-                                ),
-                                Divider(),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    var list = bestDeals[index];
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => PropertyPage(
-                                              propertyInfo: Property(
-                                                name: list.name,
-                                                image: list.image,
-                                                location: list.location,
-                                                shortAddress: list.shortAddress,
-                                                price: list.price,
-                                                propertType: list.propertType,
-                                              ),
-                                            )));
-                                  },
-                                  child: Container(
-
-                                      child: Card(
-
-                                        elevation: 8,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            ClipRRect(
-                                                borderRadius: BorderRadius.circular(15),
-                                                child: Image.network(
-                                                  snapshot.data.data[index].thumbnail,
-                                                )),
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        FontAwesomeIcons.hotel,
-                                                        size: 15,
-                                                        color: Theme.of(context).primaryColor,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Container(
-                                                        width: MediaQuery.of(context).size.width/3,
-                                                        child: Text(
-                                                          snapshot.data.data[index].title,
-                                                          overflow: TextOverflow.ellipsis,
-                                                          style: TextStyle(
-                                                              fontSize: 18,
-                                                              fontWeight: FontWeight.w500),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Text(
-                                                    snapshot.data.data[index].price.toString(),
-                                                    style: TextStyle(
-                                                        color: Theme.of(context).primaryColor,
-                                                        fontSize: 22,
-                                                        fontWeight: FontWeight.w600),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.location_on,
-                                                        size: 15,
-                                                        color: Colors.red[900],
-                                                      ),
-                                                      Text(snapshot.data.data[index].address,
-                                                          style:
-                                                          TextStyle(color: Colors.red[900])),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.star,
-                                                        size: 15,
-                                                        color: Colors.green[600],
-                                                      ),
-                                                      Text(
-                                                        snapshot.data.data[index].rate.toString(),
-                                                        style:
-                                                        TextStyle(color: Colors.green[600]),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )),
-                                );
-                              },
-                              childCount: snapshot.data.data.length,
-                            ))
-                      ],
+        body: FutureBuilder(
+          future: Provider.of<SearchResultProvider>(context, listen: false)
+              .search(
+                  furnished: "",
+                  category: "",
+                  capacity: "",
+                  price: "",
+                  bathrooms: "",
+                  rooms: "",
+                  city: "",
+                  type: ""),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Center(
+                  child: CircularProgressIndicator(
+                backgroundColor: Colors.blue,
+              ));
+            } else {
+              return Material(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverPersistentHeader(
+                      delegate: HomeScreenCustomSliverAppBar(
+                          expandedHeight: height / 2),
+                      pinned: true,
                     ),
-                  );
-                }
-              },
-            ),
-
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              FontAwesomeIcons.globeAmericas,
+                              size: 20,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              'Explore',
+                              style: textStyleSemiBold().copyWith(
+                                  fontSize: 25, color: Colors.black87),
+                            ),
+                            Divider(),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            print('taaaaaaped '+ index.toString());
+                          //  var list = bestDeals[index];
+                          //  print("testing the list : "+list.toString());
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PropertyPage(
+                                          // propertyInfo: Property(
+                                          //   name: list.name,
+                                          //   image: list.image,
+                                          //   location: list.location,
+                                          //   shortAddress: list.shortAddress,
+                                          //   price: list.price,
+                                          //   propertType: list.propertType,
+                                          // ),
+                                      property: snapshot.data.data[index],
+                                        )));
+                          },
+                          child: Container(
+                            child: DealsCard(propertyData: snapshot.data.data[index],),
+                          //     child: Card(
+                          //   elevation: 8,
+                          //   shape: RoundedRectangleBorder(
+                          //     borderRadius: BorderRadius.circular(15),
+                          //   ),
+                          //   child: Column(
+                          //     children: [
+                          //       ClipRRect(
+                          //           borderRadius: BorderRadius.circular(15),
+                          //           child: Image.network(
+                          //             snapshot.data.data[index].thumbnail,
+                          //           )),
+                          //       Padding(
+                          //         padding: const EdgeInsets.all(8.0),
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //               MainAxisAlignment.spaceBetween,
+                          //           children: [
+                          //             Row(
+                          //               children: [
+                          //                 Icon(
+                          //                   FontAwesomeIcons.hotel,
+                          //                   size: 15,
+                          //                   color:
+                          //                       Theme.of(context).primaryColor,
+                          //                 ),
+                          //                 SizedBox(
+                          //                   width: 5,
+                          //                 ),
+                          //                 Container(
+                          //                   width: MediaQuery.of(context)
+                          //                           .size
+                          //                           .width /
+                          //                       3,
+                          //                   child: Text(
+                          //                     snapshot.data.data[index].title,
+                          //                     overflow: TextOverflow.ellipsis,
+                          //                     style: TextStyle(
+                          //                         fontSize: 18,
+                          //                         fontWeight: FontWeight.w500),
+                          //                   ),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //             Text(
+                          //               snapshot.data.data[index].price
+                          //                   .toString(),
+                          //               style: TextStyle(
+                          //                   color:
+                          //                       Theme.of(context).primaryColor,
+                          //                   fontSize: 22,
+                          //                   fontWeight: FontWeight.w600),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       Padding(
+                          //         padding: const EdgeInsets.all(8.0),
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //               MainAxisAlignment.spaceBetween,
+                          //           children: [
+                          //             Row(
+                          //               children: [
+                          //                 Icon(
+                          //                   Icons.location_on,
+                          //                   size: 15,
+                          //                   color: Colors.red[900],
+                          //                 ),
+                          //                 Text(
+                          //                     snapshot.data.data[index].address,
+                          //                     style: TextStyle(
+                          //                         color: Colors.red[900])),
+                          //               ],
+                          //             ),
+                          //             Row(
+                          //               children: [
+                          //                 Icon(
+                          //                   Icons.star,
+                          //                   size: 15,
+                          //                   color: Colors.green[600],
+                          //                 ),
+                          //                 Text(
+                          //                   snapshot.data.data[index].rate
+                          //                       .toString(),
+                          //                   style: TextStyle(
+                          //                       color: Colors.green[600]),
+                          //                 ),
+                          //               ],
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // )
+                          ),
+                        );
+                      },
+                      childCount: snapshot.data.data.length,
+                    ))
+                  ],
+                ),
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -468,10 +481,22 @@ void _modalBottomSheet(context, List<Category> catList) {
                                       .copyWith(fontWeight: FontWeight.w400),
                                 ),
                                 onTap: () {
-                                  Provider.of<SearchResultProvider>(context,listen: false)
-                                      .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) => PropertyListScreen()));
+                                  Provider.of<SearchResultProvider>(context,
+                                          listen: false)
+                                      .search(
+                                          furnished: "",
+                                          category: "",
+                                          capacity: "",
+                                          price: "",
+                                          bathrooms: "",
+                                          rooms: "",
+                                          city: "",
+                                          type: "");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              PropertyListScreen()));
                                   print("*/*/*/**/*/" +
                                       catList[index].id.toString());
                                 },

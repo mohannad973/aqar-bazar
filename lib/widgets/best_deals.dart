@@ -1,6 +1,6 @@
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/places.dart';
-import 'package:aqar_bazar/screens/property.dart';
+import 'file:///E:/hashtag%20progects/aqar/lib/screens/property/property.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -35,20 +35,20 @@ class BestDeals extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
-                    var list = bestDeals[index];
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PropertyPage(
-                                  propertyInfo: Property(
-                                    name: list.name,
-                                    image: list.image,
-                                    location: list.location,
-                                    shortAddress: list.shortAddress,
-                                    price: list.price,
-                                    propertType: list.propertType,
-                                  ),
-                                )));
+                    // var list = bestDeals[index];
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => PropertyPage(
+                    //               propertyInfo: Property(
+                    //                 name: list.name,
+                    //                 image: list.image,
+                    //                 location: list.location,
+                    //                 shortAddress: list.shortAddress,
+                    //                 price: list.price,
+                    //                 propertType: list.propertType,
+                    //               ),
+                    //             )));
                   },
                   child: Container(
                       child: Card(

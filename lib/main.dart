@@ -1,8 +1,13 @@
+import 'package:aqar_bazar/providers/comments_provider.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/providers/preferences_provider.dart';
 import 'package:aqar_bazar/providers/property_parameters_provider.dart';
+import 'package:aqar_bazar/providers/register_provider.dart';
+import 'package:aqar_bazar/providers/request_property_provider.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
+import 'package:aqar_bazar/providers/single_property_provider.dart';
+import 'package:aqar_bazar/providers/user_profile_provider.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/landing.dart';
@@ -26,6 +31,16 @@ void main() {
           create: (_) => PropertyParametersProvider()),
       ChangeNotifierProvider<SearchResultProvider>(
           create: (_) => SearchResultProvider()),
+      ChangeNotifierProvider<RegisterProvider>(
+          create: (_) => RegisterProvider()),
+      ChangeNotifierProvider<USerProfileProvider>(
+          create: (_) => USerProfileProvider()),
+      ChangeNotifierProvider<SinglePropertyProvider>(
+          create: (_) => SinglePropertyProvider()),
+      ChangeNotifierProvider<RequestPropertyProvider>(
+          create: (_) => RequestPropertyProvider()),
+      ChangeNotifierProvider<CommentsProvider>(
+          create: (_) => CommentsProvider()),
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,

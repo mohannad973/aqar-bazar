@@ -21,7 +21,7 @@ class LogInProvider with ChangeNotifier {
         sessionManager.setAuthToken(user.accessToken);
         setLoading(false);
 
-        print("token:" + user.accessToken);
+        print("token is :" + user.accessToken.substring(1070,user.accessToken.length));
 
         return true;
       }

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Property types/house.dart';
-import '../property.dart';
+import '../property/property.dart';
 
 class PropertyListScreen extends StatefulWidget {
   @override
