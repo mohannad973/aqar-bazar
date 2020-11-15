@@ -1,5 +1,7 @@
+import 'package:aqar_bazar/Utils/form_validators.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
+import 'package:aqar_bazar/screens/Auth/signup.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -13,14 +15,14 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  final _signInKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
   BuildContext scaffoldContext;
 
-
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,17 +80,27 @@ class _LogInState extends State<LogIn> {
                               height: 15,
                             ),
                             Form(
+                              key: _signInKey,
                               child: Column(
                                 children: [
                                   TextFormField(
                                     decoration: inputDecoration()
                                         .copyWith(hintText: "Email"),
                                     controller: emailController,
+                                    onChanged: (val) {
+                                      setState(() => email = val);
+                                    },
+                                    validator: emailValidator(email),
                                   ),
                                   SizedBox(
                                     height: 15,
                                   ),
                                   TextFormField(
+                                    onChanged: (val) {
+                                      setState(() => password = val);
+                                    },
+                                    validator: passwordValidator(),
+                                    obscureText: true,
                                     decoration: inputDecoration()
                                         .copyWith(hintText: "Password"),
                                     controller: passwordController,
@@ -97,7 +109,7 @@ class _LogInState extends State<LogIn> {
                                     height: 15,
                                   ),
                                   Provider.of<LogInProvider>(context,
-                                              listen: false)
+                                              )
                                           .isLoading()
                                       ? CircularProgressIndicator(
                                           backgroundColor: Colors.blue,
@@ -110,27 +122,34 @@ class _LogInState extends State<LogIn> {
                                                   3,
                                               vertical: 10),
                                           onPressed: () async {
-                                            final String email =
-                                                emailController.text.trim();
-                                            final String password =
-                                                passwordController.text.trim();
-                                            final bool user = await Provider.of<
-                                                        LogInProvider>(context,
-                                                    listen: false)
-                                                .logIn(email, password);
+                                            if (_signInKey.currentState
+                                                .validate()) {
+                                              final String email =
+                                                  emailController.text.trim();
+                                              final String password =
+                                                  passwordController.text
+                                                      .trim();
+                                              final bool user = await Provider
+                                                      .of<LogInProvider>(
+                                                          context,
+                                                          listen: false)
+                                                  .logIn(email, password);
 
-                                            if (user) {
-                                              // Provider.of<SearchResultProvider>(context,listen: false)
-                                              //     .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NewHome()),
-                                              );
-                                            } else {
-                                              // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Wrong"),));
+                                              if (user) {
+                                                // Provider.of<SearchResultProvider>(context,listen: false)
+                                                //     .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          NewHome()),
+                                                );
+                                              } else {
+                                                // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Wrong"),));
+                                              }
+                                              FocusScope.of(context).requestFocus(FocusNode());
                                             }
+                                            _signInKey.currentState.save();
                                           },
                                           icon: Icon(
                                             Icons.person_add,
@@ -166,22 +185,32 @@ class _LogInState extends State<LogIn> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Center(
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(text: "Don't have an account? "),
-                      TextSpan(
-                        text: "Sign Up",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.blue,
-                        ),
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.of(context)
+                        .pushReplacement(
+                      MaterialPageRoute(
+                          builder: (_) =>
+                              SignUp()),
+                    );
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey,
                       ),
-                    ],
+                      children: <TextSpan>[
+                        TextSpan(text: "Don't have an account? "),
+                        TextSpan(
+                          text: "Sign Up",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

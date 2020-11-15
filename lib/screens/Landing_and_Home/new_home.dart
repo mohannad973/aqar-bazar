@@ -11,8 +11,10 @@ import 'package:aqar_bazar/screens/Landing_and_Home/models/property_parameters_m
 import 'package:aqar_bazar/screens/Landing_and_Home/widgets/best_deals.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
+import 'package:aqar_bazar/screens/my_bookings/my_bookings_screen.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
 import 'package:aqar_bazar/screens/property_list_screen/property_list_screen.dart';
+import 'package:aqar_bazar/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -130,12 +132,17 @@ class _NewHomeState extends State<NewHome> {
               ),
               GestureDetector(
                 child: ListTile(
-                  leading: Text(
-                    'My Bookings',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey[600],
-                        letterSpacing: 0.5),
+                  leading: GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TestScreen()));
+                    },
+                    child: Text(
+                      'My Bookings',
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
+                          letterSpacing: 0.5),
+                    ),
                   ),
                   trailing:
                       Icon(Icons.book, color: Theme.of(context).primaryColor),

@@ -14,9 +14,12 @@ class LogInProvider with ChangeNotifier {
 
   Future<bool> logIn(String email, String password) async {
     setLoading(true);
+
     try {
       //Todo DAta Connection Checker
-      SignInResponse user = await api.login(email, password);
+      String cookie = await sessionManager.getSessionToken();
+      SignInResponse user = await api.login(email, password,cookie);
+
       if (user != null) {
         sessionManager.setAuthToken(user.accessToken);
         setLoading(false);

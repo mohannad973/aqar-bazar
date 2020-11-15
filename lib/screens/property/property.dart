@@ -1,10 +1,14 @@
+
 import 'dart:ui';
 import 'package:aqar_bazar/constants.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
+import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
+import 'package:aqar_bazar/providers/cancel_request_provider.dart';
 import 'package:aqar_bazar/providers/comments_provider.dart';
 import 'package:aqar_bazar/providers/request_property_provider.dart';
 import 'package:aqar_bazar/providers/single_property_provider.dart';
+import 'package:aqar_bazar/screens/property/add_comment.dart';
 import 'package:aqar_bazar/screens/property/comments.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -30,6 +34,8 @@ class PropertyPage extends StatefulWidget {
 }
 
 class _PropertyPageState extends State<PropertyPage> {
+  List<Comment> commentsList = [];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -37,7 +43,15 @@ class _PropertyPageState extends State<PropertyPage> {
     Provider.of<SinglePropertyProvider>(context, listen: false)
         .getPropertyInfo(widget.property.viewLink);
     Provider.of<CommentsProvider>(context,listen: false).getComments(1, widget.property.id.toString());
+
+
   }
+
+
+  _addCommentToList(Comment comment){
+    commentsList.add(comment);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +91,10 @@ class _PropertyPageState extends State<PropertyPage> {
                                 child: AutoSizeText(
                                   singleProperty.title,
                                   style: TextStyle(
-                                      color: Colors.black87, fontSize: 20),
-                                  maxLines: 2,
+                                      color: Colors.black87, fontSize: 18),
+                                  maxLines: 3,
                                 ),
-                                width: width * 0.9,
+                                width: width * 0.8,
                               ),
                             ],
                           ),
@@ -338,7 +352,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                       SizedBox(
                                         height: 35,
                                       ),
-                                      singleProperty.isBooked
+                                      singleProperty.isBooked || Provider.of<RequestPropertyProvider>(context).isRequested()
                                           ? Container(
                                               width: width,
                                               child: Center(
@@ -383,7 +397,15 @@ class _PropertyPageState extends State<PropertyPage> {
                                                           //         .width /
                                                           //         4,
                                                           //     vertical: 12),
-                                                          onPressed: () {},
+                                                          onPressed: () {
+                                                            Provider.of<RequestPropertyProvider>(
+                                                                context,
+                                                                listen: false)
+                                                                .cancelRequest(
+                                                                singleProperty.id
+                                                                    .toString()
+                                                                    .trim());
+                                                          },
                                                           child: Text(
                                                             'cancel book',
                                                             style: TextStyle(
@@ -504,7 +526,12 @@ class _PropertyPageState extends State<PropertyPage> {
                           ),
                         ),
                       Provider.of<CommentsProvider>(context).isLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):
-                      Comments(commentsResponse: Provider.of<CommentsProvider>(context).commentsResponse,propertyInfo: widget.singleProperty,),
+                      ( Provider.of<CommentsProvider>(context).commentsList.isEmpty
+                          ? Container()
+                          :     Comments(commentsResponse: Provider.of<CommentsProvider>(context).commentsResponse,propertyInfo: widget.singleProperty,commentList: Provider.of<CommentsProvider>(context).commentsResponse.data ,)),
+
+                        AddNewComment(propertyId: widget.property.id,)
+
                       ]),
                     ),
                     // SliverToBoxAdapter(

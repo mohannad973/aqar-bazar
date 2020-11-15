@@ -1,4 +1,8 @@
+import 'package:aqar_bazar/models/like_comment_response.dart';
+import 'package:aqar_bazar/providers/add_comment_provider.dart';
+import 'package:aqar_bazar/providers/cancel_request_provider.dart';
 import 'package:aqar_bazar/providers/comments_provider.dart';
+import 'package:aqar_bazar/providers/like_comment_provider.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/providers/preferences_provider.dart';
 import 'package:aqar_bazar/providers/property_parameters_provider.dart';
@@ -8,6 +12,7 @@ import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
 import 'package:aqar_bazar/providers/single_property_provider.dart';
 import 'package:aqar_bazar/providers/user_profile_provider.dart';
+import 'package:aqar_bazar/providers/user_requests_provider.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/landing.dart';
@@ -41,6 +46,14 @@ void main() {
           create: (_) => RequestPropertyProvider()),
       ChangeNotifierProvider<CommentsProvider>(
           create: (_) => CommentsProvider()),
+      ChangeNotifierProvider<LikeCommentProvider>(
+          create: (_) => LikeCommentProvider()),
+      ChangeNotifierProvider<CancelRequestProvider>(
+          create: (_) => CancelRequestProvider()),
+      ChangeNotifierProvider<AddComentProvider>(
+          create: (_) => AddComentProvider()),
+      ChangeNotifierProvider<UserRequestProvider>(
+          create: (_) => UserRequestProvider()),
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,

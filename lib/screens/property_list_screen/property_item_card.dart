@@ -11,7 +11,7 @@ Widget propertyCard(BuildContext context,Datum propertyItem) {
 
   return Container(
 
-    height: 165,
+    height: 170,
     child: ClipRRect(
       borderRadius: BorderRadius.circular(15),
 
@@ -34,7 +34,7 @@ Widget propertyCard(BuildContext context,Datum propertyItem) {
           child: Row(
             children: [
               Container(
-                height: 165,
+                height: 170,
                 width: width * 0.3,
                 child: FittedBox(
                     fit: BoxFit.fill,
@@ -42,15 +42,15 @@ Widget propertyCard(BuildContext context,Datum propertyItem) {
                     child: Image.network(propertyItem.thumbnail)),
               ),
               SizedBox(
-                width: 10,
+                width: 6,
               ),
               Container(
-                width: width*0.4,
+                width: width*0.35,
                 child: Column(
 
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(propertyItem.title),
+                    Text(propertyItem.title,maxLines: 3,),
 
                     Text(propertyItem.address),
                     // Row(children: [
