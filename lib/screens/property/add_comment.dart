@@ -2,6 +2,7 @@ import 'package:aqar_bazar/constants.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
 import 'package:aqar_bazar/providers/add_comment_provider.dart';
+import 'package:aqar_bazar/providers/comments_provider.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,9 +59,16 @@ class _AddNewCommentState extends State<AddNewComment> {
           child: Center(
             child: RaisedButton(
               onPressed: () {
+                // print('comment message 1: '+Provider.of<AddComentProvider>(context,listen: false).message);
+                print('11111111');
                     Provider.of<AddComentProvider>(context,listen: false).addComment(widget.propertyId.toString(), commentController.text);
-                    if(Provider.of<AddComentProvider>(context).message!= null){
-                      widget.addComment(Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0));
+
+                    if(Provider.of<AddComentProvider>(context,listen: false).message!= null){
+                      print('22222222');
+                      print('comment message : '+Provider.of<AddComentProvider>(context,listen: false).message);
+                      // widget.addComment(Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0));
+                      Provider.of<CommentsProvider>(context,listen: false).commentsList.insert(0,Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0));
+                      print('comment message 2: '+Provider.of<CommentsProvider>(context,listen: false).commentsList.toString());
                     }
               },
               child: Text(

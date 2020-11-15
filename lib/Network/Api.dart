@@ -287,4 +287,31 @@ class Api {
       print('error ' + e.toString());
     }
   }
+
+
+  Future contactHost(String token, String cookie, String propertyId,String message) async {
+    try {
+      String url = baseUrl + '/properties/$propertyId/contactHost';
+
+      final response = await http.post(url,body: {
+        'message' : message
+      }, headers: {
+        'Accept': 'application/json',
+        'Cookie': cookie,
+        'Authorization': 'Bearer $token',
+      });
+
+      print('contact host ' + response.body);
+      print('contact host 2' + response.statusCode.toString());
+
+
+      if (response.statusCode == 200) {
+        return successStringResponseFromJson(response.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('error ' + e.toString());
+    }
+  }
 }

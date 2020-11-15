@@ -10,6 +10,7 @@ import 'package:aqar_bazar/providers/request_property_provider.dart';
 import 'package:aqar_bazar/providers/single_property_provider.dart';
 import 'package:aqar_bazar/screens/property/add_comment.dart';
 import 'package:aqar_bazar/screens/property/comments.dart';
+import 'package:aqar_bazar/screens/property/contact_host_screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:flutter/material.dart';
@@ -525,12 +526,20 @@ class _PropertyPageState extends State<PropertyPage> {
                             style: TextStyle(color: fBlue, fontSize: 20),
                           ),
                         ),
+
+
+
                       Provider.of<CommentsProvider>(context).isLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):
                       ( Provider.of<CommentsProvider>(context).commentsList.isEmpty
                           ? Container()
                           :     Comments(commentsResponse: Provider.of<CommentsProvider>(context).commentsResponse,propertyInfo: widget.singleProperty,commentList: Provider.of<CommentsProvider>(context).commentsResponse.data ,)),
 
-                        AddNewComment(propertyId: widget.property.id,)
+                        AddNewComment(propertyId: widget.property.id,),
+                        SizedBox(height: 10,),
+                        horizantalLine(),
+                        ContactHostScreen(propertyId: widget.property.id,),
+
+
 
                       ]),
                     ),
@@ -1016,4 +1025,16 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
+}
+
+Widget horizantalLine(){
+  return   Padding(
+    padding: const EdgeInsets.symmetric(
+      horizontal: 18.0,
+      vertical: 8.0,
+    ),
+    child: Divider(
+      thickness: 1,
+    ),
+  );
 }

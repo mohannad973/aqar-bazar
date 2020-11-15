@@ -70,7 +70,7 @@ class _TestScreenState extends State<TestScreen> {
                 // itemExtent: itemSize,
                 itemCount: userRequestProvider.allRequestsList.length,
                 itemBuilder: (context, index) {
-                  return RequestedItemCard(request: userRequestProvider.allRequestsList[index],);
+                  return RequestedItemCard(request: userRequestProvider.allRequestsList[index],itemIndex: index,);
                 },
               ),
             ),
@@ -90,72 +90,4 @@ class _TestScreenState extends State<TestScreen> {
     super.dispose();
   }
 
-  Widget rowButtons() => Container(
-    height: 50.0,
-    color: Colors.blue,
-    child: Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          RaisedButton(
-            child: Text("up"),
-            onPressed: () {
-              con.animateTo(con.offset - itemSize,
-                  curve: Curves.linear,
-                  duration: Duration(milliseconds: 500));
-//                  con.jumpTo(con.offset - itemSize);
-            },
-          ),
-          RaisedButton(
-            child: Text("down"),
-            onPressed: () {
-              con.animateTo(con.offset + itemSize,
-                  curve: Curves.linear,
-                  duration: Duration(milliseconds: 500));
-//                  con.jumpTo(con.offset + itemSize);
-            },
-          )
-        ],
-      ),
-    ),
-  );
-
-  Widget searchField() => Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: TextField(
-      onChanged: (value) {
-        filterSearchResults(value);
-      },
-      controller: textController,
-      decoration: InputDecoration(
-          labelText: "Search",
-          hintText: "Search",
-          prefixIcon: Icon(Icons.search),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-    ),
-  );
-
-  void filterSearchResults(String query) {
-    List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(duplicateItems);
-    if (query.isNotEmpty) {
-      List<String> dummyListData = List<String>();
-      dummySearchList.forEach((item) {
-        if (item.contains(query)) {
-          dummyListData.add(item);
-        }
-      });
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        items.clear();
-        items.addAll(duplicateItems);
-      });
-    }
-  }
 }

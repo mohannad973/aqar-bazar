@@ -1,20 +1,33 @@
+import 'package:aqar_bazar/constants.dart';
 import 'package:aqar_bazar/models/user_requests_response.dart';
+import 'package:aqar_bazar/providers/cancel_request_provider.dart';
+import 'package:aqar_bazar/providers/user_requests_provider.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-class RequestedItemCard extends StatelessWidget {
+import 'package:provider/provider.dart';
+
+class RequestedItemCard extends StatefulWidget {
   Request request;
+  int itemIndex;
+  int index=-1;
+  RequestedItemCard({this.request,this.itemIndex});
 
-  RequestedItemCard({this.request});
+  @override
+  _RequestedItemCardState createState() => _RequestedItemCardState();
+}
 
+class _RequestedItemCardState extends State<RequestedItemCard> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    return   Padding(
+    var userRequestProvider = Provider.of<UserRequestProvider>(context);
+    var cancelRequestProvider = Provider.of<CancelRequestProvider>(context);
+    return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         height: 170,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
-
           child: Container(
             decoration: new BoxDecoration(
               boxShadow: [
@@ -38,21 +51,29 @@ class RequestedItemCard extends StatelessWidget {
                     width: width * 0.3,
                     child: FittedBox(
                         fit: BoxFit.fill,
-                        child: Image.network(request.thumbnail)),
+                        child: Image.network(widget.request.thumbnail)),
                   ),
                   SizedBox(
                     width: 6,
                   ),
                   Container(
-                    width: width*0.35,
+                    width: width * 0.45,
                     child: Column(
-
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(request.title,maxLines: 3,),
+                            Container(
+                              child: AutoSizeText(
+                                widget.request.title,
+                                maxLines: 3,
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(),
+                              ),
+                              width: width * 0.45,
+                            ),
                           ],
                         ),
 
@@ -60,103 +81,95 @@ class RequestedItemCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("from: "),
-                            Text(request.from.toString()),
+                            Text(widget.request.from == null
+                                ? '-'
+                                : widget.request.from.toString().substring(0, 10)),
                           ],
                         ),
-                        // Row(children: [
-                        //   Icon(Icons.hotel,color: Colors.blue,),
-                        //   Text("1"),
-                        //   Icon(Icons.beach_access),
-                        //   Text("2")
-                        // ],),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("to: "),
-                            Text(request.to.toString()),
-
+                            Text(widget.request.to == null
+                                ? '-'
+                                : widget.request.to.toString().substring(0, 10)),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("status: "),
-                            Text(request.status),
+                            Text(widget.request.status),
                           ],
                         ),
-
-
                       ],
                     ),
                   ),
                   Spacer(),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(" \$${request.amount}",style: TextStyle(fontSize: 20,color: Colors.green),),
-                      Container(
-                        child: Center(
-                          child: RaisedButton(
-                            onPressed: (){},
-                            child: Text(
-                              'pay',
-                              style: TextStyle(
-                                fontWeight:
-                                FontWeight
-                                    .bold,
-                                fontSize: 15,
-                                color:
-                                Colors.white,
-                              ),
-                            ),
-                            color:
-                            Theme.of(context)
-                                .primaryColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius
-                                    .circular(
-                                    15)),
-                          ),
+                  Container(
+                    width: width * 0.2,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          " \$${widget.request.amount}",
+                          style: TextStyle(fontSize: 20, color: Colors.green),
                         ),
-                        width: width * 0.3,
-                      ),
-                      Container(
-                        child: Center(
-                          child: RaisedButton(
-                            onPressed: (){},
-                            child: Text(
-                              'cancel',
-                              style: TextStyle(
-                                fontWeight:
-                                FontWeight
-                                    .bold,
-                                fontSize: 15,
-                                color:
-                                Colors.white,
+                        Container(
+                          child: Center(
+                            child: RaisedButton(
+                              onPressed:widget.request.payNow == null?null :() {},
+                              child: Text(
+                                'pay',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
                               ),
+                              color: Theme.of(context).primaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15)),
                             ),
-                            color:
-                            Theme.of(context)
-                                .primaryColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius
-                                    .circular(
-                                    15)),
                           ),
+                          width: width * 0.3,
                         ),
-                        width: width * 0.2,
-                      ),
+                        Container(
+                          child: Center(
+                            child: (cancelRequestProvider.isLoading() && widget.index == widget.itemIndex)?Center(child: CircularProgressIndicator(backgroundColor: fBlue,)):RaisedButton(
+                              onPressed:widget.request.status == 'cancelled'?null : () {
+                                int index;
+                                index = userRequestProvider.allRequestsList.indexOf(widget.request);
+                                setState(() {
+                                  widget.index = index;
+                                });
+                                cancelRequestProvider.cancelRequest(widget.request.id.toString());
 
-                    ],
+                                userRequestProvider.allRequestsList[index].status='cancelled';
+
+                              },
+                              child: Text(
+                                'cancel',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              color: Theme.of(context).primaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15)),
+                            ),
+                          ),
+                          width: width * 0.2,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
             ),
           ),
-
-
         ),
       ),
     );

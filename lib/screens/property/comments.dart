@@ -114,7 +114,7 @@ class _CommentsState extends State<Comments> {
                                           Provider.of<LikeCommentProvider>(context,listen: false).likeComment( Provider.of<CommentsProvider>(context,listen: false)
                                               .commentsList[index].id.toString());
 
-                                          if(Provider.of<LikeCommentProvider>(context,listen: false).likeComentResponse != null){
+                                          if(Provider.of<LikeCommentProvider>(context).likeComentResponse != null){
                                             setState(() {
                                                likeBtn = Provider.of<LikeCommentProvider>(context).likeComentResponse.btn;
 
@@ -123,7 +123,7 @@ class _CommentsState extends State<Comments> {
 
                                       },
                                       child: Text(
-                                        Provider.of<LikeCommentProvider>(context,listen: false).likeComentResponse==null?
+                                        Provider.of<LikeCommentProvider>(context).likeComentResponse==null?
                                         'like' :  Provider.of<LikeCommentProvider>(context,).likeBtn ,
                                         style: TextStyle(color: fBlue),
                                       ),

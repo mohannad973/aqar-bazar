@@ -2,6 +2,7 @@ import 'package:aqar_bazar/models/like_comment_response.dart';
 import 'package:aqar_bazar/providers/add_comment_provider.dart';
 import 'package:aqar_bazar/providers/cancel_request_provider.dart';
 import 'package:aqar_bazar/providers/comments_provider.dart';
+import 'package:aqar_bazar/providers/contact_host_provider.dart';
 import 'package:aqar_bazar/providers/like_comment_provider.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/providers/preferences_provider.dart';
@@ -54,6 +55,8 @@ void main() {
           create: (_) => AddComentProvider()),
       ChangeNotifierProvider<UserRequestProvider>(
           create: (_) => UserRequestProvider()),
+      ChangeNotifierProvider<ContactHostProvider>(
+          create: (_) => ContactHostProvider()),
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
