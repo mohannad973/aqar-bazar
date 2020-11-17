@@ -11,7 +11,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-  String title = 'Long List';
+  String title = 'My Requested Properties';
   int page = 1;
   String prevTitle = '';
   List<String> items;
@@ -36,16 +36,15 @@ class _TestScreenState extends State<TestScreen> {
         Provider.of<UserRequestProvider>(context,listen: false).getAllRequests(page+=1);
         setState(() {
 
-          title = "reached the bottom";
         });
       }else if (con.offset <= con.position.minScrollExtent &&
           !con.position.outOfRange) {
         setState(() {
-          title = "reached the top";
+
         });
       } else {
         setState(() {
-          title = prevTitle;
+
         });
       }
     });

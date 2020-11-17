@@ -116,11 +116,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(
                               height: 20,
                             ),
-                            profileListItem(
-                                'Credits & Coupons', LineAwesomeIcons.gift),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            // profileListItem(
+                            //     'Credits & Coupons', LineAwesomeIcons.gift),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
                             InkWell(
                               child: profileListItem(
                                   'Help Center', LineAwesomeIcons.info),

@@ -57,6 +57,7 @@ void main() {
           create: (_) => UserRequestProvider()),
       ChangeNotifierProvider<ContactHostProvider>(
           create: (_) => ContactHostProvider()),
+
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,

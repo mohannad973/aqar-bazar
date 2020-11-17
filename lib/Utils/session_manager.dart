@@ -36,4 +36,10 @@ class SessionManager {
   }
 
 
+  Future<void> clearSessionManager() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
+
+
 }

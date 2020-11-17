@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/models/add_comment_model.dart';
@@ -11,10 +10,8 @@ import 'package:aqar_bazar/models/user_requests_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/log_in_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/register_success_response.dart';
 import 'package:aqar_bazar/screens/profile/models/user_profile_model.dart';
-import 'package:aqar_bazar/screens/settings/preferences_model.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 
 const baseUrl = "https://aqarbazar.com/api";
 
@@ -41,6 +38,26 @@ class Api {
     return http.post(url);
   }
 
+
+
+  Future filter(
+      {String furnished,
+        String type,
+        String rooms,
+        String price,
+        String capacity,int page}) {
+    print("from api class 989786" + furnished);
+    var url = baseUrl + "/v1/search?page=$page";
+    print("uuuuuuuurrrrrrrl" + url);
+    return http.post(url,body: {
+      'furnished':furnished,
+      'type':type,
+      'price_range':price,
+      'capacity':capacity,
+      'rooms':rooms
+    });
+  }
+
   Future getPreferences() {
     var url = baseUrl + "/v1/getPreferences";
     return http.get(url);
@@ -52,9 +69,10 @@ class Api {
     return http.get(url);
   }
 
-  Future login(String email, String password, String coo) async {
+  Future login(String email, String password) async {
     try {
-     print('login cookie : '+coo);
+      print('777777');
+     //print('login cookie : '+coo);
       final String apiUrl = baseUrl + '/v1/login';
       final response = await http.post(apiUrl, body: {
         "email": email,
@@ -70,6 +88,7 @@ class Api {
 
       sessionManager.setSessionToken(cookie);
      print('login response :'+response.body);
+      print('8888888888');
       if (response.statusCode == 200) {
         final String responseString = response.body;
 
@@ -80,6 +99,7 @@ class Api {
         return null;
       }
     } catch (e) {
+      print('9999999'+e.toString());
       return null;
     }
   }
@@ -314,4 +334,7 @@ class Api {
       print('error ' + e.toString());
     }
   }
+
+
+
 }

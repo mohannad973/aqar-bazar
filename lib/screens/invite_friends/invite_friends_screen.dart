@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
+import 'package:share/share.dart';
 
 class InviteFriends extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class _InviteFriendsState extends State<InviteFriends> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
@@ -37,7 +40,12 @@ class _InviteFriendsState extends State<InviteFriends> {
           SizedBox(height: 50,),
           RaisedButton.icon(
               onPressed: (){
-                Navigator.of(context).pop();
+                // FlutterShare.share(
+                //   title: 'Share',
+                //   linkUrl: 'shareUrl',
+                // );
+                print('share11111111111');
+                share(context,'test share');
               },
               padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context)
@@ -62,5 +70,10 @@ class _InviteFriendsState extends State<InviteFriends> {
         ],
       ),
     );
+  }
+  void share(BuildContext context,String text){
+    final String title = 'description';
+    Share.share(title,subject: text,);
+
   }
 }

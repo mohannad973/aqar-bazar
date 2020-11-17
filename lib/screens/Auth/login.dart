@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/Utils/form_validators.dart';
+import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
 import 'package:aqar_bazar/screens/Auth/signup.dart';
@@ -23,8 +24,29 @@ class _LogInState extends State<LogIn> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  _getSessionManager()async{
+    print('token3333');
+    SessionManager sessionManager = SessionManager();
+    if(await sessionManager.getAuthToken()==null){
+      print('token4444');
+    }
+    else{
+      print('token5555'+await sessionManager.getAuthToken());
+    }
+
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+   _getSessionManager();
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
@@ -124,6 +146,7 @@ class _LogInState extends State<LogIn> {
                                           onPressed: () async {
                                             if (_signInKey.currentState
                                                 .validate()) {
+                                              print('11111111');
                                               final String email =
                                                   emailController.text.trim();
                                               final String password =
@@ -134,6 +157,8 @@ class _LogInState extends State<LogIn> {
                                                           context,
                                                           listen: false)
                                                   .logIn(email, password);
+
+                                              print('00000'+user.toString());
 
                                               if (user) {
                                                 // Provider.of<SearchResultProvider>(context,listen: false)

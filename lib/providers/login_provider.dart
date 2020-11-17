@@ -13,14 +13,17 @@ class LogInProvider with ChangeNotifier {
   SessionManager sessionManager = SessionManager();
 
   Future<bool> logIn(String email, String password) async {
+    print('22222222');
     setLoading(true);
 
     try {
+      print('3333333');
       //Todo DAta Connection Checker
-      String cookie = await sessionManager.getSessionToken();
-      SignInResponse user = await api.login(email, password,cookie);
+      // String cookie = await sessionManager.getSessionToken();
+      SignInResponse user = await api.login(email, password);
 
       if (user != null) {
+        print('44444');
         sessionManager.setAuthToken(user.accessToken);
         setLoading(false);
 
@@ -29,9 +32,11 @@ class LogInProvider with ChangeNotifier {
         return true;
       }
 
+      print('5555555');
       setLoading(false);
       return false;
     } catch (e) {
+      print('66666'+e.toString());
       setLoading(false);
       return false;
     }

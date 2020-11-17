@@ -1,10 +1,12 @@
 import 'package:aqar_bazar/Utils/colors.dart';
 import 'package:aqar_bazar/Utils/decorations.dart';
+import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/slider_images.dart';
 import 'package:aqar_bazar/providers/property_parameters_provider.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
+import 'package:aqar_bazar/screens/Auth/login.dart';
 import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/categories.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/property_parameters_model.dart';
@@ -204,7 +206,11 @@ class _NewHomeState extends State<NewHome> {
                   trailing:
                       Icon(Icons.cancel, color: Theme.of(context).primaryColor),
                 ),
-                onTap: () {},
+                onTap: () {
+                  SessionManager sessionManager = SessionManager();
+                  sessionManager.clearSessionManager();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LogIn()));
+                },
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -250,7 +256,12 @@ class _NewHomeState extends State<NewHome> {
               SizedBox(width: 25),
               IconButton(
                 icon: Icon(Icons.book, color: Theme.of(context).primaryColor),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyBookingsScreen()));
+                },
               ),
               IconButton(
                   icon: Icon(Icons.settings,

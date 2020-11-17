@@ -29,6 +29,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
           child: Container(
+            width: width,
             decoration: new BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -54,7 +55,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                         child: Image.network(widget.request.thumbnail)),
                   ),
                   SizedBox(
-                    width: 6,
+                    width: 4,
                   ),
                   Container(
                     width: width * 0.45,
