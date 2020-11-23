@@ -1,0 +1,117 @@
+{
+    "welcome to aqar":"Welcome to Aqar Bazar",
+    "welcome disc":"Your Way to find, Buy or Even Rent Any Kind of real estate",
+    "own your dream house": "Own Your Dream House",
+    "own your dream house disc": "Find The House of your Dreams And Make it Yours",
+    "you will find what you need" : "You'll find What You Need",
+    "you will find what you need disc" : "whether need a new office for your start up company",
+    "you will find what you need disc2" : "Or a luxurious Hotel room for your abroad vacation",
+    "signin title" : "We've Got you Covered",
+    "signin disc" : "No extra steps and no worries sign up and START exploring",
+    "signInBtn" : "Sign In",
+    "signUpBtn" : "Sign Up",
+    "skip" : "Skip",
+    "or": "OR",
+    "email" : "Email",
+    "password": "Password",
+    "dont have account": "Don't Have an account?",
+    "first name": "First Name",
+    "last name": "Last Name",
+    "repeat password": "Repeat Password",
+    "by clicking1": "By clicking On the Button above you agree to our",
+    "by clicking2": "terms of services",
+    "by clicking3": " and that you have read or ",
+    "by clicking4": "Privace Policy",
+    "already have account" : "Already have an account?",
+
+    "home" : "Home",
+    "my_bookings": "My Bookings",
+    "Contact_us" : "Contact Us",
+    "about_us" : "About US",
+    "log_out": "LogOut",
+
+    "Explore": "Explore",
+    "book_now":"Book Now",
+    "summary": "Summary",
+    "Photos": "Photos",
+    "see_all": "See All",
+    "details": "Details",
+    "nobed": "Number Of Bedrooms",
+    "nobath" : "Number Of Bathrooms",
+    "price" : "Price",
+
+    "cancel_book": "Cancel Book",
+    "already_booked": "Already Booked",
+    "comments": "Comments",
+    "like":"like",
+    "one_day_ago": "one day ago",
+    "leave_comment": "leave a comment",
+    "add_comment" : "add comment",
+    "comment": "comment",
+    "contact_host": "Contact the Host",
+    "message": "Message",
+    "send": "Send",
+
+
+    "my_requested_property": "My Requested Properties",
+    "pay": "Pay",
+    "cancel" : "Cancel",
+    "from" : "From: ",
+    "to" : "To: ",
+    "cancelled" : "Cancelled",
+    "pending" : "Pending",
+    "confirmed" : "Confirmed",
+    "status" : "Status: ",
+
+    "property_details": "Property Details",
+    "filter": "Filter",
+    "rent" : "Rent",
+    "buy": "Buy",
+    "furnished": "Furnished",
+    "capacity": "Capacity",
+    "room_count": "room count",
+    "apply": "Apply",
+    "search_result": "Search Result",
+
+
+    "change_password": "Change Password",
+    "Invite_friends": "Invite Friends",
+    "help": "Help Center",
+    "payments": "Payments",
+    "settings": "Settings",
+
+    "new_pass": "New Password",
+    "confirm_pass": "Confirm Password",
+
+    "invite_your_frnds": "Invite Your Friends",
+    "invite_your_frnds_disc": "Invite Your Friends To Use Aqar Bazar",
+    "share": "Share",
+
+    "common_questions": "Common Questions: ",
+    "question": "question",
+    "answer": "Answer",
+
+    "notification": "Notifications",
+    "Country": "Country",
+    "Currency": "Currency",
+    "language": "Language",
+
+
+    "pick_curr": "Pick Currency",
+    "pick_lan": "Pick Language",
+    "pick_country": "Pick Country",
+    "cancelBtn": "CANCEL",
+    "ok": "OK"
+
+
+
+
+
+
+
+
+
+
+
+
+}

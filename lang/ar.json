@@ -1,0 +1,117 @@
+{
+  "welcome to aqar":"أهلا بك في عقار بازار",
+  "welcome disc":"Your Way to find, Buy or Even Rent Any Kind of real estate",
+  "own your dream house": "Own Your Dream House",
+  "own your dream house disc": "Find The House of your Dreams And Make it Yours",
+  "you will find what you need" : "You'll find What You Need",
+  "you will find what you need disc" : "whether need a new office for your start up company",
+  "you will find what you need disc2" : "Or a luxurious Hotel room for your abroad vacation",
+  "signin title" : "We've Got you Covered",
+  "signin disc" : "No extra steps and no worries sign up and START exploring",
+  "signInBtn" : "تسجيل الدخول",
+  "signUpBtn" : "إنشاء حساب",
+  "skip" : "تخطي",
+  "or": "أو",
+  "email" : "البريد الالكتروني",
+  "password": "كلمة المرور",
+  "dont have account": "هل لديك حساب ؟",
+  "first name": "الاسم الأول",
+  "last name": "الاسم الأخير",
+  "repeat password": "إعادة كلمة المرور",
+  "by clicking1": "بالضعط على زر التسجيل انت موافق على",
+  "by clicking2": "الشروط والأحكام",
+  "by clicking3": " وقرأت ",
+  "by clicking4": "سياسة الخصوصية",
+  "already have account" : "لديك حساب بالفعل؟",
+
+  "home" : "الصفحة الرئيسية",
+  "my_bookings": "حجوزاتي",
+  "Contact_us" : "تواصل معنا",
+  "about_us" : "حول",
+  "log_out": "تسجيل الخروج",
+
+  "Explore": "استكشف",
+  "book_now":"حجز",
+  "summary": "ملخص",
+  "Photos": "الصور",
+  "see_all": "مشاهدة الكل",
+  "details": "التفاصيل",
+  "nobed": "عدد غرف النوم",
+  "nobath" : "عدد الحمامات",
+  "price" : "السعر",
+
+  "cancel_book": "الغاء الحجز",
+  "already_booked": "حجزته مسبقا",
+  "comments": "التعليقات",
+  "like":"إعجاب",
+  "one_day_ago": "منذ يوم",
+  "leave_comment": "اترك تعليقا",
+  "add_comment" : "أضق تعليق",
+  "comment": "تعليق",
+  "contact_host": "مراسلة المالك",
+  "message": "الرسالة",
+  "send": "ارسال",
+
+
+  "my_requested_property": "قائمة طلباتي",
+  "pay": "ادفع",
+  "cancel" : "الغاء",
+  "from" : "من: ",
+  "to" : "الى: ",
+  "cancelled" : "ملغي",
+  "pending" : "انتظار",
+  "confirmed" : "تم تأكيده",
+  "status" : "الحالة: ",
+
+  "property_details": "تفاصيل المنشأة",
+  "filter": "بحث",
+  "rent" : "أيجار",
+  "buy": "شراء",
+  "furnished": "مفروش",
+  "capacity": "المساحة",
+  "room_count": "عدد الغرف",
+  "apply": "بحث",
+  "search_result": "نتيجة البحث",
+
+
+  "change_password": "تغيير كلمة المرور",
+  "Invite_friends": "دعوة صديق",
+  "help": "الاسئلة الشائعة",
+  "payments": "الدقع",
+  "settings": "الضبط",
+
+  "new_pass": "كلمة السر الجديدة",
+  "confirm_pass": "تأكيد كلمة السر",
+
+  "invite_your_frnds": "قم بدعوة اصدقائك",
+  "invite_your_frnds_disc": "ليستخدمو تطبيق عقار بازار",
+  "share": "مشاركة",
+
+  "common_questions": "الاسئلة الشائعة",
+  "question": "سؤال",
+  "answer": "جواب",
+
+  "notification": "اشعارات",
+  "Country": "البلد",
+  "Currency": "العملة",
+  "language": "اللغة",
+
+
+  "pick_curr": "اختر العملة",
+  "pick_lan": "اختر اللعة",
+  "pick_country": "اختر البلد",
+  "cancelBtn": "الغاء",
+  "ok": "موافق"
+
+
+
+
+
+
+
+
+
+
+
+
+}
