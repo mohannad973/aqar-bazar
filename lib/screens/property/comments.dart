@@ -1,5 +1,6 @@
 import 'package:aqar_bazar/Network/Api.dart';
 import 'package:aqar_bazar/Utils/session_manager.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
 import 'package:aqar_bazar/providers/comments_provider.dart';
@@ -105,7 +106,7 @@ class _CommentsState extends State<Comments> {
                                   MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                      'one day ago',
+                                      Applocalizations.of(context).translate("one_day_ago"),
                                       style: TextStyle(color: fBlue),
                                     ),
                                     VerticalDivider(),
@@ -124,7 +125,7 @@ class _CommentsState extends State<Comments> {
                                       },
                                       child: Text(
                                         Provider.of<LikeCommentProvider>(context).likeComentResponse==null?
-                                        'like' :  Provider.of<LikeCommentProvider>(context,).likeBtn ,
+                                        Applocalizations.of(context).translate("like") :  Provider.of<LikeCommentProvider>(context,).likeBtn ,
                                         style: TextStyle(color: fBlue),
                                       ),
                                     ),

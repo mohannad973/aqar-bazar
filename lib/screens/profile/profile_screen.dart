@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/constants.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/preferences_provider.dart';
 import 'package:aqar_bazar/providers/user_profile_provider.dart';
 import 'package:aqar_bazar/screens/Common_quistion/Common_quistion_screen.dart';
@@ -96,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   );
                                 },
                                 child: profileListItem(
-                                    'change password', LineAwesomeIcons.lock)),
+                                    Applocalizations.of(context).translate("change_password"), LineAwesomeIcons.lock)),
                             SizedBox(
                               height: 20,
                             ),
@@ -109,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               },
                               child: profileListItem(
-                                'Invite Friends',
+                                Applocalizations.of(context).translate("Invite_friends"),
                                 LineAwesomeIcons.person_entering_booth,
                               ),
                             ),
@@ -123,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             // ),
                             InkWell(
                               child: profileListItem(
-                                  'Help Center', LineAwesomeIcons.info),
+                                  Applocalizations.of(context).translate("help"), LineAwesomeIcons.info),
                               onTap: () {
                                 Navigator.push(
                                   context,
@@ -137,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               height: 20,
                             ),
                             profileListItem(
-                                'Payments', LineAwesomeIcons.money_bill),
+                                Applocalizations.of(context).translate("payments"), LineAwesomeIcons.money_bill),
                             SizedBox(
                               height: 20,
                             ),
@@ -166,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   }
                                 },
                                 child: profileListItem(
-                                    'Settings', Icons.settings)),
+                                    Applocalizations.of(context).translate("settings"), Icons.settings)),
                           ],
                         ),
                       ),

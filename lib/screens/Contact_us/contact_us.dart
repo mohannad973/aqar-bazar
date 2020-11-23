@@ -18,16 +18,16 @@ class _ContactUsState extends State<ContactUs> {
     var width = MediaQuery.of(context).size.width;
     return Container(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: iconColor(),
-          elevation: 4.0,
-          child: Icon(
-            Icons.search,
-            color: Theme.of(context).accentColor,
-          ),
-          onPressed: () {},
-        ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: iconColor(),
+        //   elevation: 4.0,
+        //   child: Icon(
+        //     Icons.search,
+        //     color: Theme.of(context).accentColor,
+        //   ),
+        //   onPressed: () {},
+        // ),
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,

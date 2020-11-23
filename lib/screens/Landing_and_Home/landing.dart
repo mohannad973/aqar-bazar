@@ -1,8 +1,13 @@
+import 'package:aqar_bazar/Utils/session_manager.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/screens/Auth/login.dart';
+import 'package:aqar_bazar/screens/Landing_and_Home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:aqar_bazar/screens/Auth/signup.dart';
+
+import 'new_home.dart';
 
 class OnBoardingPage extends StatefulWidget {
   @override
@@ -25,6 +30,14 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     );
   }
 
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
   @override
   Widget build(BuildContext context) {
     const bodyStyle = TextStyle(fontSize: 19.0, color: Colors.blue);
@@ -51,32 +64,32 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       key: introKey,
       pages: [
         PageViewModel(
-          title: "Welcome to Aqar Bazar ",
-          body: "Your way to find, Buy or Even Rent any kind of real estate",
+          title:  Applocalizations.of(context).translate("welcome to aqar"),
+          body: Applocalizations.of(context).translate("welcome disc"),
           image: _buildImage('logo'),
           decoration: pageDecorationWhiteBackground,
         ),
         PageViewModel(
-          title: "Own your dream House",
-          body: "Find The House of your Dreams And Make It Yours",
+          title: Applocalizations.of(context).translate("own your dream house"),
+          body: Applocalizations.of(context).translate("own your dream house disc"),
           image: _buildImage('house'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "You'll find What You Need",
-          body: "Whether need a new office for Your start up company",
+          title: Applocalizations.of(context).translate("you will find what you need"),
+          body: Applocalizations.of(context).translate("you will find what you need disc"),
           image: _buildImage('realestate4'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "You'll find What You Need",
-          body: "Or a luxurious Hotel room for your abroad vication",
+          title: Applocalizations.of(context).translate("you will find what you need"),
+          body: Applocalizations.of(context).translate("you will find what you need disc2"),
           image: _buildImage('realestate3'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "We've Got you Coverd",
-          body: "No extra steps and no worries sign up and START exploring",
+          title: Applocalizations.of(context).translate("signin title"),
+          body: Applocalizations.of(context).translate("signin disc"),
           image: _buildImage('hotel'),
           footer: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -88,8 +101,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     MaterialPageRoute(builder: (_) => LogIn()),
                   );
                 },
-                child: const Text(
-                  'Sign In',
+                child:  Text(
+                  Applocalizations.of(context).translate("signInBtn"),
                   style: TextStyle(color: Colors.white),
                 ),
                 color: Colors.lightBlue,
@@ -107,8 +120,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     MaterialPageRoute(builder: (_) => SignUp()),
                   );
                 },
-                child: const Text(
-                  'Sign up',
+                child:  Text(
+                  Applocalizations.of(context).translate("signUpBtn"),
                   style: TextStyle(color: Colors.white),
                 ),
                 color: Color(0xff015CA8),
@@ -122,13 +135,17 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           decoration: pageDecoration,
         ),
       ],
-      onDone: () {},
+      onDone: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => NewHome()),
+        );
+      },
       //onSkip: () => _onIntroEnd(context), // You can override onSkip callback
       showSkipButton: true,
       skipFlex: 0,
       nextFlex: 0,
-      skip: const Text(
-        'Skip',
+      skip:  Text(
+        Applocalizations.of(context).translate("skip"),
         style: TextStyle(
             color: Colors.white,
             fontSize: 17.0,

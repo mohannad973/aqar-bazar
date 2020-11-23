@@ -1,3 +1,4 @@
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:share/share.dart';
@@ -27,14 +28,16 @@ class _InviteFriendsState extends State<InviteFriends> {
           Image.asset('assets/images/invitefriends.png'),
           SizedBox(height: 10,),
           Text(
-            'Invite Your Friends',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22),
+            Applocalizations.of(context)
+                .translate("invite_your_frnds"),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22),
           ),
           SizedBox(height: 15,),
           Container(
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Center(child: Text('are you one of those who makes every thing at the last moment?',style: TextStyle(fontSize: 20),overflow: TextOverflow.ellipsis,maxLines: 2,textAlign: TextAlign.center,)),
+              child: Center(child: Text(Applocalizations.of(context)
+                  .translate("invite_your_frnds_disc"),style: TextStyle(fontSize: 20),overflow: TextOverflow.ellipsis,maxLines: 2,textAlign: TextAlign.center,)),
             ),
           ),
           SizedBox(height: 50,),
@@ -59,7 +62,8 @@ class _InviteFriendsState extends State<InviteFriends> {
                 color: Colors.white,
               ),
               label: Text(
-                "Share",
+                Applocalizations.of(context)
+                    .translate("share"),
                 style: TextStyle(color: Colors.white),
               ),
               color: Colors.lightBlue,

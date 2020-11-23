@@ -1,5 +1,8 @@
 
+import 'dart:ui';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SessionManager {
   final String auth_token = "auth_token";
@@ -41,5 +44,26 @@ class SessionManager {
     prefs.clear();
   }
 
+
+
+  final String APP_LOCALE = "app_locale";
+
+
+//set data into shared preferences like this
+  Future<void> setLocale(String locale) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      prefs.setString(this.APP_LOCALE, locale);
+
+
+  }
+
+//get value from shared preferences
+  Future<String> getLocale() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String locale;
+    locale = pref.getString(this.APP_LOCALE) ?? null;
+    return locale;
+  }
 
 }

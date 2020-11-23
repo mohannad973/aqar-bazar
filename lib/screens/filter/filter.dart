@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/constants.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
 import 'package:aqar_bazar/screens/filter/price_range_slider.dart';
@@ -122,7 +123,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       height: 50,
                     ),
                     Text(
-                      "Filter",
+                        Applocalizations.of(context).translate("filter"),
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -250,7 +251,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           color: Colors.white,
                         ),
                         label: Text(
-                          "Apply",
+                            Applocalizations.of(context).translate("apply"),
                           style: TextStyle(color: Colors.white),
                         ),
                         color: Colors.lightBlue,
@@ -549,7 +550,7 @@ class _FilterScreenState extends State<FilterScreen> {
           ],
         ),
         child: DropdownButton(
-            hint: Text("Price"),
+            hint: Text(Applocalizations.of(context).translate("price")),
             dropdownColor: Color.fromRGBO(226, 229, 235, 1),
             isExpanded: true,
             underline: Container(),
@@ -586,7 +587,7 @@ class _FilterScreenState extends State<FilterScreen> {
           ],
         ),
         child: DropdownButton(
-            hint: Text("Capacity"),
+            hint: Text(Applocalizations.of(context).translate("capacity")),
             dropdownColor: Color.fromRGBO(226, 229, 235, 1),
             isExpanded: true,
             underline: Container(),
@@ -623,7 +624,7 @@ class _FilterScreenState extends State<FilterScreen> {
           ],
         ),
         child: DropdownButton(
-            hint: Text("Furnished"),
+            hint: Text(Applocalizations.of(context).translate("furnished")),
             dropdownColor: Color.fromRGBO(226, 229, 235, 1),
             isExpanded: true,
             underline: Container(),
@@ -699,7 +700,7 @@ class _FilterScreenState extends State<FilterScreen> {
           ],
         ),
         child: DropdownButton(
-            hint: Text("room count"),
+            hint: Text(Applocalizations.of(context).translate("room_count")),
             dropdownColor: Color.fromRGBO(226, 229, 235, 1),
             isExpanded: true,
             underline: Container(),

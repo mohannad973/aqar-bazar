@@ -1,5 +1,6 @@
 import 'package:aqar_bazar/Utils/form_validators.dart';
 import 'package:aqar_bazar/Utils/session_manager.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
 import 'package:aqar_bazar/screens/Auth/signup.dart';
@@ -81,7 +82,7 @@ class _LogInState extends State<LogIn> {
                               height: 0.0,
                             ),
                             Text(
-                              "Sign in",
+                              Applocalizations.of(context).translate("signInBtn"),
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
@@ -95,7 +96,7 @@ class _LogInState extends State<LogIn> {
                               height: 8,
                             ),
                             Text(
-                              "OR",
+                              Applocalizations.of(context).translate("or"),
                               style: TextStyle(color: Colors.grey[600]),
                             ),
                             SizedBox(
@@ -107,7 +108,7 @@ class _LogInState extends State<LogIn> {
                                 children: [
                                   TextFormField(
                                     decoration: inputDecoration()
-                                        .copyWith(hintText: "Email"),
+                                        .copyWith(hintText:  Applocalizations.of(context).translate("email"),),
                                     controller: emailController,
                                     onChanged: (val) {
                                       setState(() => email = val);
@@ -124,7 +125,7 @@ class _LogInState extends State<LogIn> {
                                     validator: passwordValidator(),
                                     obscureText: true,
                                     decoration: inputDecoration()
-                                        .copyWith(hintText: "Password"),
+                                        .copyWith(hintText: Applocalizations.of(context).translate("password"),),
                                     controller: passwordController,
                                   ),
                                   SizedBox(
@@ -141,7 +142,7 @@ class _LogInState extends State<LogIn> {
                                               horizontal: MediaQuery.of(context)
                                                       .size
                                                       .width /
-                                                  3,
+                                                  5,
                                               vertical: 10),
                                           onPressed: () async {
                                             if (_signInKey.currentState
@@ -181,7 +182,7 @@ class _LogInState extends State<LogIn> {
                                             color: Colors.white,
                                           ),
                                           label: Text(
-                                            "Sign in",
+                                            Applocalizations.of(context).translate("signInBtn"),
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -226,9 +227,9 @@ class _LogInState extends State<LogIn> {
                         color: Colors.grey,
                       ),
                       children: <TextSpan>[
-                        TextSpan(text: "Don't have an account? "),
+                        TextSpan(text:  Applocalizations.of(context).translate("dont have account"),),
                         TextSpan(
-                          text: "Sign Up",
+                          text: Applocalizations.of(context).translate("signUpBtn"),
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.blue,

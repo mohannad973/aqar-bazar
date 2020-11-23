@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/constants.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
 import 'package:aqar_bazar/providers/add_comment_provider.dart';
@@ -37,7 +38,7 @@ class _ContactHostScreenState extends State<ContactHostScreen> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Contact The Host', style: TextStyle(color: fBlue, fontSize: 15),),
+            Applocalizations.of(context).translate("contact_host") , style: TextStyle(color: fBlue, fontSize: 15),),
         ),
         Container(
             child: Padding(
@@ -46,8 +47,8 @@ class _ContactHostScreenState extends State<ContactHostScreen> {
                 maxLines: 5,
                 controller: messageController,
                 decoration: InputDecoration(
-                  hintText: 'message',
-                  labelText: "Contact Host",
+                  hintText: Applocalizations.of(context).translate("message"),
+                  labelText:  Applocalizations.of(context).translate("message"),
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(10.0),
@@ -78,7 +79,7 @@ class _ContactHostScreenState extends State<ContactHostScreen> {
 
               },
               child: Text(
-                'Send',
+                Applocalizations.of(context).translate("send"),
                 style: TextStyle(
                   fontWeight:
                   FontWeight

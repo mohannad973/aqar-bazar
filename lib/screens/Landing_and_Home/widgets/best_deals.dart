@@ -1,3 +1,4 @@
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,7 @@ class DealsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Locale myLocale = Localizations.localeOf(context);
     var width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -39,7 +41,9 @@ class DealsCard extends StatelessWidget {
             Container(
               width: 120,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: myLocale.toString() == 'ar_AE'?BorderRadius.only(
+                      topRight: Radius.circular(18),
+                      bottomRight: Radius.circular(18)):BorderRadius.only(
                       topLeft: Radius.circular(18),
                       bottomLeft: Radius.circular(18)),
                   image: DecorationImage(
@@ -58,11 +62,14 @@ class DealsCard extends StatelessWidget {
                 children: [
                   Container(
                     child: AutoSizeText(
+
                       propertyData.title,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                       maxLines: 2,
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.center,
                     ),
                     width: width * 0.5,
                   ),

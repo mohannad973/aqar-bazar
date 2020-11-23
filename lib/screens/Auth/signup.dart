@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/Utils/form_validators.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/register_provider.dart';
 import 'package:aqar_bazar/screens/Auth/login.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
@@ -75,7 +76,7 @@ class _SignUpState extends State<SignUp> {
                                 height: 0.0,
                               ),
                               Text(
-                                "Sign up",
+                                Applocalizations.of(context).translate("signUpBtn"),
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
@@ -89,7 +90,7 @@ class _SignUpState extends State<SignUp> {
                                 height: 8,
                               ),
                               Text(
-                                "OR",
+                                Applocalizations.of(context).translate("or"),
                                 style: TextStyle(color: Colors.grey[600]),
                               ),
                               SizedBox(
@@ -107,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                                         validator:
                                             emptyFieldVAlidator(firstName),
                                         decoration: inputDecoration()
-                                            .copyWith(hintText: "First Name"),
+                                            .copyWith(hintText: Applocalizations.of(context).translate("first name"),),
                                         controller: firstNameController,
                                       ),
                                       SizedBox(
@@ -120,7 +121,7 @@ class _SignUpState extends State<SignUp> {
                                         validator:
                                             emptyFieldVAlidator(lastName),
                                         decoration: inputDecoration()
-                                            .copyWith(hintText: "Last Name"),
+                                            .copyWith(hintText:  Applocalizations.of(context).translate("last name"),),
                                         controller: lastNameController,
                                       ),
                                       SizedBox(
@@ -132,7 +133,7 @@ class _SignUpState extends State<SignUp> {
                                         },
                                         validator: emailValidator(email),
                                         decoration: inputDecoration()
-                                            .copyWith(hintText: "Email"),
+                                            .copyWith(hintText: Applocalizations.of(context).translate("email"),),
                                         controller: emailController,
                                       ),
                                       SizedBox(
@@ -145,7 +146,7 @@ class _SignUpState extends State<SignUp> {
                                         validator: passwordValidator(),
                                         obscureText: true,
                                         decoration: inputDecoration()
-                                            .copyWith(hintText: "Password"),
+                                            .copyWith(hintText: Applocalizations.of(context).translate("password"),),
                                         controller: passwordController,
                                       ),
                                       SizedBox(
@@ -158,7 +159,7 @@ class _SignUpState extends State<SignUp> {
                                         validator: passwordValidator(),
                                         obscureText: true,
                                         decoration: inputDecoration().copyWith(
-                                            hintText: "Repeat Passowrd"),
+                                            hintText: Applocalizations.of(context).translate("repeat password"),),
                                         controller:
                                             passwordConfirmationController,
                                       ),
@@ -234,7 +235,7 @@ class _SignUpState extends State<SignUp> {
                                                 color: Colors.white,
                                               ),
                                               label: Text(
-                                                "Sign Up",
+                                                Applocalizations.of(context).translate("signInBtn"),
                                                 style: TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -269,17 +270,17 @@ class _SignUpState extends State<SignUp> {
                     children: <TextSpan>[
                       TextSpan(
                           text:
-                              "By clicking On the Button above you agree to our "),
+                          Applocalizations.of(context).translate("by clicking1"),),
                       TextSpan(
-                        text: "terms of services",
+                        text:  Applocalizations.of(context).translate("by clicking2"),
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.blue,
                         ),
                       ),
-                      TextSpan(text: " and that you have read or "),
+                      TextSpan(text:  Applocalizations.of(context).translate("by clicking3"),),
                       TextSpan(
-                        text: "Privace Policy",
+                        text:  Applocalizations.of(context).translate("by clicking4"),
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.blue,
@@ -311,9 +312,9 @@ class _SignUpState extends State<SignUp> {
                           color: Colors.grey,
                         ),
                         children: <TextSpan>[
-                          TextSpan(text: "Already have an account? "),
+                          TextSpan(text:  Applocalizations.of(context).translate("already have account"),),
                           TextSpan(
-                            text: "Log in",
+                            text: Applocalizations.of(context).translate("signInBtn"),
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.blue,

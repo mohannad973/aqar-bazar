@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'constants.dart';
+import 'localization/app_localization.dart';
 class TestScreen extends StatefulWidget {
   final List<String> items= List<String>.generate(50, (i) => "Item $i");
   @override
@@ -56,7 +57,7 @@ class _TestScreenState extends State<TestScreen> {
 
       return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(Applocalizations.of(context).translate("my_requested_property")),
         ),
         body:
         userRequestProvider.isFirstLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):

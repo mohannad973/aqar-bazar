@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/constants.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/user_requests_response.dart';
 import 'package:aqar_bazar/providers/cancel_request_provider.dart';
 import 'package:aqar_bazar/providers/user_requests_provider.dart';
@@ -81,7 +82,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("from: "),
+                            Text(Applocalizations.of(context).translate("from"),),
                             Text(widget.request.from == null
                                 ? '-'
                                 : widget.request.from.toString().substring(0, 10)),
@@ -90,7 +91,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("to: "),
+                            Text(Applocalizations.of(context).translate("to"),),
                             Text(widget.request.to == null
                                 ? '-'
                                 : widget.request.to.toString().substring(0, 10)),
@@ -99,7 +100,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("status: "),
+                            Text(Applocalizations.of(context).translate("status"),),
                             Text(widget.request.status),
                           ],
                         ),
@@ -121,7 +122,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                             child: RaisedButton(
                               onPressed:widget.request.payNow == null?null :() {},
                               child: Text(
-                                'pay',
+                                Applocalizations.of(context).translate("pay"),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
@@ -138,7 +139,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                         Container(
                           child: Center(
                             child: (cancelRequestProvider.isLoading() && widget.index == widget.itemIndex)?Center(child: CircularProgressIndicator(backgroundColor: fBlue,)):RaisedButton(
-                              onPressed:widget.request.status == 'cancelled'?null : () {
+                              onPressed:widget.request.status == Applocalizations.of(context).translate("cancelled") ?null : () {
                                 int index;
                                 index = userRequestProvider.allRequestsList.indexOf(widget.request);
                                 setState(() {
@@ -150,7 +151,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
 
                               },
                               child: Text(
-                                'cancel',
+                                Applocalizations.of(context).translate("cancel"),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,

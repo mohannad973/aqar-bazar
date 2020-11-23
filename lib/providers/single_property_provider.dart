@@ -17,15 +17,18 @@ class SinglePropertyProvider with ChangeNotifier{
 
   SinglePropertyResponse singlePropertyResponse = SinglePropertyResponse();
   SingleProperty singleProperty ;
+  List<String> attachments = [];
 
   Future<SingleProperty> getPropertyInfo(String url) async {
     setLoading(true);
     try {
+      attachments.clear();
       String token = await sessionManager.getAuthToken();
       SinglePropertyResponse response = await api.getPropertyInfo(url,token);
       if(response != null){
         //singlePropertyResponse = singlePropertyResponseFromJson(response.body);
         singleProperty = response.data;
+        attachments = response.data.attachments;
 
         print('single property info 1: '+singleProperty.id.toString());
         print('single property info 2: '+singleProperty.isBooked.toString());

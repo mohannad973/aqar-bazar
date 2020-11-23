@@ -9,6 +9,7 @@ import 'package:aqar_bazar/models/succes_string_response.dart';
 import 'package:aqar_bazar/models/user_requests_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/log_in_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/register_success_response.dart';
+import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:aqar_bazar/screens/profile/models/user_profile_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -79,6 +80,12 @@ class Api {
         "password": password
       });
 
+      print('statusCode : '+response.statusCode.toString());
+
+      if(response.statusCode == 401){
+        return response.statusCode;
+      }
+
 
      print('email :' + email+'t');
      print('pass :' + password+'p');
@@ -87,8 +94,8 @@ class Api {
 
 
       sessionManager.setSessionToken(cookie);
-     print('login response :'+response.body);
-      print('8888888888');
+     print('login cookie :'+cookie);
+
       if (response.statusCode == 200) {
         final String responseString = response.body;
 
@@ -336,5 +343,28 @@ class Api {
   }
 
 
+
+  Future getAllProperties( String cookie, int page) async {
+    try {
+      String url = baseUrl + '/v1/properties?page=$page';
+
+      final response = await http.get(url, headers: {
+        'Accept': 'application/json',
+        'Cookie': cookie,
+      });
+
+      print('all properties1 ' + response.body);
+
+      print('all properties2  ' + response.statusCode.toString());
+
+      if (response.statusCode == 200) {
+        return searchResultModeFromJson(response.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('error ' + e.toString());
+    }
+  }
 
 }

@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/constants.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
 import 'package:aqar_bazar/providers/add_comment_provider.dart';
@@ -32,7 +33,7 @@ class _AddNewCommentState extends State<AddNewComment> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            'Leave a comment', style: TextStyle(color: fBlue, fontSize: 15),),
+            Applocalizations.of(context).translate("leave_comment"), style: TextStyle(color: fBlue, fontSize: 15),),
         ),
         Container(
             child: Padding(
@@ -40,8 +41,8 @@ class _AddNewCommentState extends State<AddNewComment> {
               child: TextField(
                 controller: commentController,
                 decoration: InputDecoration(
-                  hintText: 'add comment',
-                  labelText: "Add Comment",
+                  hintText: Applocalizations.of(context).translate("add_comment"),
+                  labelText: Applocalizations.of(context).translate("add_comment"),
                   fillColor: Colors.white,
                   border: new OutlineInputBorder(
                     borderRadius: new BorderRadius.circular(10.0),
@@ -58,21 +59,24 @@ class _AddNewCommentState extends State<AddNewComment> {
         Container(
           child: Center(
             child: RaisedButton(
-              onPressed: () {
-                // print('comment message 1: '+Provider.of<AddComentProvider>(context,listen: false).message);
-                print('11111111');
+              onPressed: () async{
+
                     Provider.of<AddComentProvider>(context,listen: false).addComment(widget.propertyId.toString(), commentController.text);
 
                     if(Provider.of<AddComentProvider>(context,listen: false).message!= null){
-                      print('22222222');
-                      print('comment message : '+Provider.of<AddComentProvider>(context,listen: false).message);
-                      // widget.addComment(Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0));
-                      Provider.of<CommentsProvider>(context,listen: false).commentsList.insert(0,Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0));
-                      print('comment message 2: '+Provider.of<CommentsProvider>(context,listen: false).commentsList.toString());
+                      Comment com = Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0);
+                      Provider.of<CommentsProvider>(context,listen: false).addvalueToCommentList(com);
+                      // print('22222222');
+                      // print('comment message : '+Provider.of<AddComentProvider>(context,listen: false).message);
+                      // // widget.addComment(Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0));
+                      // //  Provider.of<CommentsProvider>(context,listen: false).commentsList.insert(0,Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0));
+                      // print('comment message 2: '+Provider.of<CommentsProvider>(context,listen: false).commentsList.toString());
                     }
+                // Comment com = Comment(id: 0,comment: commentController.text,createdAt: DateTime.now(),humanTime: '',totalLikes: 0);
+                // Provider.of<CommentsProvider>(context).addvalueToCommentList(com);
               },
               child: Text(
-                'Comment',
+    Applocalizations.of(context).translate("comment"),
                 style: TextStyle(
                   fontWeight:
                   FontWeight

@@ -35,6 +35,7 @@ class AddComentProvider with ChangeNotifier {
 
         message = addCommentResponse.success;
 
+        print('message99 '+message.toString());
         setLoading(false);
         return addCommentResponse;
       }

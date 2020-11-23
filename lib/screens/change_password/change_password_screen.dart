@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/Utils/decorations.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -44,7 +45,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               height: 0.0,
                             ),
                             Text(
-                              "Change password",
+                              Applocalizations.of(context).translate("change_password"),
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
@@ -58,14 +59,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                 children: [
                                   TextFormField(
                                       decoration: inputDecoration()
-                                          .copyWith(hintText: "new password"),
+                                          .copyWith(hintText: Applocalizations.of(context).translate("new_pass")),
                                       obscureText: true),
                                   SizedBox(
                                     height: 15,
                                   ),
                                   TextFormField(
                                       decoration: inputDecoration().copyWith(
-                                          hintText: "confirm password"),
+                                          hintText: Applocalizations.of(context).translate("confirm_pass")),
                                       obscureText: true),
                                   SizedBox(
                                     height: 15,
@@ -85,7 +86,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                                         color: Colors.white,
                                       ),
                                       label: Text(
-                                        "Apply",
+                                        Applocalizations.of(context).translate("apply"),
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       color: Colors.lightBlue,

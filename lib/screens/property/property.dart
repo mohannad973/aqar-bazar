@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 import 'package:aqar_bazar/constants.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
@@ -11,10 +12,12 @@ import 'package:aqar_bazar/providers/single_property_provider.dart';
 import 'package:aqar_bazar/screens/property/add_comment.dart';
 import 'package:aqar_bazar/screens/property/comments.dart';
 import 'package:aqar_bazar/screens/property/contact_host_screen.dart';
+import 'package:aqar_bazar/screens/property/image_gallery/property_images_screen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 
 import '../Property types/house.dart';
@@ -138,7 +141,7 @@ class _PropertyPageState extends State<PropertyPage> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 2, horizontal: 8),
                           child: Text(
-                            'Summary',
+                            Applocalizations.of(context).translate("summary"),
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.w600),
                           ),
@@ -149,16 +152,13 @@ class _PropertyPageState extends State<PropertyPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 2, horizontal: 8),
-                          child: RichText(
-                            text: TextSpan(
-                                style: TextStyle(color: Colors.grey[600]),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: singleProperty.description,
-                                  ),
-                                ]),
-                          ),
-                        ),
+                          child:
+                          Html(
+                            data: singleProperty.description, //html string to be parsed
+
+                            useRichText: true,
+                            defaultTextStyle: TextStyle(fontSize: 14),
+                        ),),
                         SizedBox(
                           height: 10,
                         ),
@@ -179,23 +179,28 @@ class _PropertyPageState extends State<PropertyPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Photos',
+                                Applocalizations.of(context).translate("Photos"),
                                 style: TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.w600),
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    'See All',
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Icon(
-                                    Icons.navigate_next,
-                                    color: Theme.of(context).primaryColor,
-                                  )
-                                ],
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageGallery(attachments:Provider.of<SinglePropertyProvider>(context).attachments ,)));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      Applocalizations.of(context).translate("see_all"),
+                                      style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Icon(
+                                      Icons.navigate_next,
+                                      color: Theme.of(context).primaryColor,
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                           ),
@@ -203,36 +208,58 @@ class _PropertyPageState extends State<PropertyPage> {
                         Container(
                           height: MediaQuery.of(context).size.height / 5,
                           child: ListView.builder(
-                            itemCount: bestDeals.length,
+                            cacheExtent: 999,
+                            itemCount: Provider.of<SinglePropertyProvider>(context).attachments.length >=4 ? 4:Provider.of<SinglePropertyProvider>(context).attachments.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
-                              var destination = bestDeals[index];
+                              var destination = Provider.of<SinglePropertyProvider>(context).attachments.length >=4?Provider.of<SinglePropertyProvider>(context).attachments.sublist(0,4):Provider.of<SinglePropertyProvider>(context).attachments;
                               return Container(
                                 margin: EdgeInsets.symmetric(
                                     vertical: 10.0, horizontal: 5),
                                 width: 200,
-                                child: Card(
-                                  elevation: 2,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  color: Colors.blue,
-                                  child: Stack(
-                                    alignment: Alignment.bottomLeft,
-                                    children: [
-                                      ClipRRect(
+                                child: GestureDetector(
+                                  onTap: (){
+                                    showGeneralDialog(
+                                        context: context,
+                                        barrierDismissible: true,
+                                        barrierLabel: MaterialLocalizations.of(context)
+                                            .modalBarrierDismissLabel,
+                                        barrierColor: Colors.black45,
+                                        transitionDuration: const Duration(milliseconds: 200),
+                                        pageBuilder: (BuildContext buildContext,
+                                            Animation animation,
+                                            Animation secondaryAnimation) {
+                                          return Center(
+                                              child: Container(
+                                                margin: EdgeInsets.all(8.0),
+                                                  height: MediaQuery.of(context).size.height*0.8,
+                                                  padding: EdgeInsets.all(10),
+                                                  color: Colors.white,
+                                                  child: FadeInImage.assetNetwork(
+                                                    placeholder: 'assets/images/loader.gif',
+                                                    image: Provider.of<SinglePropertyProvider>(context).attachments[index],
+                                                    fit: BoxFit.cover,
+                                                  ),)
+                                          );
+
+                                        });
+                                  },
+                                  child: Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+
+                                    child: Container(
+                                      child: ClipRRect(
                                         borderRadius: BorderRadius.circular(15),
-                                        child: Image.asset(
-                                          destination.image,
+                                        child: FadeInImage.assetNetwork(
+                                          placeholder: 'assets/images/loader.gif',
+                                          image: Provider.of<SinglePropertyProvider>(context).attachments[index],
                                           fit: BoxFit.cover,
-                                          width: 300,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              6,
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -262,7 +289,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                             vertical: 8.0,
                                           ),
                                           child: Text(
-                                            'Details',
+                                            Applocalizations.of(context).translate("details"),
                                             style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryColor,
@@ -272,7 +299,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 20,
+                                        height: 0,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -281,7 +308,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text('Number of Bedrooms',
+                                              Text(Applocalizations.of(context).translate("nobed"),
                                                   style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w600,
@@ -307,7 +334,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text('Number of Bathrooms',
+                                              Text(Applocalizations.of(context).translate("nobath"),
                                                   style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w600,
@@ -324,7 +351,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                             ]),
                                       ),
                                       SizedBox(
-                                        height: 15,
+                                        height: 8,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -333,7 +360,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text('Price',
+                                              Text(Applocalizations.of(context).translate("price"),
                                                   style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w600,
@@ -351,7 +378,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                             ]),
                                       ),
                                       SizedBox(
-                                        height: 35,
+                                        height: 15,
                                       ),
                                       singleProperty.isBooked || Provider.of<RequestPropertyProvider>(context).isRequested()
                                           ? Container(
@@ -366,7 +393,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                                       child: Center(
                                                         child: RaisedButton(
                                                           child: Text(
-                                                            'already booked',
+                                                            Applocalizations.of(context).translate("already_booked"),
                                                             style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -408,7 +435,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                                                     .trim());
                                                           },
                                                           child: Text(
-                                                            'cancel book',
+                                                            Applocalizations.of(context).translate("cancel_book"),
                                                             style: TextStyle(
                                                               fontWeight:
                                                                   FontWeight
@@ -470,7 +497,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                                   }
                                                 },
                                                 child: Text(
-                                                  'Book Now',
+                                                  Applocalizations.of(context).translate("book_now"),
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15,
@@ -522,7 +549,7 @@ class _PropertyPageState extends State<PropertyPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            'Comments',
+                            Applocalizations.of(context).translate("comments"),
                             style: TextStyle(color: fBlue, fontSize: 20),
                           ),
                         ),
@@ -532,7 +559,7 @@ class _PropertyPageState extends State<PropertyPage> {
                       Provider.of<CommentsProvider>(context).isLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):
                       ( Provider.of<CommentsProvider>(context).commentsList.isEmpty
                           ? Container()
-                          :     Comments(commentsResponse: Provider.of<CommentsProvider>(context).commentsResponse,propertyInfo: widget.singleProperty,commentList: Provider.of<CommentsProvider>(context).commentsResponse.data ,)),
+                          :     Comments(commentsResponse: Provider.of<CommentsProvider>(context).commentsResponse,propertyInfo: widget.singleProperty,commentList: Provider.of<CommentsProvider>(context).commentsList,)),
 
                         AddNewComment(propertyId: widget.property.id,),
                         SizedBox(height: 10,),
@@ -907,7 +934,7 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                width: width * 0.8,
+                                width: width * 0.7,
                                 child: AutoSizeText(
                                   propertyInfo.title,
                                   style: TextStyle(
@@ -940,16 +967,16 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor nulla pariatur. Excepteur sint ',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
-                          ),
+                          // SizedBox(
+                          //   height: 15,
+                          // ),
+                          // Text(
+                          //   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor nulla pariatur. Excepteur sint ',
+                          //   style: TextStyle(
+                          //       color: Theme.of(context).primaryColor,
+                          //       fontSize: 15,
+                          //       fontWeight: FontWeight.w500),
+                          // ),
                           SizedBox(
                             height: 25,
                           ),
@@ -976,7 +1003,7 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
                                 //                 rating: list.rating))));
                               },
                               child: Text(
-                                'Book Now',
+                                Applocalizations.of(context).translate("book_now"),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
@@ -1038,3 +1065,13 @@ Widget horizantalLine(){
     ),
   );
 }
+//
+// RichText(
+// text: TextSpan(
+// style: TextStyle(color: Colors.grey[600]),
+// children: <TextSpan>[
+// TextSpan(
+// text: singleProperty.description,
+// ),
+// ]),
+// ),

@@ -1,8 +1,12 @@
+
 import 'package:aqar_bazar/Utils/colors.dart';
 import 'package:aqar_bazar/Utils/decorations.dart';
 import 'package:aqar_bazar/Utils/session_manager.dart';
+import 'package:aqar_bazar/constants.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/slider_images.dart';
+import 'package:aqar_bazar/providers/all_properties_provider.dart';
 import 'package:aqar_bazar/providers/property_parameters_provider.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
@@ -22,6 +26,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import '../../main.dart';
 import '../property/property.dart';
 
 class NewHome extends StatefulWidget {
@@ -43,12 +48,46 @@ class _NewHomeState extends State<NewHome> {
 
   List<Datum> homeProperties = [];
 
+
+  int page = 1;
+  ScrollController con;
+
+  String _progress = "0%";
+  ScrollController _controller;
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    print('test1');
+    Provider.of<AllPropertiesProvider>(context,listen: false).getAllProperties(1);
+
+    con = ScrollController();
+    _controller = ScrollController();
+    _controller.addListener(() {
+      if (con.offset >= con.position.maxScrollExtent &&
+          !con.position.outOfRange) {
+        print('controller%1');
+        Provider.of<AllPropertiesProvider>(context,listen: false).getAllProperties(page+=1);
+        setState(() {
+
+        });
+      }else if (con.offset <= con.position.minScrollExtent &&
+          !con.position.outOfRange) {
+        print('controller%2');
+        setState(() {
+
+        });
+      } else {
+        print('controller%3');
+        setState(() {
+
+        });
+      }
+    });
+
+
 
     Provider.of<PropertyParametersProvider>(context, listen: false)
         .getPropertyParameters();
@@ -61,6 +100,7 @@ class _NewHomeState extends State<NewHome> {
 
   @override
   Widget build(BuildContext context) {
+    var allPropertiesProvider = Provider.of<AllPropertiesProvider>(context);
     Widget _iconRow(int index) {
       return GestureDetector(
         onTap: () {
@@ -101,6 +141,7 @@ class _NewHomeState extends State<NewHome> {
 
     return SafeArea(
       child: Scaffold(
+
         key: _scaffoldKey,
         drawer: Drawer(
           child: ListView(
@@ -117,7 +158,7 @@ class _NewHomeState extends State<NewHome> {
               GestureDetector(
                 child: ListTile(
                   leading: Text(
-                    'Home',
+                      Applocalizations.of(context).translate("home"),
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey[600],
@@ -126,7 +167,9 @@ class _NewHomeState extends State<NewHome> {
                   trailing:
                       Icon(Icons.home, color: Theme.of(context).primaryColor),
                 ),
-                onTap: () {},
+                onTap: () {
+
+                },
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -139,7 +182,7 @@ class _NewHomeState extends State<NewHome> {
                       Navigator.push(context, MaterialPageRoute(builder: (context)=>TestScreen()));
                     },
                     child: Text(
-                      'My Bookings',
+                      Applocalizations.of(context).translate("my_bookings"),
                       style: TextStyle(
                           fontSize: 18,
                           color: Colors.grey[600],
@@ -158,7 +201,7 @@ class _NewHomeState extends State<NewHome> {
               GestureDetector(
                 child: ListTile(
                   leading: Text(
-                    'Contact Us',
+                    Applocalizations.of(context).translate("Contact_us"),
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey[600],
@@ -168,6 +211,7 @@ class _NewHomeState extends State<NewHome> {
                       Icon(Icons.mail, color: Theme.of(context).primaryColor),
                 ),
                 onTap: () {
+
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ContactUs()));
                 },
@@ -179,7 +223,7 @@ class _NewHomeState extends State<NewHome> {
               GestureDetector(
                 child: ListTile(
                   leading: Text(
-                    'About us',
+                    Applocalizations.of(context).translate("about_us"),
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey[600],
@@ -197,7 +241,7 @@ class _NewHomeState extends State<NewHome> {
               GestureDetector(
                 child: ListTile(
                   leading: Text(
-                    'Log out',
+                    Applocalizations.of(context).translate("log_out"),
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey[600],
@@ -257,10 +301,7 @@ class _NewHomeState extends State<NewHome> {
               IconButton(
                 icon: Icon(Icons.book, color: Theme.of(context).primaryColor),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MyBookingsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TestScreen()));
                 },
               ),
               IconButton(
@@ -275,188 +316,93 @@ class _NewHomeState extends State<NewHome> {
             ],
           ),
         ),
-        body: FutureBuilder(
-          future: Provider.of<SearchResultProvider>(context, listen: false)
-              .search(
-                  furnished: "",
-                  category: "",
-                  capacity: "",
-                  price: "",
-                  bathrooms: "",
-                  rooms: "",
-                  city: "",
-                  type: ""),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return Center(
-                  child: CircularProgressIndicator(
-                backgroundColor: Colors.blue,
-              ));
-            } else {
-              return Material(
-                child: CustomScrollView(
-                  slivers: [
-                    SliverPersistentHeader(
-                      delegate: HomeScreenCustomSliverAppBar(
-                          expandedHeight: height / 2),
-                      pinned: true,
-                    ),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              FontAwesomeIcons.globeAmericas,
-                              size: 20,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              'Explore',
-                              style: textStyleSemiBold().copyWith(
-                                  fontSize: 25, color: Colors.black87),
-                            ),
-                            Divider(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            print('taaaaaaped '+ index.toString());
-                          //  var list = bestDeals[index];
-                          //  print("testing the list : "+list.toString());
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PropertyPage(
-                                          // propertyInfo: Property(
-                                          //   name: list.name,
-                                          //   image: list.image,
-                                          //   location: list.location,
-                                          //   shortAddress: list.shortAddress,
-                                          //   price: list.price,
-                                          //   propertType: list.propertType,
-                                          // ),
-                                      property: snapshot.data.data[index],
-                                        )));
-                          },
-                          child: Container(
-                            child: DealsCard(propertyData: snapshot.data.data[index],),
-                          //     child: Card(
-                          //   elevation: 8,
-                          //   shape: RoundedRectangleBorder(
-                          //     borderRadius: BorderRadius.circular(15),
-                          //   ),
-                          //   child: Column(
-                          //     children: [
-                          //       ClipRRect(
-                          //           borderRadius: BorderRadius.circular(15),
-                          //           child: Image.network(
-                          //             snapshot.data.data[index].thumbnail,
-                          //           )),
-                          //       Padding(
-                          //         padding: const EdgeInsets.all(8.0),
-                          //         child: Row(
-                          //           mainAxisAlignment:
-                          //               MainAxisAlignment.spaceBetween,
-                          //           children: [
-                          //             Row(
-                          //               children: [
-                          //                 Icon(
-                          //                   FontAwesomeIcons.hotel,
-                          //                   size: 15,
-                          //                   color:
-                          //                       Theme.of(context).primaryColor,
-                          //                 ),
-                          //                 SizedBox(
-                          //                   width: 5,
-                          //                 ),
-                          //                 Container(
-                          //                   width: MediaQuery.of(context)
-                          //                           .size
-                          //                           .width /
-                          //                       3,
-                          //                   child: Text(
-                          //                     snapshot.data.data[index].title,
-                          //                     overflow: TextOverflow.ellipsis,
-                          //                     style: TextStyle(
-                          //                         fontSize: 18,
-                          //                         fontWeight: FontWeight.w500),
-                          //                   ),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //             Text(
-                          //               snapshot.data.data[index].price
-                          //                   .toString(),
-                          //               style: TextStyle(
-                          //                   color:
-                          //                       Theme.of(context).primaryColor,
-                          //                   fontSize: 22,
-                          //                   fontWeight: FontWeight.w600),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //       Padding(
-                          //         padding: const EdgeInsets.all(8.0),
-                          //         child: Row(
-                          //           mainAxisAlignment:
-                          //               MainAxisAlignment.spaceBetween,
-                          //           children: [
-                          //             Row(
-                          //               children: [
-                          //                 Icon(
-                          //                   Icons.location_on,
-                          //                   size: 15,
-                          //                   color: Colors.red[900],
-                          //                 ),
-                          //                 Text(
-                          //                     snapshot.data.data[index].address,
-                          //                     style: TextStyle(
-                          //                         color: Colors.red[900])),
-                          //               ],
-                          //             ),
-                          //             Row(
-                          //               children: [
-                          //                 Icon(
-                          //                   Icons.star,
-                          //                   size: 15,
-                          //                   color: Colors.green[600],
-                          //                 ),
-                          //                 Text(
-                          //                   snapshot.data.data[index].rate
-                          //                       .toString(),
-                          //                   style: TextStyle(
-                          //                       color: Colors.green[600]),
-                          //                 ),
-                          //               ],
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // )
-                          ),
-                        );
-                      },
-                      childCount: snapshot.data.data.length,
-                    ))
-                  ],
-                ),
-              );
-            }
-          },
-        ),
+        body:
+    // FutureBuilder(
+    //       future: Provider.of<SearchResultProvider>(context, listen: false)
+    //           .search(
+    //               furnished: "",
+    //               category: "",
+    //               capacity: "",
+    //               price: "",
+    //               bathrooms: "",
+    //               rooms: "",
+    //               city: "",
+    //               type: ""),
+    //       builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //         if (snapshot.data == null) {
+    //           return Center(
+    //               child: CircularProgressIndicator(
+    //             backgroundColor: Colors.blue,
+    //           ));
+    //         } else {
+             allPropertiesProvider.isFirstLoading()?Center(child: CircularProgressIndicator(backgroundColor: fBlue,)):
+
+
+                 CustomScrollView(
+                   // controller: con,
+                   // controller: _controller,
+                   slivers: [
+                     SliverPersistentHeader(
+
+                       delegate: HomeScreenCustomSliverAppBar(
+                           expandedHeight: height / 2),
+                       pinned: true,
+                     ),
+                     SliverToBoxAdapter(
+                       child: Padding(
+                         padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
+                         child: Row(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             Icon(
+                               FontAwesomeIcons.globeAmericas,
+                               size: 20,
+                               color: Theme.of(context).primaryColor,
+                             ),
+                             SizedBox(
+                               width: 8,
+                             ),
+                             Text(
+                               Applocalizations.of(context).translate("Explore"),
+                               style: textStyleSemiBold().copyWith(
+                                   fontSize: 25, color: Colors.black87),
+                             ),
+                             Divider(),
+                           ],
+                         ),
+                       ),
+                     ),
+
+
+                     SliverList(
+
+                         delegate: SliverChildBuilderDelegate(
+                               (BuildContext context, int index) {
+                             return GestureDetector(
+                               onTap: () {
+                                 print('taaaaaaped '+ index.toString());
+                                 //  var list = bestDeals[index];
+                                 //  print("testing the list : "+list.toString());
+                                 Navigator.push(
+                                     context,
+                                     MaterialPageRoute(
+                                         builder: (context) => PropertyPage(
+                                           property: allPropertiesProvider.allProperties[index],
+                                         )));
+                               },
+                               child: Container(
+                                 child: DealsCard(propertyData: allPropertiesProvider.allProperties[index],),
+                               ),
+                             );
+                           },
+                           childCount: allPropertiesProvider.allProperties.length,
+                         ))
+                   ],
+                 )
+
+        //     }
+        //   },
+        // ),
       ),
     );
   }
@@ -552,15 +498,15 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
     double _circleAvatarRad = 50;
     List<SliderImages> _images = [
       SliderImages(
-        title: 'Hey there',
+        title: '',
         imageUrl: 'assets/images/home1.jpg',
       ),
       SliderImages(
-        title: 'This is a beautiful Image',
+        title: '',
         imageUrl: 'assets/images/home4.png',
       ),
       SliderImages(
-        title: 'this is another Great Image',
+        title: '',
         imageUrl: 'assets/images/home5.png',
       )
     ];

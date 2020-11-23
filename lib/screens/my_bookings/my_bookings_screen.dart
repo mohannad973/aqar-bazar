@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/constants.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/user_requests_provider.dart';
 import 'package:aqar_bazar/screens/my_bookings/requested_item_card.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
     var width = MediaQuery.of(context).size.width;
     var userRequestProvider = Provider.of<UserRequestProvider>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('My Bookings'),),
+      appBar: AppBar(title: Text(Applocalizations.of(context).translate("my_requested_property"),),),
       body:
           userRequestProvider.isLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):
 

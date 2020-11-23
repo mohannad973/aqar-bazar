@@ -1,5 +1,6 @@
 import 'package:aqar_bazar/Common_Widgets/common_widgets.dart';
 import 'package:aqar_bazar/Utils/decorations.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:flutter/material.dart';
 
 class CommonQuestionScreen extends StatefulWidget {
@@ -28,16 +29,16 @@ class _CommonQuestionScreenState extends State<CommonQuestionScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
-                      decoration:
-                          inputDecoration().copyWith(hintText: 'Search'),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: TextField(
+                  //     style: TextStyle(
+                  //       fontSize: 15,
+                  //     ),
+                  //     decoration:
+                  //         inputDecoration().copyWith(hintText: 'Search'),
+                  //   ),
+                  // ),
                 ],
               ),
               height: 100,
@@ -47,7 +48,7 @@ class _CommonQuestionScreenState extends State<CommonQuestionScreen> {
           SizedBox(height: 10,),
           Padding(
             padding: const EdgeInsets.only(left: 10),
-            child: Text("Common Questions :",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),),
+            child: Text(Applocalizations.of(context).translate("common_questions"),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),),
           ),
           SizedBox(height: 10,),
           Expanded(

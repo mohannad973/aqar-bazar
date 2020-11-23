@@ -59,4 +59,17 @@ class CommentsProvider with ChangeNotifier {
   bool isLoading() {
     return loading;
   }
+
+  void addvalueToCommentList(Comment comment){
+    print("v99");
+   try{
+     commentsList.add(comment);
+     print('value99');
+
+   }catch(e){
+     print("value88 "+e.toString());
+   }
+
+   notifyListeners();
+  }
 }
