@@ -44,6 +44,7 @@
   "already_booked": "حجزته مسبقا",
   "comments": "التعليقات",
   "like":"إعجاب",
+  "dislike":"الغاء الاعجاب",
   "one_day_ago": "منذ يوم",
   "leave_comment": "اترك تعليقا",
   "add_comment" : "أضق تعليق",

@@ -3,6 +3,7 @@ import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/models/add_comment_model.dart';
 import 'package:aqar_bazar/models/cancel_request_response.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
+import 'package:aqar_bazar/models/contact_us_response.dart';
 import 'package:aqar_bazar/models/like_comment_response.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
 import 'package:aqar_bazar/models/succes_string_response.dart';
@@ -157,12 +158,13 @@ class Api {
     }
   }
 
-  Future getPropertyInfo(String url, String token) async {
+  Future getPropertyInfo(String url, String token,String lang) async {
     try {
       final response = await http.get(url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
+         'langLabel':lang
       });
 
       if (response.statusCode == 200) {
@@ -220,6 +222,8 @@ class Api {
 
   Future getComments(
       String propertId, int pageNumber, String token, String cookie) async {
+    print('tstToken '+token);
+    print('tstCookie '+cookie);
     try {
       String url =
           baseUrl + '/properties/$propertId/comments?page=${pageNumber}';
@@ -227,8 +231,8 @@ class Api {
       final response = await http.post(url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $token',
-        'Cookie': cookie,
+        'Authorization': 'Bearer ${token.trim()}',
+        'Cookie': cookie.trim(),
       });
 
       print('comment body ' + response.body.toString());
@@ -344,13 +348,15 @@ class Api {
 
 
 
-  Future getAllProperties( String cookie, int page) async {
+  Future getAllProperties( String cookie, int page,String lang) async {
     try {
       String url = baseUrl + '/v1/properties?page=$page';
+
 
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
         'Cookie': cookie,
+        'langLabel':lang
       });
 
       print('all properties1 ' + response.body);
@@ -366,5 +372,97 @@ class Api {
       print('error ' + e.toString());
     }
   }
+
+  Future contactUs(String email, String name, String phone,
+      String message) async {
+    try {
+      final String apiUrl = baseUrl + '/v1/submitContact';
+      final response = await http.post(apiUrl, body: {
+        "email": email,
+        "name": name,
+        "phone": phone,
+        "message": message,
+      });
+
+      if (response.statusCode == 200) {
+        final String responseString = response.body;
+
+        return contactUsResponseFromJson(responseString);
+      } else {
+        print(response.statusCode);
+
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+
+  Future pay(String propertyId, String amount) async {
+    try {
+      final String apiUrl = baseUrl + '/v1/book/paypal?property_id=$propertyId&amount=$amount';
+      final response = await http.get(apiUrl);
+
+
+      if (response.statusCode == 200) {
+        final String responseString = response.body;
+
+        print("response webview : "+responseString );
+
+        return (responseString);
+      } else {
+        print(response.statusCode);
+
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+
+  Future getNotifications(String token, String cookie) async {
+    try {
+      final String apiUrl = baseUrl + '/v1/notifications';
+      final response = await http.get(apiUrl,headers: {
+        'Accept': 'application/json',
+        'Cookie': cookie,
+        'Authorization': 'Bearer $token',
+      });
+
+
+      print('nots '+response.toString());
+      if (response.statusCode == 200) {
+        final String responseString = response.body;
+
+        print("response notif : "+responseString );
+
+        return (responseString);
+      } else {
+        print(response.statusCode);
+
+        return null;
+      }
+    } catch (e) {
+      print('errr 80'+e.toString());
+      return null;
+    }
+  }
+
+  // Future searchByPropertyType(
+  //     {String propertyType,
+  //      int page}) {
+  //
+  //   var url = baseUrl + "/v1/search?page=$page";
+  //   return http.post(url,body: {
+  //     'furnished':furnished,
+  //     'type':type,
+  //     'price_range':price,
+  //     'capacity':capacity,
+  //     'rooms':rooms
+  //   });
+
+
 
 }

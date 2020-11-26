@@ -1,4 +1,3 @@
-
 import 'package:aqar_bazar/Utils/colors.dart';
 import 'package:aqar_bazar/Utils/decorations.dart';
 import 'package:aqar_bazar/Utils/session_manager.dart';
@@ -7,13 +6,16 @@ import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/slider_images.dart';
 import 'package:aqar_bazar/providers/all_properties_provider.dart';
+import 'package:aqar_bazar/providers/notification_provider.dart';
 import 'package:aqar_bazar/providers/property_parameters_provider.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
+import 'package:aqar_bazar/providers/show_all_properties_provider.dart';
 import 'package:aqar_bazar/screens/Auth/login.dart';
 import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/categories.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/property_parameters_model.dart';
+import 'package:aqar_bazar/screens/Landing_and_Home/show_all_properties_screen.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/widgets/best_deals.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
@@ -48,20 +50,19 @@ class _NewHomeState extends State<NewHome> {
 
   List<Datum> homeProperties = [];
 
-
-  int page = 1;
   ScrollController con;
 
   String _progress = "0%";
   ScrollController _controller;
-
+  int page = 1;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    Provider.of<AllPropertiesProvider>(context,listen: false).getAllProperties(1);
+    Provider.of<AllPropertiesProvider>(context, listen: false)
+        .getAllProperties(1);
 
     con = ScrollController();
     _controller = ScrollController();
@@ -69,25 +70,18 @@ class _NewHomeState extends State<NewHome> {
       if (con.offset >= con.position.maxScrollExtent &&
           !con.position.outOfRange) {
         print('controller%1');
-        Provider.of<AllPropertiesProvider>(context,listen: false).getAllProperties(page+=1);
-        setState(() {
-
-        });
-      }else if (con.offset <= con.position.minScrollExtent &&
+        Provider.of<AllPropertiesProvider>(context, listen: false)
+            .getAllProperties(page += 1);
+        setState(() {});
+      } else if (con.offset <= con.position.minScrollExtent &&
           !con.position.outOfRange) {
         print('controller%2');
-        setState(() {
-
-        });
+        setState(() {});
       } else {
         print('controller%3');
-        setState(() {
-
-        });
+        setState(() {});
       }
     });
-
-
 
     Provider.of<PropertyParametersProvider>(context, listen: false)
         .getPropertyParameters();
@@ -101,6 +95,7 @@ class _NewHomeState extends State<NewHome> {
   @override
   Widget build(BuildContext context) {
     var allPropertiesProvider = Provider.of<AllPropertiesProvider>(context);
+    List<Datum> list = allPropertiesProvider.allProperties;
     Widget _iconRow(int index) {
       return GestureDetector(
         onTap: () {
@@ -141,269 +136,279 @@ class _NewHomeState extends State<NewHome> {
 
     return SafeArea(
       child: Scaffold(
-
-        key: _scaffoldKey,
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.all(8.0),
-            children: [
-              Center(
-                child: DrawerHeader(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    width: width / 5,
+          key: _scaffoldKey,
+          drawer: Drawer(
+            child: ListView(
+              padding: EdgeInsets.all(8.0),
+              children: [
+                Center(
+                  child: DrawerHeader(
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      width: width / 5,
+                    ),
                   ),
                 ),
-              ),
-              GestureDetector(
-                child: ListTile(
-                  leading: Text(
+                GestureDetector(
+                  child: ListTile(
+                    leading: Text(
                       Applocalizations.of(context).translate("home"),
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey[600],
-                        letterSpacing: 0.5),
-                  ),
-                  trailing:
-                      Icon(Icons.home, color: Theme.of(context).primaryColor),
-                ),
-                onTap: () {
-
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              GestureDetector(
-                child: ListTile(
-                  leading: GestureDetector(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TestScreen()));
-                    },
-                    child: Text(
-                      Applocalizations.of(context).translate("my_bookings"),
                       style: TextStyle(
                           fontSize: 18,
                           color: Colors.grey[600],
                           letterSpacing: 0.5),
                     ),
+                    trailing:
+                        Icon(Icons.home, color: Theme.of(context).primaryColor),
                   ),
-                  trailing:
-                      Icon(Icons.book, color: Theme.of(context).primaryColor),
+                  onTap: () {},
                 ),
-                onTap: () {},
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              GestureDetector(
-                child: ListTile(
-                  leading: Text(
-                    Applocalizations.of(context).translate("Contact_us"),
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey[600],
-                        letterSpacing: 0.5),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(),
+                ),
+                GestureDetector(
+                  child: ListTile(
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TestScreen()));
+                      },
+                      child: Text(
+                        Applocalizations.of(context).translate("my_bookings"),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[600],
+                            letterSpacing: 0.5),
+                      ),
+                    ),
+                    trailing:
+                        Icon(Icons.book, color: Theme.of(context).primaryColor),
                   ),
-                  trailing:
-                      Icon(Icons.mail, color: Theme.of(context).primaryColor),
+                  onTap: () {},
                 ),
-                onTap: () {
-
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ContactUs()));
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              GestureDetector(
-                child: ListTile(
-                  leading: Text(
-                    Applocalizations.of(context).translate("about_us"),
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey[600],
-                        letterSpacing: 0.5),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(),
+                ),
+                GestureDetector(
+                  child: ListTile(
+                    leading: Text(
+                      Applocalizations.of(context).translate("Contact_us"),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
+                          letterSpacing: 0.5),
+                    ),
+                    trailing:
+                        Icon(Icons.mail, color: Theme.of(context).primaryColor),
                   ),
-                  trailing:
-                      Icon(Icons.info, color: Theme.of(context).primaryColor),
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ContactUs()));
+                  },
                 ),
-                onTap: () {},
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-              GestureDetector(
-                child: ListTile(
-                  leading: Text(
-                    Applocalizations.of(context).translate("log_out"),
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey[600],
-                        letterSpacing: 0.5),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(),
+                ),
+                GestureDetector(
+                  child: ListTile(
+                    leading: Text(
+                      Applocalizations.of(context).translate("about_us"),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
+                          letterSpacing: 0.5),
+                    ),
+                    trailing:
+                        Icon(Icons.info, color: Theme.of(context).primaryColor),
                   ),
-                  trailing:
-                      Icon(Icons.cancel, color: Theme.of(context).primaryColor),
+                  onTap: () {},
                 ),
-                onTap: () {
-                  SessionManager sessionManager = SessionManager();
-                  sessionManager.clearSessionManager();
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LogIn()));
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Divider(),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(),
+                ),
+                GestureDetector(
+                  child: ListTile(
+                    leading: Text(
+                      Applocalizations.of(context).translate("log_out"),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
+                          letterSpacing: 0.5),
+                    ),
+                    trailing: Icon(Icons.cancel,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                  onTap: () {
+                    SessionManager sessionManager = SessionManager();
+                    sessionManager.clearSessionManager();
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LogIn()));
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(),
+                ),
+              ],
+            ),
           ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColor,
-          elevation: 4.0,
-          child: Icon(
-            FontAwesomeIcons.list,
-            color: Theme.of(context).accentColor,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
+            elevation: 4.0,
+            child: Icon(
+              FontAwesomeIcons.list,
+              color: Theme.of(context).accentColor,
+            ),
+            onPressed: () {
+              _modalBottomSheet(context, categoriesList);
+            },
           ),
-          onPressed: () {
-            _modalBottomSheet(context, categoriesList);
-          },
-        ),
-        bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          notchMargin: 4.0,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.menu, color: Theme.of(context).primaryColor),
-                onPressed: () {
-                  _scaffoldKey.currentState.openDrawer();
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.search, color: Theme.of(context).primaryColor),
-                onPressed: () {
-                  Provider.of<SearchParamsProvider>(context, listen: false)
-                      .getSearchParams();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => FilterScreen()));
-                },
-              ),
-              SizedBox(width: 25),
-              IconButton(
-                icon: Icon(Icons.book, color: Theme.of(context).primaryColor),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TestScreen()));
-                },
-              ),
-              IconButton(
-                  icon: Icon(Icons.settings,
-                      color: Theme.of(context).primaryColor),
+          bottomNavigationBar: BottomAppBar(
+            shape: CircularNotchedRectangle(),
+            notchMargin: 4.0,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.menu, color: Theme.of(context).primaryColor),
                   onPressed: () {
+                    _scaffoldKey.currentState.openDrawer();
+                  },
+                ),
+                IconButton(
+                  icon:
+                      Icon(Icons.search, color: Theme.of(context).primaryColor),
+                  onPressed: () {
+                    Provider.of<SearchParamsProvider>(context, listen: false)
+                        .getSearchParams();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProfileScreen()));
-                  }),
-            ],
+                            builder: (context) => FilterScreen()));
+                  },
+                ),
+                SizedBox(width: 25),
+                IconButton(
+                  icon: Icon(Icons.book, color: Theme.of(context).primaryColor),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TestScreen()));
+                  },
+                ),
+                IconButton(
+                    icon: Icon(Icons.settings,
+                        color: Theme.of(context).primaryColor),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileScreen()));
+                    }),
+              ],
+            ),
           ),
-        ),
-        body:
-    // FutureBuilder(
-    //       future: Provider.of<SearchResultProvider>(context, listen: false)
-    //           .search(
-    //               furnished: "",
-    //               category: "",
-    //               capacity: "",
-    //               price: "",
-    //               bathrooms: "",
-    //               rooms: "",
-    //               city: "",
-    //               type: ""),
-    //       builder: (BuildContext context, AsyncSnapshot snapshot) {
-    //         if (snapshot.data == null) {
-    //           return Center(
-    //               child: CircularProgressIndicator(
-    //             backgroundColor: Colors.blue,
-    //           ));
-    //         } else {
-             allPropertiesProvider.isFirstLoading()?Center(child: CircularProgressIndicator(backgroundColor: fBlue,)):
+          body: allPropertiesProvider.isFirstLoading()
+              ? Center(
+                  child: CircularProgressIndicator(
+                  backgroundColor: fBlue,
+                ))
+              : Builder(builder: (context) {
+                  final _scr = PrimaryScrollController.of(context);
+                  _scr.addListener(() {
+                    if (_scr.position.pixels == _scr.position.maxScrollExtent) {
+                      // Provider.of<AllPropertiesProvider>(context,
+                      //         listen: false)
+                      //     .getAllProperties(page += 1);
+                    }
+                  });
 
+                  return CustomScrollView(
+                    slivers: [
+                      SliverPersistentHeader(
+                        delegate: HomeScreenCustomSliverAppBar(
+                            expandedHeight: height / 2),
+                        pinned: true,
+                      ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                FontAwesomeIcons.globeAmericas,
+                                size: 20,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                Applocalizations.of(context)
+                                    .translate("Explore"),
+                                style: textStyleSemiBold().copyWith(
+                                    fontSize: 25, color: Colors.black87),
+                              ),
+                              Divider(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                index == 0
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 18, right: 18, bottom: 2),
+                                        child: GestureDetector(
+                                          onTap: (){
 
-                 CustomScrollView(
-                   // controller: con,
-                   // controller: _controller,
-                   slivers: [
-                     SliverPersistentHeader(
-
-                       delegate: HomeScreenCustomSliverAppBar(
-                           expandedHeight: height / 2),
-                       pinned: true,
-                     ),
-                     SliverToBoxAdapter(
-                       child: Padding(
-                         padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
-                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                             Icon(
-                               FontAwesomeIcons.globeAmericas,
-                               size: 20,
-                               color: Theme.of(context).primaryColor,
-                             ),
-                             SizedBox(
-                               width: 8,
-                             ),
-                             Text(
-                               Applocalizations.of(context).translate("Explore"),
-                               style: textStyleSemiBold().copyWith(
-                                   fontSize: 25, color: Colors.black87),
-                             ),
-                             Divider(),
-                           ],
-                         ),
-                       ),
-                     ),
-
-
-                     SliverList(
-
-                         delegate: SliverChildBuilderDelegate(
-                               (BuildContext context, int index) {
-                             return GestureDetector(
-                               onTap: () {
-                                 print('taaaaaaped '+ index.toString());
-                                 //  var list = bestDeals[index];
-                                 //  print("testing the list : "+list.toString());
-                                 Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                         builder: (context) => PropertyPage(
-                                           property: allPropertiesProvider.allProperties[index],
-                                         )));
-                               },
-                               child: Container(
-                                 child: DealsCard(propertyData: allPropertiesProvider.allProperties[index],),
-                               ),
-                             );
-                           },
-                           childCount: allPropertiesProvider.allProperties.length,
-                         ))
-                   ],
-                 )
-
-        //     }
-        //   },
-        // ),
-      ),
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowAllProperties()));
+                                          },
+                                          child: Text(
+                                            'see all >',
+                                            style: TextStyle(
+                                                color: fBlue, fontSize: 15),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => PropertyPage(
+                                                  property: list[index],
+                                                )));
+                                  },
+                                  child: DealsCard(
+                                    propertyData: list[index],
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                        childCount: list.length,
+                      ))
+                    ],
+                  );
+                })),
     );
   }
 }
@@ -510,6 +515,7 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
         imageUrl: 'assets/images/home5.png',
       )
     ];
+
     return Stack(
       fit: StackFit.expand,
       overflow: Overflow.visible,
@@ -602,3 +608,45 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
     return true;
   }
 }
+
+// Widget build(BuildContext context) {
+//   return Scaffold(
+//     body: NestendScrollView(
+//       headerSliverBuilder: (BuildContext context, bool value) {
+//         return <Widget>[
+//           SliverAppBar(),
+//         ];
+//       },
+//       body: SafeArea(
+//         child: Builder(
+//           builder: (context) {
+//             final _scr = PrimaryScrollController.of(context);
+//             _scr.addListener(() {
+//               if (_scr.position.pixels == _scr.position.maxScrollExtent) {
+//                 print('At DOWNW!!!');
+//               }
+//             });
+//
+//             return CustomScrollView(
+//               controller: _scr,
+//               slivers: <Widget>[
+//                 SliverOverlapAbsorber(
+//                   handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+//                     context,
+//                   ),
+//                 ),
+//                 SliverList(
+//                   delegate: SliverChildListDelegate(
+//                     List.generate(100, (int index) {
+//                       return Text('ITEM -> $index');
+//                     }),
+//                   ),
+//                 )
+//               ],
+//             );
+//           },
+//         ),
+//       ),
+//     ),
+//   );
+// }

@@ -26,4 +26,9 @@ class ContactUsResponse {
     "status": status,
     "message": message,
   };
+
+  @override
+  String toString() {
+    return 'ContactUsResponse{status: $status, message: $message}';
+  }
 }

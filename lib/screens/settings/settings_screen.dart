@@ -1,6 +1,7 @@
 import 'package:aqar_bazar/Utils/decorations.dart';
 import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/localization/app_localization.dart';
+import 'package:aqar_bazar/providers/all_properties_provider.dart';
 import 'package:aqar_bazar/providers/preferences_provider.dart';
 import 'package:aqar_bazar/screens/settings/preferences_model.dart';
 import 'package:aqar_bazar/screens/settings/settings_item.dart';
@@ -308,21 +309,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 Locale newLocale = Locale('en', 'US');
                                 MyHomePage.setLocale(context, newLocale);
                                 sessionManager.setLocale('1');
+                                sessionManager.setLang('en');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
                                 Navigator.pop(context, true);
                                 break;
                               case 2:
                                 Locale newLocale = Locale('ar', 'AE');
                                 MyHomePage.setLocale(context, newLocale);
                                 sessionManager.setLocale('2');
+                                sessionManager.setLang('ar');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
                                 Navigator.pop(context, true);
                                 break;
                               case 3:
                                 Navigator.pop(context, true);
+                                sessionManager.setLang('tr');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
                                 break;
                               default:
                                 Locale newLocale = Locale('en', 'US');
                                 MyHomePage.setLocale(context, newLocale);
                                 sessionManager.setLocale('1');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
                                 Navigator.pop(context, true);
 
                                 break;

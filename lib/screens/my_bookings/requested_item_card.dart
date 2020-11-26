@@ -2,7 +2,9 @@ import 'package:aqar_bazar/constants.dart';
 import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/user_requests_response.dart';
 import 'package:aqar_bazar/providers/cancel_request_provider.dart';
+import 'package:aqar_bazar/providers/payment_provider.dart';
 import 'package:aqar_bazar/providers/user_requests_provider.dart';
+import 'package:aqar_bazar/screens/my_bookings/pay_pal_webView.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -120,12 +122,16 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                         Container(
                           child: Center(
                             child: RaisedButton(
-                              onPressed:widget.request.payNow == null?null :() {},
+                              onPressed:widget.request.payNow == null?null :() {
+                                Provider.of<PaymentProvider>(context,listen: false).pay('66', "2000");
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>PayPalScreen()));
+
+                              },
                               child: Text(
                                 Applocalizations.of(context).translate("pay"),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   color: Colors.white,
                                 ),
                               ),
@@ -154,7 +160,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                                 Applocalizations.of(context).translate("cancel"),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   color: Colors.white,
                                 ),
                               ),

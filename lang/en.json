@@ -44,6 +44,7 @@
     "already_booked": "Already Booked",
     "comments": "Comments",
     "like":"like",
+    "dislike":"dislike",
     "one_day_ago": "one day ago",
     "leave_comment": "leave a comment",
     "add_comment" : "add comment",

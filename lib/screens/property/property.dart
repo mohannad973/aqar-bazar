@@ -18,6 +18,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/rich_text_parser.dart';
 import 'package:provider/provider.dart';
 
 import '../Property types/house.dart';
@@ -153,12 +154,19 @@ class _PropertyPageState extends State<PropertyPage> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 2, horizontal: 8),
                           child:
-                          Html(
-                            data: singleProperty.description, //html string to be parsed
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: Html(
+                                 shrinkToFit: true,
+                                data: singleProperty.description, //
+                                // html string to be parsed
 
-                            useRichText: true,
-                            defaultTextStyle: TextStyle(fontSize: 14),
-                        ),),
+                                useRichText: true,
+                                defaultTextStyle: TextStyle(fontSize: 14,),
+                                  ),
+                            )
+
+                        ),
                         SizedBox(
                           height: 10,
                         ),

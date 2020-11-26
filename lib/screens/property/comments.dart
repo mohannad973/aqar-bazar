@@ -44,6 +44,7 @@ class _CommentsState extends State<Comments> {
     _commentsScrolController.addListener(() {
       if (_commentsScrolController.position.pixels ==
           _commentsScrolController.position.maxScrollExtent) {
+        print("reached the end");
         getMoreComments(context);
       }
     });
@@ -106,7 +107,7 @@ class _CommentsState extends State<Comments> {
                                   MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                      Applocalizations.of(context).translate("one_day_ago"),
+                                      Provider.of<CommentsProvider>(context).commentsList[index].humanTime,
                                       style: TextStyle(color: fBlue),
                                     ),
                                     VerticalDivider(),
@@ -115,17 +116,21 @@ class _CommentsState extends State<Comments> {
                                           Provider.of<LikeCommentProvider>(context,listen: false).likeComment( Provider.of<CommentsProvider>(context,listen: false)
                                               .commentsList[index].id.toString());
 
-                                          if(Provider.of<LikeCommentProvider>(context).likeComentResponse != null){
+                                          Provider.of<CommentsProvider>(context,listen: false).commentsList[index].isLiked==false?
+                                          Provider.of<CommentsProvider>(context,listen: false).commentsList[index].isLiked=true:
+                                          Provider.of<CommentsProvider>(context,listen: false).commentsList[index].isLiked=false;
+
+                                          if(Provider.of<LikeCommentProvider>(context,listen: false).likeComentResponse != null){
                                             setState(() {
-                                               likeBtn = Provider.of<LikeCommentProvider>(context).likeComentResponse.btn;
+                                               likeBtn = Provider.of<LikeCommentProvider>(context,listen: false).likeComentResponse.btn;
 
                                             });
                                           }
 
                                       },
                                       child: Text(
-                                        Provider.of<LikeCommentProvider>(context).likeComentResponse==null?
-                                        Applocalizations.of(context).translate("like") :  Provider.of<LikeCommentProvider>(context,).likeBtn ,
+                                        Provider.of<CommentsProvider>(context).commentsList[index].isLiked==false?
+                                        Applocalizations.of(context).translate("like") : Applocalizations.of(context).translate("dislike")  ,
                                         style: TextStyle(color: fBlue),
                                       ),
                                     ),
@@ -134,9 +139,17 @@ class _CommentsState extends State<Comments> {
                               ),
                             ],
                           ),
-                          Icon(
-                            Icons.favorite,
-                            color: Colors.green,
+                          Row(
+                            children: [
+                              Text(
+                                Provider.of<CommentsProvider>(context).commentsList[index].totalLikes.toString()  ,
+                                style: TextStyle(color: fBlue),
+                              ),
+                              Icon(
+                                Icons.favorite,
+                                color: Colors.green,
+                              ),
+                            ],
                           )
                         ],
                       ),

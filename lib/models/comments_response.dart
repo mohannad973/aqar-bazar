@@ -80,6 +80,7 @@ class Comment {
     this.createdAt,
     this.humanTime,
     this.totalLikes,
+    this.isLiked
   });
 
   int id;
@@ -87,6 +88,7 @@ class Comment {
   DateTime createdAt;
   String humanTime;
   int totalLikes;
+  bool isLiked;
 
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
     id: json["id"],
@@ -94,7 +96,9 @@ class Comment {
     createdAt: DateTime.parse(json["created_at"]),
     humanTime: json["human_time"],
     totalLikes: json["total_likes"],
+    isLiked: json["is_liked"]
   );
+
 
   Map<String, dynamic> toJson() => {
     "id": id,
@@ -102,6 +106,7 @@ class Comment {
     "created_at": createdAt.toIso8601String(),
     "human_time": humanTime,
     "total_likes": totalLikes,
+    "is_liked": isLiked
   };
 
   @override

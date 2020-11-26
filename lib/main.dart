@@ -4,14 +4,18 @@ import 'package:aqar_bazar/providers/all_properties_provider.dart';
 import 'package:aqar_bazar/providers/cancel_request_provider.dart';
 import 'package:aqar_bazar/providers/comments_provider.dart';
 import 'package:aqar_bazar/providers/contact_host_provider.dart';
+import 'package:aqar_bazar/providers/contact_us_provider.dart';
 import 'package:aqar_bazar/providers/like_comment_provider.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
+import 'package:aqar_bazar/providers/notification_provider.dart';
+import 'package:aqar_bazar/providers/payment_provider.dart';
 import 'package:aqar_bazar/providers/preferences_provider.dart';
 import 'package:aqar_bazar/providers/property_parameters_provider.dart';
 import 'package:aqar_bazar/providers/register_provider.dart';
 import 'package:aqar_bazar/providers/request_property_provider.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
+import 'package:aqar_bazar/providers/show_all_properties_provider.dart';
 import 'package:aqar_bazar/providers/single_property_provider.dart';
 import 'package:aqar_bazar/providers/user_profile_provider.dart';
 import 'package:aqar_bazar/providers/user_requests_provider.dart';
@@ -127,6 +131,14 @@ class _MyHomePageState extends State<MyHomePage> {
             create: (_) => ContactHostProvider()),
         ChangeNotifierProvider<AllPropertiesProvider>(
             create: (_) => AllPropertiesProvider()),
+        ChangeNotifierProvider<ContactUSProvider>(
+            create: (_) => ContactUSProvider()),
+        ChangeNotifierProvider<PaymentProvider>(
+            create: (_) => PaymentProvider()),
+        ChangeNotifierProvider<NotificationProvider>(
+            create: (_) => NotificationProvider()),
+        ChangeNotifierProvider<ShowAllPropertiesProvider>(
+            create: (_) => ShowAllPropertiesProvider()),
 
       ],
       child: MaterialApp(

@@ -25,6 +25,7 @@ class AllPropertiesProvider with ChangeNotifier {
   SessionManager sessionManager = SessionManager();
 
   Future<SearchResultModel> getAllProperties(int page) async {
+    int page2 = page;
     print('the page :'+ page.toString());
     if (page == 1) {
       setFirstLoad(true);
@@ -38,15 +39,27 @@ class AllPropertiesProvider with ChangeNotifier {
     try {
       String token = await sessionManager.getAuthToken();
       String cookie = await sessionManager.getSessionToken();
+      String lang = await sessionManager.getLang() ==null?'en':await sessionManager.getLang() ;
 
-      searchResultModel = await api.getAllProperties( cookie, page);
+
+
+      searchResultModel = await api.getAllProperties( cookie, page,lang);
+
+      // while(page2 <= searchResultModel.meta.lastPage){
+      //
+      //   searchResultModel = await api.getAllProperties(cookie, page2,lang);
+      //   allProperties.addAll(searchResultModel.data);
+      //     notifyListeners();
+      //   page2+=1;
+      // }
 
       if (searchResultModel != null) {
-        allProperties.addAll(searchResultModel.data);
+         allProperties.addAll(searchResultModel.data);
+         // notifyListeners();
 
-        for(Datum d in allProperties){
-          print('new list of property :'+d.id.toString());
-        }
+        // for(Datum d in allProperties){
+        //   print('new list of property :'+d.id.toString());
+        // }
 
 
 

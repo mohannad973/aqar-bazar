@@ -66,4 +66,22 @@ class SessionManager {
     return locale;
   }
 
+
+  final String LANG = 'LANG';
+  Future<void> setLang(String lang) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setString(this.LANG, lang);
+
+
+  }
+
+//get lang from shared preferences
+  Future<String> getLang() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String lang;
+    lang = pref.getString(this.LANG) ?? null;
+    return lang;
+  }
+
 }
