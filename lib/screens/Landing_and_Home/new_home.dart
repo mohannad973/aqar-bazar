@@ -210,7 +210,7 @@ class _NewHomeState extends State<NewHome> {
                       ),
                     ),
                     trailing:
-                        Icon(Icons.book, color: Theme.of(context).primaryColor),
+                    Icon(Icons.book, color: Theme.of(context).primaryColor),
                   ),
                   onTap: () {},
                 ),
@@ -228,7 +228,7 @@ class _NewHomeState extends State<NewHome> {
                           letterSpacing: 0.5),
                     ),
                     trailing:
-                        Icon(Icons.mail, color: Theme.of(context).primaryColor),
+                    Icon(Icons.mail, color: Theme.of(context).primaryColor),
                   ),
                   onTap: () {
                     Navigator.push(context,
@@ -282,7 +282,7 @@ class _NewHomeState extends State<NewHome> {
             ),
           ),
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
             backgroundColor: Theme.of(context).primaryColor,
             elevation: 4.0,
@@ -309,7 +309,7 @@ class _NewHomeState extends State<NewHome> {
                 ),
                 IconButton(
                   icon:
-                      Icon(Icons.search, color: Theme.of(context).primaryColor),
+                  Icon(Icons.search, color: Theme.of(context).primaryColor),
                   onPressed: () {
                     Provider.of<SearchParamsProvider>(context, listen: false)
                         .getSearchParams();
@@ -341,97 +341,97 @@ class _NewHomeState extends State<NewHome> {
           ),
           body: (allPropertiesProvider.isFirstLoading() || Provider.of<LogInProvider>(context).isLoading()  )
               ? Center(
-                  child: CircularProgressIndicator(
-                  backgroundColor: fBlue,
-                ))
+              child: CircularProgressIndicator(
+                backgroundColor: fBlue,
+              ))
               : Builder(builder: (context) {
-                  final _scr = PrimaryScrollController.of(context);
-                  _scr.addListener(() {
-                    if (_scr.position.pixels == _scr.position.maxScrollExtent) {
-                      // Provider.of<AllPropertiesProvider>(context,
-                      //         listen: false)
-                      //     .getAllProperties(page += 1);
-                    }
-                  });
+            final _scr = PrimaryScrollController.of(context);
+            _scr.addListener(() {
+              if (_scr.position.pixels == _scr.position.maxScrollExtent) {
+                // Provider.of<AllPropertiesProvider>(context,
+                //         listen: false)
+                //     .getAllProperties(page += 1);
+              }
+            });
 
-                  return CustomScrollView(
-                    slivers: [
-                      SliverPersistentHeader(
-                        delegate: HomeScreenCustomSliverAppBar(
-                            expandedHeight: height / 2),
-                        pinned: true,
-                      ),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+            return CustomScrollView(
+              slivers: [
+                SliverPersistentHeader(
+                  delegate: HomeScreenCustomSliverAppBar(
+                      expandedHeight: height / 2),
+                  pinned: true,
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 25, 10, 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          FontAwesomeIcons.globeAmericas,
+                          size: 20,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          Applocalizations.of(context)
+                              .translate("Explore"),
+                          style: textStyleSemiBold().copyWith(
+                              fontSize: 25, color: Colors.black87),
+                        ),
+                        Divider(),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                        return Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Icon(
-                                FontAwesomeIcons.globeAmericas,
-                                size: 20,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                Applocalizations.of(context)
-                                    .translate("Explore"),
-                                style: textStyleSemiBold().copyWith(
-                                    fontSize: 25, color: Colors.black87),
-                              ),
-                              Divider(),
+                              index == 0
+                                  ? Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 18, right: 18, bottom: 4),
+                                child: GestureDetector(
+                                  onTap: (){
+
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowAllProperties()));
+                                  },
+                                  child: Text(
+                                    Applocalizations.of(context).translate("show-all"),
+                                    style: TextStyle(
+                                        color: fBlue, fontSize: 18),
+                                  ),
+                                ),
+                              )
+                                  : Container(),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => PropertyPage(
+                                            property: list[index],
+                                          )));
+                                },
+                                child: DealsCard(
+                                  propertyData: list[index],
+                                ),
+                              )
                             ],
                           ),
-                        ),
-                      ),
-                      SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          return Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                index == 0
-                                    ? Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 18, right: 18, bottom: 4),
-                                        child: GestureDetector(
-                                          onTap: (){
-
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowAllProperties()));
-                                          },
-                                          child: Text(
-                                            'show all >',
-                                            style: TextStyle(
-                                                color: fBlue, fontSize: 18),
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => PropertyPage(
-                                                  property: list[index],
-                                                )));
-                                  },
-                                  child: DealsCard(
-                                    propertyData: list[index],
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        },
-                        childCount: list.length,
-                      ))
-                    ],
-                  );
-                })),
+                        );
+                      },
+                      childCount: list.length,
+                    ))
+              ],
+            );
+          })),
     );
   }
 }
@@ -450,12 +450,12 @@ void _modalBottomSheet(context, List<Category> catList) {
                     padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
                     child: Center(
                         child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Image.asset(
-                        'assets/images/logo1.png',
-                        height: _avatarRadius - 10,
-                      ),
-                    )),
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Image.asset(
+                            'assets/images/logo1.png',
+                            height: _avatarRadius - 10,
+                          ),
+                        )),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -498,8 +498,8 @@ void _modalBottomSheet(context, List<Category> catList) {
                               index != catList.length
                                   ? Divider()
                                   : SizedBox(
-                                      height: 8,
-                                    ),
+                                height: 8,
+                              ),
                             ],
                           );
                         }),
@@ -579,7 +579,7 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
                   opacity: (1 - shrinkOffset / expandedHeight),
                   child: Text(_images[index].title,
                       style:
-                          TextStyle(color: Colors.white, fontSize: width / 18)),
+                      TextStyle(color: Colors.white, fontSize: width / 18)),
                 ),
               ),
               Positioned(
@@ -589,7 +589,7 @@ class HomeScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
                   opacity: (1 - shrinkOffset / expandedHeight),
                   child: Text(_images[index].title,
                       style:
-                          TextStyle(color: Colors.white, fontSize: width / 18)),
+                      TextStyle(color: Colors.white, fontSize: width / 18)),
                 ),
               ),
             ]);

@@ -516,4 +516,35 @@ class Api {
       return null;
     }
   }
+
+
+
+  Future bookProperty(String token, String id, String cookie,String from , String to , String amount , String sellType ) async {
+    try {
+      String url = baseUrl + '/v1/bookProperty';
+      final response = await http.post(url,body:{
+        "property_id":id,
+        "selling_type":sellType,
+        "amount":amount,
+        "from":from,
+        "to":to
+
+      }, headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cookie': cookie,
+        'Authorization': 'Bearer $token',
+      });
+
+      if (response.statusCode == 200) {
+        return successStringResponseFromJson(response.body);
+      } else {
+
+        return null;
+      }
+    } catch (e) {
+      print('error ' + e.toString());
+    }
+  }
+
 }

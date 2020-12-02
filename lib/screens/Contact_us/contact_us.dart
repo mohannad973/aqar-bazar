@@ -4,6 +4,9 @@ import 'package:aqar_bazar/Utils/form_validators.dart';
 import 'package:aqar_bazar/constants.dart';
 import 'package:aqar_bazar/providers/contact_us_provider.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/Home.dart';
+import 'package:aqar_bazar/localization/app_localization.dart';
+
+
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -48,8 +51,7 @@ class _ContactUsState extends State<ContactUs> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
-          title: Text(
-            'Contact us',
+          title: Text(Applocalizations.of(context).translate("contact-us"),
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -94,7 +96,7 @@ class _ContactUsState extends State<ContactUs> {
                                         emptyFieldVAlidator(name),
                                         controller: nameController,
                                         decoration: inputDecoration()
-                                            .copyWith(hintText: "Name"),
+                                            .copyWith(hintText: Applocalizations.of(context).translate("name")),
                                       ),
                                       SizedBox(
                                         height: 15,
@@ -107,7 +109,7 @@ class _ContactUsState extends State<ContactUs> {
                                         emailValidator(email),
                                         controller: emailController,
                                         decoration: inputDecoration()
-                                            .copyWith(hintText: "Email"),
+                                            .copyWith(hintText: Applocalizations.of(context).translate("email")),
                                       ),
                                       SizedBox(
                                         height: 15,
@@ -120,7 +122,7 @@ class _ContactUsState extends State<ContactUs> {
                                         emptyFieldVAlidator(phone),
                                         controller: phoneController,
                                         decoration: inputDecoration()
-                                            .copyWith(hintText: "Phone number"),
+                                            .copyWith(hintText: Applocalizations.of(context).translate("phone")),
                                       ),
                                       SizedBox(
                                         height: 15,
@@ -134,7 +136,7 @@ class _ContactUsState extends State<ContactUs> {
                                           emptyFieldVAlidator(message),
                                           controller: messageController,
                                           decoration: inputDecoration()
-                                              .copyWith(hintText: 'Message'),
+                                              .copyWith(hintText: Applocalizations.of(context).translate("send")),
                                           maxLines: 7,
                                           keyboardType: TextInputType.text,
                                         ),
@@ -196,7 +198,7 @@ class _ContactUsState extends State<ContactUs> {
                             messageController.clear();
                             _scaffoldKey.currentState.showSnackBar(SnackBar(
                               content: Text(
-                                'Your Message were sent successfully',
+                                Applocalizations.of(context).translate("message-sent"),
                               ),
                               duration: Duration(seconds: 2),
                             ));
@@ -220,7 +222,7 @@ class _ContactUsState extends State<ContactUs> {
                         color: Colors.white,
                       ),
                       label: Text(
-                        "Send message",
+                        Applocalizations.of(context).translate("send"),
                         style: TextStyle(color: Colors.white),
                       ),
                       color: iconColor(),

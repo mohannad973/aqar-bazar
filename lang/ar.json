@@ -111,9 +111,27 @@
   "sell_type": "النوع",
 
 
-  "favourites": "المفضلة"
+  "favourites": "المفضلة",
+  "show-all": "المزيد >",
+  "for-rent": "إيجار",
+  "for-sell": "بيع",
+  "all-properties": "جميع المنشآت",
 
+  "contact-us": "تواصل معنا",
 
+  "name": "الاسم",
+
+  "phone": "رفم الهاتف",
+
+  "empty-fav" : "قائمة المفضلة لديك فارغة",
+
+  "added-to-fav": "تمت الإضافة الى المفضلة",
+
+  "removed-from-fav": "تمت الإزالة من المفضلة",
+
+  "message-sent": "تم إرسال الرسالة بنجاح",
+
+  "contact-host" : "تم إرسال الرسالة الى المالك"
 
 
 }

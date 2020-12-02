@@ -61,57 +61,57 @@ class _FavouritesScreen extends State<FavouritesScreen> {
       ),
       body: favouritesProvider.isFirstLoading()
           ? Center(
-              child: CircularProgressIndicator(
-              backgroundColor: darkBlue,
-            ))
+          child: CircularProgressIndicator(
+            backgroundColor: darkBlue,
+          ))
           : favouritesProvider.data.isEmpty
-              ? Center(
-                  child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Image.asset('assets/images/empty-box.png'),
-                        height: 200,
-                        width: 200,
-                      ),
-                      Container(
-                        child: Text(
-                          'Your Favourites list is Empty',
-                          style: TextStyle(fontSize: 20, color: Colors.black),
-                        ),
-                      ),
-                    ],
-                  ),
-                ))
-              : Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: ListView.builder(
-                        controller: con,
-                        // itemExtent: itemSize,
-                        itemCount: favouritesProvider.data.length,
-                        itemBuilder: (context, index) {
-                          return DealsCard(
-                            fav: true,
-                            propertyData: favouritesProvider.data[index],
-                          );
-                          // return RequestedItemCard(request: userRequestProvider.allRequestsList[index],itemIndex: index,);
-                        },
-                      ),
-                    ),
-                    favouritesProvider.isLoading()
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(
-                              backgroundColor: darkBlue,
-                            ),
-                          )
-                        : Container()
-                  ],
+          ? Center(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: Image.asset('assets/images/empty-box.png'),
+                  height: 200,
+                  width: 200,
                 ),
+                Container(
+                  child: Text(
+                    'Your Favourites list is Empty',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
+          ))
+          : Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              controller: con,
+              // itemExtent: itemSize,
+              itemCount: favouritesProvider.data.length,
+              itemBuilder: (context, index) {
+                return DealsCard(
+                  fav: true,
+                  propertyData: favouritesProvider.data[index],
+                );
+                // return RequestedItemCard(request: userRequestProvider.allRequestsList[index],itemIndex: index,);
+              },
+            ),
+          ),
+          favouritesProvider.isLoading()
+              ? Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CircularProgressIndicator(
+              backgroundColor: darkBlue,
+            ),
+          )
+              : Container()
+        ],
+      ),
     );
   }
 

@@ -111,7 +111,7 @@ void _showToast(BuildContext context) {
   final scaffold = Scaffold.of(context);
   scaffold.showSnackBar(
     SnackBar(
-      content: const Text('Message Sent To Host'),
+      content:  Text(Applocalizations.of(context).translate("contact-host"),),
     ),
   );
 }

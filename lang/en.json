@@ -110,7 +110,39 @@
     "sell_type": "Type",
 
 
-    "favourites": "Favourites"
+    "favourites": "Favourites",
+    "show-all": "show all >",
+
+
+
+
+    "for-rent": "For rent",
+    "for-sell": "for sell",
+
+    "all-properties": "All Properties",
+
+    "contact-us": "Contact Us",
+
+    "name": "Name",
+
+    "phone": "Phone Number",
+
+    "empty-fav" : "Your favourite List is empty",
+
+
+
+    "added-to-fav": "Property added to favourites",
+
+    "removed-from-fav": "Property removed from favourites",
+
+    "message-sent": "message sent successfully",
+
+
+    "contact-host" : "message sent to host"
+
+
+
+
 
 
 
