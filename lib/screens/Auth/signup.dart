@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/Utils/form_validators.dart';
+import 'package:aqar_bazar/Utils/secure_storage.dart';
 import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/register_provider.dart';
 import 'package:aqar_bazar/screens/Auth/login.dart';
@@ -28,6 +29,8 @@ class _SignUpState extends State<SignUp> {
       lastName = '',
       password = '',
       confirmPasswod = '';
+
+  SecureStorage secureStorage = SecureStorage();
 
   TextStyle defaultStyle = TextStyle(
     color: Colors.grey,
@@ -212,6 +215,9 @@ class _SignUpState extends State<SignUp> {
                                                           passwordConfirm);
 
                                                   if (user) {
+                                                    secureStorage.deleteAllSecureStorage();
+                                                    secureStorage.writeSecurePass('pass', passwordController.text.trim());
+                                                    secureStorage.writeSecureEmail('email', emailController.text.trim());
                                                     Navigator.of(context)
                                                         .pushReplacement(
                                                       MaterialPageRoute(

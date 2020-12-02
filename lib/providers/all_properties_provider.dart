@@ -20,11 +20,11 @@ class AllPropertiesProvider with ChangeNotifier {
 
   List<Datum> allProperties = [];
 
-  SearchResultModel searchResultModel = SearchResultModel();
+  SearchResultResponse searchResultModel = SearchResultResponse();
 
   SessionManager sessionManager = SessionManager();
 
-  Future<SearchResultModel> getAllProperties(int page) async {
+  Future<SearchResultResponse> getAllProperties(int page) async {
     int page2 = page;
     print('the page :'+ page.toString());
     if (page == 1) {
@@ -40,10 +40,12 @@ class AllPropertiesProvider with ChangeNotifier {
       String token = await sessionManager.getAuthToken();
       String cookie = await sessionManager.getSessionToken();
       String lang = await sessionManager.getLang() ==null?'en':await sessionManager.getLang() ;
+      String currency = await sessionManager.getCurrency()==null?'USD':await sessionManager.getCurrency();
 
 
 
-      searchResultModel = await api.getAllProperties( cookie, page,lang);
+
+      searchResultModel = await api.getAllProperties( cookie, page,lang,currency);
 
       // while(page2 <= searchResultModel.meta.lastPage){
       //

@@ -71,6 +71,17 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
       appBar: AppBar(title: Text(Applocalizations.of(context).translate("my_requested_property"),),),
       body:
           userRequestProvider.isLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):
+              userRequestProvider.allRequestsList.isEmpty?Center(child: Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(child: Image.asset('assets/images/empty-box.png'),height: 200,width: 200,),
+                    Container(child: Text('Your Favourites list is Empty',style: TextStyle(fontSize: 20,color: Colors.black),),),
+                  ],
+                ),
+              )):
 
       SingleChildScrollView(
         child: Expanded(

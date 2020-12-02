@@ -16,6 +16,7 @@ class LogInProvider with ChangeNotifier {
 
 
   Future<bool> logIn(String email, String password) async {
+    print('pr4');
     print('22222222');
     setLoading(true);
 

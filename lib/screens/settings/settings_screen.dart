@@ -3,6 +3,7 @@ import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/all_properties_provider.dart';
 import 'package:aqar_bazar/providers/preferences_provider.dart';
+import 'package:aqar_bazar/providers/property_parameters_provider.dart';
 import 'package:aqar_bazar/screens/settings/preferences_model.dart';
 import 'package:aqar_bazar/screens/settings/settings_item.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   int _selected;
 
   int languageSelected;
+
 
   @override
   void initState() {
@@ -242,6 +244,58 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           value: index,
                           groupValue: _selected,
                           onChanged: (value) {
+                            SessionManager sessionManager = SessionManager();
+                            _selected = index;
+                            int currID = currencyList[_selected].id;
+
+                            switch (currID) {
+                              case 238:
+                                sessionManager.setCurrency('AED');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
+                                Navigator.pop(context, true);
+                                break;
+                              case 232:
+
+                                sessionManager.setCurrency('TRY');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
+                                Navigator.pop(context, true);
+                                break;
+                              case 5:
+
+                                sessionManager.setCurrency('USD');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
+                                Navigator.pop(context, true);
+                                break;
+
+                              case 198:
+
+                                sessionManager.setCurrency('SAR');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
+                                Navigator.pop(context, true);
+                                break;
+                              default:
+
+                                sessionManager.setCurrency('USD');
+                                Provider.of<AllPropertiesProvider>(context, listen: false)
+                                    .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
+                                Navigator.pop(context, true);
+
+                                break;
+                            }
                             setState(() {
                               _selected = index;
                             });
@@ -312,6 +366,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 sessionManager.setLang('en');
                                 Provider.of<AllPropertiesProvider>(context, listen: false)
                                     .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
                                 Navigator.pop(context, true);
                                 break;
                               case 2:
@@ -321,6 +377,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 sessionManager.setLang('ar');
                                 Provider.of<AllPropertiesProvider>(context, listen: false)
                                     .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
                                 Navigator.pop(context, true);
                                 break;
                               case 3:
@@ -328,6 +386,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 sessionManager.setLang('tr');
                                 Provider.of<AllPropertiesProvider>(context, listen: false)
                                     .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
                                 break;
                               default:
                                 Locale newLocale = Locale('en', 'US');
@@ -335,6 +395,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 sessionManager.setLocale('1');
                                 Provider.of<AllPropertiesProvider>(context, listen: false)
                                     .getAllProperties(1);
+                                Provider.of<PropertyParametersProvider>(context, listen: false)
+                                    .getPropertyParameters();
                                 Navigator.pop(context, true);
 
                                 break;

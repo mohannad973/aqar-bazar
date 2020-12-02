@@ -1,4 +1,3 @@
-
 import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/models/add_comment_model.dart';
 import 'package:aqar_bazar/models/cancel_request_response.dart';
@@ -14,88 +13,102 @@ import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:aqar_bazar/screens/profile/models/user_profile_model.dart';
 import 'package:http/http.dart' as http;
 
-
 const baseUrl = "https://aqarbazar.com/api";
 
 SessionManager sessionManager = SessionManager();
 
 class Api {
-  Future getSearchParameters() {
+  Future getSearchParameters(String lang) {
     var url = baseUrl + "/v1/searchParameters";
-    return http.get(url);
+    return http.get(url, headers: {
+      'langLabel': lang,
+    });
   }
 
   Future search(
-      {String furnished,
+      { String furnished,
       String type,
       String city,
       String rooms,
       String bathrooms,
       String category,
       String price,
-      String capacity}) {
+      String capacity,
+      String token,
+      String cookie,
+      String lang,
+      String currency}) {
     print("from api class 989786" + furnished);
     var url = baseUrl + "/v1/search";
     print("uuuuuuuurrrrrrrl" + url);
-    return http.post(url);
-  }
-
-
-
-  Future filter(
-      {String furnished,
-        String type,
-        String rooms,
-        String price,
-        String capacity,int page}) {
-    print("from api class 989786" + furnished);
-    var url = baseUrl + "/v1/search?page=$page";
-    print("uuuuuuuurrrrrrrl" + url);
-    return http.post(url,body: {
-      'furnished':furnished,
-      'type':type,
-      'price_range':price,
-      'capacity':capacity,
-      'rooms':rooms
+    return http.post(url, headers: {
+      'Authorization': 'Bearer $token',
+      'langLabel': lang,
+      'cookie': cookie,
+      'currency': currency
     });
   }
 
-  Future getPreferences() {
-    var url = baseUrl + "/v1/getPreferences";
-    return http.get(url);
+  Future filter(
+      {String furnished,
+      String type,
+      String rooms,
+      String price,
+      String capacity,
+      int page,
+      String token,
+      String cookie,
+      String lang,
+      String currency}) {
+    print("from api class 989786" + furnished);
+    var url = baseUrl + "/v1/search?page=$page";
+    print("uuuuuuuurrrrrrrl" + url);
+    return http.post(url, body: {
+      'furnished': furnished,
+      'type': type,
+      'price_range': price,
+      'capacity': capacity,
+      'rooms': rooms
+    }, headers: {
+      'Authorization': 'Bearer $token',
+      'langLabel': lang,
+      'cookie': cookie,
+      'currency': currency
+    });
   }
 
-  Future getPropertyParameters() {
+  Future getPreferences(String lang) {
+    var url = baseUrl + "/v1/getPreferences";
+    return http.get(url, headers: {'langLabel': lang});
+  }
+
+  Future getPropertyParameters(int langId) {
     print('test3');
     var url = baseUrl + "/v1/propertyParameters";
-    return http.get(url);
+    return http.get(url, headers: {'frontLang': langId.toString()});
   }
 
   Future login(String email, String password) async {
     try {
       print('777777');
-     //print('login cookie : '+coo);
+      //print('login cookie : '+coo);
       final String apiUrl = baseUrl + '/v1/login';
-      final response = await http.post(apiUrl, body: {
-        "email": email,
-        "password": password
-      });
+      final response =
+          await http.post(apiUrl, body: {"email": email, "password": password});
 
-      print('statusCode : '+response.statusCode.toString());
+      print('statusCode : ' + response.statusCode.toString());
 
-      if(response.statusCode == 401){
+      if (response.statusCode == 401) {
         return response.statusCode;
       }
 
-
-     print('email :' + email+'t');
-     print('pass :' + password+'p');
+      print('email :' + email + 't');
+      print('pass :' + password + 'p');
       int index = response.headers['set-cookie'].indexOf(';');
       String cookie = response.headers['set-cookie'].substring(0, index);
 
-
       sessionManager.setSessionToken(cookie);
-     print('login cookie :'+cookie);
+      print('login cookie :' + cookie);
 
       if (response.statusCode == 200) {
         final String responseString = response.body;
@@ -107,7 +120,7 @@ class Api {
         return null;
       }
     } catch (e) {
-      print('9999999'+e.toString());
+      print('9999999' + e.toString());
       return null;
     }
   }
@@ -158,13 +171,16 @@ class Api {
     }
   }
 
-  Future getPropertyInfo(String url, String token,String lang) async {
+  Future getPropertyInfo(String url, String token, String lang, String cookie,
+      String currency) async {
     try {
       final response = await http.get(url, headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
-         'langLabel':lang
+        'langLabel': lang,
+        'cookie': cookie,
+        'currency': currency
       });
 
       if (response.statusCode == 200) {
@@ -172,9 +188,7 @@ class Api {
       } else {
         return null;
       }
-    } catch (e) {
-      print('error ' + e.toString());
-    }
+    } catch (e) {}
   }
 
   Future requestProperty(String token, String id, String cookie) async {
@@ -184,6 +198,7 @@ class Api {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Cookie': cookie,
+        'Authorization': 'Bearer $token',
       });
 
       print('55555555555  ' + response.body);
@@ -222,8 +237,8 @@ class Api {
 
   Future getComments(
       String propertId, int pageNumber, String token, String cookie) async {
-    print('tstToken '+token);
-    print('tstCookie '+cookie);
+    print('tstToken ' + token);
+    print('tstCookie ' + cookie);
     try {
       String url =
           baseUrl + '/properties/$propertId/comments?page=${pageNumber}';
@@ -232,7 +247,7 @@ class Api {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${token.trim()}',
-        'Cookie': cookie.trim(),
+        // 'Cookie': cookie.trim(),
       });
 
       print('comment body ' + response.body.toString());
@@ -295,14 +310,18 @@ class Api {
     }
   }
 
-  Future getAllRequests(String token, String cookie, int page) async {
+  Future getAllRequests(String token, String cookie, int page, String lang,
+      String currency) async {
     try {
+      print('////////// ' + lang);
       String url = baseUrl + '/v1/requests?page=$page';
 
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
-        'Cookie': cookie,
+        // 'Cookie': cookie,
         'Authorization': 'Bearer $token',
+        'langLabel': lang,
+        'currency': currency
       });
 
       print('all requests1 ' + response.body);
@@ -319,13 +338,13 @@ class Api {
     }
   }
 
-
-  Future contactHost(String token, String cookie, String propertyId,String message) async {
+  Future contactHost(
+      String token, String cookie, String propertyId, String message) async {
     try {
       String url = baseUrl + '/properties/$propertyId/contactHost';
 
-      final response = await http.post(url,body: {
-        'message' : message
+      final response = await http.post(url, body: {
+        'message': message
       }, headers: {
         'Accept': 'application/json',
         'Cookie': cookie,
@@ -334,7 +353,6 @@ class Api {
 
       print('contact host ' + response.body);
       print('contact host 2' + response.statusCode.toString());
-
 
       if (response.statusCode == 200) {
         return successStringResponseFromJson(response.body);
@@ -346,17 +364,17 @@ class Api {
     }
   }
 
-
-
-  Future getAllProperties( String cookie, int page,String lang) async {
+  Future getAllProperties(
+      String cookie, int page, String lang, String currency) async {
+    print('lang all ' + lang);
     try {
       String url = baseUrl + '/v1/properties?page=$page';
-
 
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
         'Cookie': cookie,
-        'langLabel':lang
+        'langLabel': lang,
+        'currency': currency
       });
 
       print('all properties1 ' + response.body);
@@ -373,8 +391,8 @@ class Api {
     }
   }
 
-  Future contactUs(String email, String name, String phone,
-      String message) async {
+  Future contactUs(
+      String email, String name, String phone, String message) async {
     try {
       final String apiUrl = baseUrl + '/v1/submitContact';
       final response = await http.post(apiUrl, body: {
@@ -398,17 +416,16 @@ class Api {
     }
   }
 
-
   Future pay(String propertyId, String amount) async {
     try {
-      final String apiUrl = baseUrl + '/v1/book/paypal?property_id=$propertyId&amount=$amount';
+      final String apiUrl =
+          baseUrl + '/v1/book/paypal?property_id=$propertyId&amount=$amount';
       final response = await http.get(apiUrl);
-
 
       if (response.statusCode == 200) {
         final String responseString = response.body;
 
-        print("response webview : "+responseString );
+        print("response webview : " + responseString);
 
         return (responseString);
       } else {
@@ -421,22 +438,20 @@ class Api {
     }
   }
 
-
   Future getNotifications(String token, String cookie) async {
     try {
       final String apiUrl = baseUrl + '/v1/notifications';
-      final response = await http.get(apiUrl,headers: {
+      final response = await http.get(apiUrl, headers: {
         'Accept': 'application/json',
         'Cookie': cookie,
         'Authorization': 'Bearer $token',
       });
 
-
-      print('nots '+response.toString());
+      print('nots ' + response.toString());
       if (response.statusCode == 200) {
         final String responseString = response.body;
 
-        print("response notif : "+responseString );
+        print("response notif : " + responseString);
 
         return (responseString);
       } else {
@@ -445,24 +460,60 @@ class Api {
         return null;
       }
     } catch (e) {
-      print('errr 80'+e.toString());
+      print('errr 80' + e.toString());
       return null;
     }
   }
 
-  // Future searchByPropertyType(
-  //     {String propertyType,
-  //      int page}) {
-  //
-  //   var url = baseUrl + "/v1/search?page=$page";
-  //   return http.post(url,body: {
-  //     'furnished':furnished,
-  //     'type':type,
-  //     'price_range':price,
-  //     'capacity':capacity,
-  //     'rooms':rooms
-  //   });
+  Future searchByPropertyType(
+      {String propertyType,
+      int page,
+      String token,
+      String cookie,
+      String lang,
+      String currency}) {
+    var url = baseUrl + "/v1/search?page=$page";
+    return http.post(url, body: {
+      "category": propertyType
+    }, headers: {
+      'Authorization': 'Bearer $token',
+      'langLabel': lang,
+      'cookie': cookie,
+      'currency': currency
+    });
+  }
 
+  Future getFavourites(
+      {int page, String token, String cookie, String lang, String currency}) {
+    try {
+      var url = baseUrl + "/v1/favourites?page=$page";
+      var response = http.get(url, headers: {
+        'Authorization': 'Bearer $token',
+        'langLabel': lang,
+        'currency': currency
+        // 'cookie': cookie
+      });
+      print('fav2 ' + response.toString());
+      return response;
+    } catch (e) {
+      print('fav3 ' + e.toString());
+      return null;
+    }
+  }
 
+  Future addToFav({
+    String propertyId,
+    String token,
+  }) {
+    try {
+      var url = baseUrl + "/properties/$propertyId/favorite";
+      var response = http.post(url, headers: {
+        'Authorization': 'Bearer $token',
+      });
 
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
 }

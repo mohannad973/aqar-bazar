@@ -48,6 +48,7 @@ class SingleProperty {
     this.favoriteRoute,
     this.favoriteBtnTxt,
     this.isBooked,
+    this.requestId
   });
 
   int id;
@@ -61,12 +62,13 @@ class SingleProperty {
   int bedroomsNumber;
   int bathroomsNumber;
   int sellingType;
-  int ratio;
+  dynamic ratio;
   String createdAt;
   String webRoute;
   String favoriteRoute;
   String favoriteBtnTxt;
   bool isBooked;
+  int requestId;
 
   factory SingleProperty.fromJson(Map<String, dynamic> json) => SingleProperty(
     id: json["id"],
@@ -86,6 +88,7 @@ class SingleProperty {
     favoriteRoute: json["favorite_route"],
     favoriteBtnTxt: json["favoriteBtnTxt"],
     isBooked: json["isBooked"],
+    requestId: json["request_id"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -106,6 +109,7 @@ class SingleProperty {
     "favorite_route": favoriteRoute,
     "favoriteBtnTxt": favoriteBtnTxt,
     "isBooked": isBooked,
+    "request_id": requestId
   };
 
   @override

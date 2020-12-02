@@ -5,6 +5,7 @@ import 'package:aqar_bazar/models/cancel_request_response.dart';
 import 'package:aqar_bazar/models/succes_string_response.dart';
 import 'package:aqar_bazar/models/user_requests_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/log_in_response.dart';
+import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/profile/models/user_profile_model.dart';
 import 'package:flutter/foundation.dart';
 
@@ -37,8 +38,11 @@ class UserRequestProvider with ChangeNotifier {
     try {
       String token = await sessionManager.getAuthToken();
       String cookie = await sessionManager.getSessionToken();
+       String lang  = await sessionManager.getLang();
+      String currency = await sessionManager.getCurrency()==null?"USD": await sessionManager.getCurrency();
+       print('lang2 '+lang==null.toString());
 
-      userRequestsResponse = await api.getAllRequests(token, cookie, page);
+      userRequestsResponse = await api.getAllRequests(token, cookie, page,lang,currency);
 
       if (userRequestsResponse != null) {
         allRequestsList.addAll(userRequestsResponse.request);

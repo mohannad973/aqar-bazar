@@ -1,11 +1,13 @@
 import 'package:aqar_bazar/Utils/colors.dart';
 import 'package:aqar_bazar/Utils/decorations.dart';
+import 'package:aqar_bazar/Utils/secure_storage.dart';
 import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/constants.dart';
 import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/slider_images.dart';
 import 'package:aqar_bazar/providers/all_properties_provider.dart';
+import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/providers/notification_provider.dart';
 import 'package:aqar_bazar/providers/property_parameters_provider.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
@@ -15,8 +17,10 @@ import 'package:aqar_bazar/screens/Auth/login.dart';
 import 'package:aqar_bazar/screens/Contact_us/contact_us.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/categories.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/models/property_parameters_model.dart';
+import 'package:aqar_bazar/screens/Landing_and_Home/properties_by_type.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/show_all_properties_screen.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/widgets/best_deals.dart';
+import 'package:aqar_bazar/screens/favourites/favourites_screen.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:aqar_bazar/screens/my_bookings/my_bookings_screen.dart';
@@ -55,12 +59,33 @@ class _NewHomeState extends State<NewHome> {
   String _progress = "0%";
   ScrollController _controller;
   int page = 1;
+  SecureStorage secureStorage = SecureStorage();
+  bool successLogin = false;
+
+  _performLogin() async{
+    print('pr1');
+    String email = await secureStorage.readEmail('email');
+    String  pass = await secureStorage.readPass('pass');
+
+    print('pr2 '+email + " "+ pass);
+
+    final bool user = await Provider
+        .of<LogInProvider>(
+        context,
+        listen: false)
+        .logIn(email, pass);
+    print('pr3 '+user.toString());
+    if(user){
+      successLogin = true;
+
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    _performLogin();
     Provider.of<AllPropertiesProvider>(context, listen: false)
         .getAllProperties(1);
 
@@ -149,20 +174,20 @@ class _NewHomeState extends State<NewHome> {
                     ),
                   ),
                 ),
-                GestureDetector(
-                  child: ListTile(
-                    leading: Text(
-                      Applocalizations.of(context).translate("home"),
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey[600],
-                          letterSpacing: 0.5),
-                    ),
-                    trailing:
-                        Icon(Icons.home, color: Theme.of(context).primaryColor),
-                  ),
-                  onTap: () {},
-                ),
+                // GestureDetector(
+                //   child: ListTile(
+                //     leading: Text(
+                //       Applocalizations.of(context).translate("home"),
+                //       style: TextStyle(
+                //           fontSize: 18,
+                //           color: Colors.grey[600],
+                //           letterSpacing: 0.5),
+                //     ),
+                //     trailing:
+                //         Icon(Icons.home, color: Theme.of(context).primaryColor),
+                //   ),
+                //   onTap: () {},
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Divider(),
@@ -214,24 +239,21 @@ class _NewHomeState extends State<NewHome> {
                   padding: const EdgeInsets.all(8.0),
                   child: Divider(),
                 ),
-                GestureDetector(
-                  child: ListTile(
-                    leading: Text(
-                      Applocalizations.of(context).translate("about_us"),
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey[600],
-                          letterSpacing: 0.5),
-                    ),
-                    trailing:
-                        Icon(Icons.info, color: Theme.of(context).primaryColor),
-                  ),
-                  onTap: () {},
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Divider(),
-                ),
+                // GestureDetector(
+                //   child: ListTile(
+                //     leading: Text(
+                //       Applocalizations.of(context).translate("about_us"),
+                //       style: TextStyle(
+                //           fontSize: 18,
+                //           color: Colors.grey[600],
+                //           letterSpacing: 0.5),
+                //     ),
+                //     trailing:
+                //         Icon(Icons.info, color: Theme.of(context).primaryColor),
+                //   ),
+                //   onTap: () {},
+                // ),
+
                 GestureDetector(
                   child: ListTile(
                     leading: Text(
@@ -245,6 +267,7 @@ class _NewHomeState extends State<NewHome> {
                         color: Theme.of(context).primaryColor),
                   ),
                   onTap: () {
+                    secureStorage.deleteAllSecureStorage();
                     SessionManager sessionManager = SessionManager();
                     sessionManager.clearSessionManager();
                     Navigator.pushReplacement(context,
@@ -298,10 +321,10 @@ class _NewHomeState extends State<NewHome> {
                 ),
                 SizedBox(width: 25),
                 IconButton(
-                  icon: Icon(Icons.book, color: Theme.of(context).primaryColor),
+                  icon: Icon(Icons.favorite_border, color: Theme.of(context).primaryColor),
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TestScreen()));
+                        MaterialPageRoute(builder: (context) => FavouritesScreen()));
                   },
                 ),
                 IconButton(
@@ -316,7 +339,7 @@ class _NewHomeState extends State<NewHome> {
               ],
             ),
           ),
-          body: allPropertiesProvider.isFirstLoading()
+          body: (allPropertiesProvider.isFirstLoading() || Provider.of<LogInProvider>(context).isLoading()  )
               ? Center(
                   child: CircularProgressIndicator(
                   backgroundColor: fBlue,
@@ -373,16 +396,16 @@ class _NewHomeState extends State<NewHome> {
                                 index == 0
                                     ? Padding(
                                         padding: const EdgeInsets.only(
-                                            left: 18, right: 18, bottom: 2),
+                                            left: 18, right: 18, bottom: 4),
                                         child: GestureDetector(
                                           onTap: (){
 
                                             Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowAllProperties()));
                                           },
                                           child: Text(
-                                            'see all >',
+                                            'show all >',
                                             style: TextStyle(
-                                                color: fBlue, fontSize: 15),
+                                                color: fBlue, fontSize: 18),
                                           ),
                                         ),
                                       )
@@ -445,29 +468,28 @@ void _modalBottomSheet(context, List<Category> catList) {
                             children: [
                               GestureDetector(
                                 child: Text(
-                                  catList[index].name,
+                                  catList[index].name==null?"":catList[index].name,
                                   style: textStyleSemiBold()
                                       .copyWith(fontWeight: FontWeight.w400),
                                 ),
                                 onTap: () {
-                                  Provider.of<SearchResultProvider>(context,
-                                          listen: false)
-                                      .search(
-                                          furnished: "",
-                                          category: "",
-                                          capacity: "",
-                                          price: "",
-                                          bathrooms: "",
-                                          rooms: "",
-                                          city: "",
-                                          type: "");
+                                  // Provider.of<SearchResultProvider>(context,
+                                  //         listen: false)
+                                  //     .search(
+                                  //         furnished: "",
+                                  //         category: "",
+                                  //         capacity: "",
+                                  //         price: "",
+                                  //         bathrooms: "",
+                                  //         rooms: "",
+                                  //         city: "",
+                                  //         type: "");
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              PropertyListScreen()));
-                                  print("*/*/*/**/*/" +
-                                      catList[index].id.toString());
+                                              PropertiesByTypeScreen(propertyType: catList[index].id,propertyTypeName: catList[index].name,)));
+
                                 },
                               ),
                               SizedBox(

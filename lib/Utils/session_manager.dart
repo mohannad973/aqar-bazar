@@ -70,9 +70,7 @@ class SessionManager {
   final String LANG = 'LANG';
   Future<void> setLang(String lang) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
     prefs.setString(this.LANG, lang);
-
 
   }
 
@@ -80,8 +78,22 @@ class SessionManager {
   Future<String> getLang() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     String lang;
-    lang = pref.getString(this.LANG) ?? null;
+    lang = pref.getString(this.LANG) ?? 'en';
     return lang;
+  }
+
+
+  final String CURRENCY = 'CURRENCY';
+  Future<void> setCurrency(String currency) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(this.CURRENCY, currency);
+  }
+
+  Future<String> getCurrency() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    String currency;
+    currency = pref.getString(this.CURRENCY) ?? 'USD';
+    return currency;
   }
 
 }

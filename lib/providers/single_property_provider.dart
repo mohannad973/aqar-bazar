@@ -25,14 +25,23 @@ class SinglePropertyProvider with ChangeNotifier{
       attachments.clear();
       String token = await sessionManager.getAuthToken();
       String lang = await sessionManager.getLang();
-      SinglePropertyResponse response = await api.getPropertyInfo(url,token,lang);
+      String cookie = await sessionManager.getSessionToken();
+      String currency = await sessionManager.getCurrency()==null?"USD": await sessionManager.getCurrency();
+      // print('rr3 '+token);
+       print('rr4 '+(lang==null).toString());
+       print('rr5 '+(cookie==null).toString());
+
+      SinglePropertyResponse response = await api.getPropertyInfo(url,token,lang,cookie,currency);
+
+      print('rr6 '+response.toString());
+
       if(response != null){
         //singlePropertyResponse = singlePropertyResponseFromJson(response.body);
         singleProperty = response.data;
         attachments = response.data.attachments;
 
-        print('single property info 1: '+url);
-        print('single property info 2: '+singleProperty.isBooked.toString());
+        print('rr7 '+singleProperty.isBooked.toString());
+
 
 
         setLoading(false);
@@ -40,16 +49,16 @@ class SinglePropertyProvider with ChangeNotifier{
       }
 
       if (singleProperty == null) {
-        print('single property info 3: ');
+        print('rr8 '+singleProperty.toString());
         setLoading(false);
 
         return singleProperty;
       }
-      print('single property info 4: ');
+      print('rr9 '+singleProperty.toString());
       setLoading(false);
       return singleProperty;
     } catch (e) {
-      print('single property info 5: '+e.toString());
+      print('rr10 '+e.toString());
       setLoading(false);
       return null;
     }

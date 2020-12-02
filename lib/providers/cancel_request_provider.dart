@@ -3,8 +3,10 @@ import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/models/cancel_request_response.dart';
 import 'package:aqar_bazar/models/succes_string_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/log_in_response.dart';
+import 'package:aqar_bazar/screens/Auth/models/register_success_response.dart';
 import 'package:aqar_bazar/screens/profile/models/user_profile_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart';
 
 import 'package:provider/provider.dart';
 
@@ -18,30 +20,35 @@ class CancelRequestProvider with ChangeNotifier {
 
   String message;
 
-  Future<CancelRequestResponse> cancelRequest(String id ,) async {
+  Future<bool> cancelRequest(String id ,) async {
+    print('cancel1');
     setLoading(true);
     try {
+      message ='';
       String token = await sessionManager.getAuthToken();
       String cookie = await sessionManager.getSessionToken();
 
 
-      cancelRequestResponse = await api.cancelRequest(token,id,cookie);
+      cancelRequestResponse  = await api.cancelRequest(token, id, cookie);
 
-      if (cancelRequestResponse != null) {
+
+
+
+      if (cancelRequestResponse != null  ) {
 
         message = cancelRequestResponse.message;
 
         setLoading(false);
-        return cancelRequestResponse;
+        return true;
       }
 
 
       setLoading(false);
-      return null;
+      return false;
     } catch (e) {
 
       setLoading(false);
-      return null;
+      return false;
     }
   }
 

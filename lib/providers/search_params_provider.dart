@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/Network/Api.dart';
+import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/screens/filter/property_params_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -7,6 +8,7 @@ class SearchParamsProvider with ChangeNotifier {
   bool loading = false;
 
   Api api = new Api();
+  SessionManager sessionManager = SessionManager();
   SearchParamsModel searchParams = SearchParamsModel();
   List<City> cityList = [];
   List<PriceRanges> pricesList = [];
@@ -18,7 +20,8 @@ class SearchParamsProvider with ChangeNotifier {
   Future<SearchParamsModel> getSearchParams() async {
     setLoading(true);
     try {
-      Response response = await api.getSearchParameters();
+      String lang = await sessionManager.getLang();
+      Response response = await api.getSearchParameters(lang);
 
 
       pricesList.clear();
@@ -44,11 +47,14 @@ class SearchParamsProvider with ChangeNotifier {
               id: searchParams.sellingTypes[i][1]));
         }
 
+        print('sellingTypesList1 '+sellingTypesList.toString());
+
         for (int i = 0; i < searchParams.furnished.length; i++) {
           furnishedList.add(Furnished(
               name: searchParams.furnished[i][0],
               id: searchParams.furnished[i][1]));
         }
+        print('sellingTypesList2 '+furnishedList.toString());
 
         for (int i = 0; i < searchParams.capacity.length; i++) {
           capacityList.add(Capacity(
@@ -61,6 +67,8 @@ class SearchParamsProvider with ChangeNotifier {
               name: searchParams.propertyType[i][0],
               id: searchParams.propertyType[i][1]));
         }
+
+        print('sell type tst '+sellingTypesList.toString());
         setLoading(false);
         return searchParams;
       }

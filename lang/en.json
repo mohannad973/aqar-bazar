@@ -102,7 +102,15 @@
     "pick_lan": "Pick Language",
     "pick_country": "Pick Country",
     "cancelBtn": "CANCEL",
-    "ok": "OK"
+    "ok": "OK",
+
+    "for_buy": "for buy",
+    "for_sale": "for sale",
+
+    "sell_type": "Type",
+
+
+    "favourites": "Favourites"
 
 
 

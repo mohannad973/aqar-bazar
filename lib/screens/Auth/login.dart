@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/Utils/form_validators.dart';
+import 'package:aqar_bazar/Utils/secure_storage.dart';
 import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
@@ -21,6 +22,7 @@ class _LogInState extends State<LogIn> {
   String email = '';
   String password = '';
   BuildContext scaffoldContext;
+  SecureStorage secureStorage = SecureStorage();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -162,6 +164,10 @@ class _LogInState extends State<LogIn> {
                                               print('00000'+user.toString());
 
                                               if (user) {
+                                                secureStorage.deleteAllSecureStorage();
+                                                secureStorage.writeSecureEmail('email', emailController.text.trim());
+                                                secureStorage.writeSecurePass('pass', passwordController.text.trim());
+
                                                 // Provider.of<SearchResultProvider>(context,listen: false)
                                                 //     .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
                                                 Navigator.push(

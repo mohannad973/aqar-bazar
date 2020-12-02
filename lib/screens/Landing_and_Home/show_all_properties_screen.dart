@@ -63,7 +63,7 @@ class _ShowAllPropertiesState extends State<ShowAllProperties> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(Applocalizations.of(context).translate("my_requested_property")),
+        title: Text('All Properties'),
       ),
       body:
       allPropertiesProvider.isFirstLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):

@@ -102,15 +102,16 @@
   "pick_lan": "اختر اللعة",
   "pick_country": "اختر البلد",
   "cancelBtn": "الغاء",
-  "ok": "موافق"
+  "ok": "موافق",
 
 
+  "for_buy": "للبيع",
+  "for_rent": "للإيجار",
+
+  "sell_type": "النوع",
 
 
-
-
-
-
+  "favourites": "المفضلة"
 
 
 

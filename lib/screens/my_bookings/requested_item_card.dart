@@ -22,6 +22,7 @@ class RequestedItemCard extends StatefulWidget {
 class _RequestedItemCardState extends State<RequestedItemCard> {
   @override
   Widget build(BuildContext context) {
+    print('request '+widget.request.toString());
     var width = MediaQuery.of(context).size.width;
     var userRequestProvider = Provider.of<UserRequestProvider>(context);
     var cancelRequestProvider = Provider.of<CancelRequestProvider>(context);
@@ -70,7 +71,7 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                           children: [
                             Container(
                               child: AutoSizeText(
-                                widget.request.title,
+                                widget.request.title==null?'':widget.request.title,
                                 maxLines: 3,
                                 textDirection: TextDirection.rtl,
                                 textAlign: TextAlign.center,
@@ -145,15 +146,21 @@ class _RequestedItemCardState extends State<RequestedItemCard> {
                         Container(
                           child: Center(
                             child: (cancelRequestProvider.isLoading() && widget.index == widget.itemIndex)?Center(child: CircularProgressIndicator(backgroundColor: fBlue,)):RaisedButton(
-                              onPressed:widget.request.status == Applocalizations.of(context).translate("cancelled") ?null : () {
+                              onPressed:widget.request.status == Applocalizations.of(context).translate("cancelled") ?null : () async{
                                 int index;
                                 index = userRequestProvider.allRequestsList.indexOf(widget.request);
                                 setState(() {
                                   widget.index = index;
                                 });
-                                cancelRequestProvider.cancelRequest(widget.request.id.toString());
+                                bool cancelled = await cancelRequestProvider.cancelRequest(widget.request.id.toString());
 
-                                userRequestProvider.allRequestsList[index].status='cancelled';
+                                if(cancelled){
+                                  userRequestProvider.allRequestsList[index].status='cancelled';
+                                }else{
+
+                                }
+
+
 
                               },
                               child: Text(

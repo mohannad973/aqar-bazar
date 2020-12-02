@@ -1,5 +1,6 @@
 
 import 'package:aqar_bazar/Network/Api.dart';
+import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/screens/settings/preferences_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -9,16 +10,22 @@ class PreferencesProvider with ChangeNotifier{
   bool loading = false;
 
   Api api = new Api();
+  SessionManager sessionManager = SessionManager();
+
   PreferencesResponse preferencesResponse = PreferencesResponse();
   List<Language> languagesList = [];
   List<Currency> currencyList = [];
   List<Country> countryList = [];
 
 
+
+
   Future<PreferencesResponse> getPreferences() async {
+
     setLoading(true);
     try {
-      Response response = await api.getPreferences();
+      String lang = await sessionManager.getLang();
+      Response response = await api.getPreferences(lang);
 
 
       languagesList.clear();

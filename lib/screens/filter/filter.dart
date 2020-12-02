@@ -1,3 +1,4 @@
+import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/constants.dart';
 import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/search_params_provider.dart';
@@ -18,6 +19,8 @@ class FilterScreen extends StatefulWidget {
   _FilterScreenState createState() => _FilterScreenState();
 }
 
+String lang;
+
 class _FilterScreenState extends State<FilterScreen> {
   int _rentTypeSelectedIndex = 0;
   int _furnishedTypeSelectedIndex = 0;
@@ -36,8 +39,11 @@ class _FilterScreenState extends State<FilterScreen> {
 
   String sellTypeValue;
 
+  String sellingTypeValue;
 
-  List<SellingTypes> _rentType = [];
+
+
+
 
   List<Furnished> _furnishedType = [];
 
@@ -49,6 +55,8 @@ class _FilterScreenState extends State<FilterScreen> {
 
   List<Furnished> _furnishedList = [];
 
+  List<SellingTypes> _rentType = [];
+
   List<PropertyType> _propertyTypeList = [];
 
   List<Capacity> _capacityList = [];
@@ -56,6 +64,9 @@ class _FilterScreenState extends State<FilterScreen> {
   String _chosenValue;
 
   RangeValues _values = const RangeValues(100, 600);
+
+  String rentStr;
+  String buyStr;
 
   List<PropertyTypeModel> propertyList = [
     PropertyTypeModel(name: "villa", iconData: Icons.home),
@@ -65,20 +76,38 @@ class _FilterScreenState extends State<FilterScreen> {
     PropertyTypeModel(name: "Hotel Room", iconData: Icons.home),
   ];
 
-  final Map<int, Widget> propertyTypes = const <int, Widget>{
-    0: Text('rent'),
-    1: Text('buy')
-  };
+
+
+
+
+
+
+  _getLang() async {
+    SessionManager sessionManager = SessionManager();
+
+    lang = await sessionManager.getLang();
+    if (lang == null) {
+      sessionManager.setLang('en');
+    }
+  }
 
   int propertySelectedIndex = 0;
+  Map<int, Widget> propertyTypes;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    _rentType = Provider.of<SearchParamsProvider>(context, listen: false)
-        .sellingTypesList;
+    _getLang();
+
+    // print('language tst '+lang);
+
+    // print('language tst '+Provider.of<SearchParamsProvider>(context,listen: false).sellingTypesList[0].name);
+
+
+    // _rentType = Provider.of<SearchParamsProvider>(context, listen: false)
+    //     .sellingTypesList;
 
     _furnishedType =
         Provider.of<SearchParamsProvider>(context, listen: false).furnishedList;
@@ -89,9 +118,7 @@ class _FilterScreenState extends State<FilterScreen> {
     _pricesList =
         Provider.of<SearchParamsProvider>(context, listen: false).pricesList;
 
-    _roomCountList =
-        ['1','2','3','4','5','6','7','8'];
-
+    _roomCountList = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
     _capacityList =
         Provider.of<SearchParamsProvider>(context, listen: false).capacityList;
@@ -99,9 +126,33 @@ class _FilterScreenState extends State<FilterScreen> {
     _furnishedList =
         Provider.of<SearchParamsProvider>(context, listen: false).furnishedList;
 
-    _propertyTypeList =
-        Provider.of<SearchParamsProvider>(context, listen: false)
-            .propertyTypeList;
+    _rentType =
+        Provider.of<SearchParamsProvider>(context, listen: false).sellingTypesList;
+
+    print("sellingTypesList0 "+Provider.of<SearchParamsProvider>(context, listen: false).sellingTypesList.toString());
+    print("sellingTypesList3 "+Provider.of<SearchParamsProvider>(context, listen: false).furnishedList.toString());
+
+    // _propertyTypeList =
+    //     Provider.of<SearchParamsProvider>(context, listen: false)
+    //         .propertyTypeList;
+
+    // _rentType = Provider.of<SearchParamsProvider>(context, listen: false)
+    //     .sellingTypesList;
+
+    // rentStr = Provider.of<SearchParamsProvider>(context,listen: false).sellingTypesList[0].name;
+    // buyStr = Provider.of<SearchParamsProvider>(context,listen: false).sellingTypesList[1].name;
+
+    print('tsst '+ _rentType.toString());
+
+    // propertyTypes = <int, Widget>{
+    //   0: Text(_rentType[0].name),
+    //   1: Text(_rentType[1].name)
+    // };
+
+    // propertyTypes =  <int, Widget>{
+    //   0: Text(Applocalizations.of(context).translate("for_rent")),
+    //   1: Text(Applocalizations.of(context).translate("for_sale"))
+    // };
   }
 
   @override
@@ -113,7 +164,9 @@ class _FilterScreenState extends State<FilterScreen> {
                 backgroundColor: Colors.blue,
               ),
             )
-          : SingleChildScrollView(
+          :
+
+      SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -123,7 +176,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       height: 50,
                     ),
                     Text(
-                        Applocalizations.of(context).translate("filter"),
+                      Applocalizations.of(context).translate("filter"),
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -133,19 +186,19 @@ class _FilterScreenState extends State<FilterScreen> {
                       height: 20,
                     ),
 
-                    Container(
-                      height: 28,
-                      width: MediaQuery.of(context).size.width,
-                      child: CupertinoSegmentedControl(
-                        groupValue: _sellingTypeIndex,
-                        onValueChanged: (int i) {
-                          setState(() {
-                            _sellingTypeIndex = i;
-                          });
-                        },
-                        children: propertyTypes,
-                      ),
-                    ),
+                    // Container(
+                    //   height: 28,
+                    //   width: MediaQuery.of(context).size.width,
+                    //   child: CupertinoSegmentedControl(
+                    //     groupValue: _sellingTypeIndex,
+                    //     onValueChanged: (int i) {
+                    //       setState(() {
+                    //         _sellingTypeIndex = i;
+                    //       });
+                    //     },
+                    //     children: propertyTypes,
+                    //   ),
+                    // ),
 
                     // Container(
                     //   height: 60,
@@ -172,7 +225,6 @@ class _FilterScreenState extends State<FilterScreen> {
                     SizedBox(
                       height: 20,
                     ),
-
 
                     // Row(
                     //   children: [
@@ -208,9 +260,8 @@ class _FilterScreenState extends State<FilterScreen> {
                     //   endIndent: 20,
                     // ),
 
-
-
                     // dropDownSellType(),
+                    dropDownSellingType(),
                     dropDownFurnished(),
                     // dropDownSelectCity(),
                     dropDownSelectPrice(),
@@ -220,23 +271,57 @@ class _FilterScreenState extends State<FilterScreen> {
                     RaisedButton.icon(
                         onPressed: () async {
                           // print('apply btn :'+ furnishedValue +" "+priceRangeValue+' '+' '+ roomCountValue+' '+ capacityValue +' '+ _sellingTypeIndex.toString());
-                          String type = _sellingTypeIndex == null ? '' : _sellingTypeIndex.toString();
-                          String furnished = furnishedValue == null ? '' : furnishedValue.toString();
-                          String price = priceRangeValue == null ? '' : priceRangeValue.toString();
-                          String roomCount = roomCountValue == null ? '' : roomCountValue.toString();
-                          String capacity = capacityValue == null ? '' : capacityValue.toString();
+                          String type = sellingTypeValue == null
+                              ? ''
+                              : sellingTypeValue.toString();
+                          String furnished = furnishedValue == null
+                              ? ''
+                              : furnishedValue.toString();
+                          String price = priceRangeValue == null
+                              ? ''
+                              : priceRangeValue.toString();
+                          String roomCount = roomCountValue == null
+                              ? ''
+                              : roomCountValue.toString();
+                          String capacity = capacityValue == null
+                              ? ''
+                              : capacityValue.toString();
 
-
-                          SearchResultModel searchResultModel =
+                          SearchResultResponse searchResultModel =
                               await Provider.of<SearchResultProvider>(context,
                                       listen: false)
-                                  .filter(type: type,price: price,rooms: roomCount,capacity: capacity,furnished: furnished,page: 1);
-                          if(searchResultModel == null){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchResultScreen(searchList: null,capacity: capacity,furnished: furnished,rooms: roomCount,price: price,type: type,)));
-                          }else{
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchResultScreen(searchList: searchResultModel.data,capacity: capacity,furnished: furnished,rooms: roomCount,price: price,type: type,)));
+                                  .filter(
+                                      type: type,
+                                      price: price,
+                                      rooms: roomCount,
+                                      capacity: capacity,
+                                      furnished: furnished,
+                                      page: 1);
+                          if (searchResultModel == null) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchResultScreen(
+                                          searchList: null,
+                                          capacity: capacity,
+                                          furnished: furnished,
+                                          rooms: roomCount,
+                                          price: price,
+                                          type: type,
+                                        )));
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchResultScreen(
+                                          searchList: searchResultModel.data,
+                                          capacity: capacity,
+                                          furnished: furnished,
+                                          rooms: roomCount,
+                                          price: price,
+                                          type: type,
+                                        )));
                           }
-
 
                           // print("filter ///////" +
                           //     searchResultModel.toString());
@@ -251,7 +336,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           color: Colors.white,
                         ),
                         label: Text(
-                            Applocalizations.of(context).translate("apply"),
+                          Applocalizations.of(context).translate("apply"),
                           style: TextStyle(color: Colors.white),
                         ),
                         color: Colors.lightBlue,
@@ -608,6 +693,44 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
+
+  Widget dropDownSellingType() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 1,
+                spreadRadius: 1,
+                offset: Offset(0, 4),
+                color: Color.fromRGBO(226, 229, 235, 1))
+          ],
+        ),
+        child: DropdownButton(
+            hint: Text(Applocalizations.of(context).translate("sell_type")),
+            dropdownColor: Color.fromRGBO(226, 229, 235, 1),
+            isExpanded: true,
+            underline: Container(),
+            value: sellingTypeValue,
+            items:
+            _rentType.map<DropdownMenuItem<String>>((SellingTypes value) {
+              return DropdownMenuItem<String>(
+                value: value.id,
+                child: Center(child: Text(value.name)),
+              );
+            }).toList(),
+            onChanged: (value) {
+              setState(() {
+                sellingTypeValue = value.toString();
+              });
+            }),
+      ),
+    );
+  }
+
   Widget dropDownFurnished() {
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -666,8 +789,8 @@ class _FilterScreenState extends State<FilterScreen> {
             isExpanded: true,
             underline: Container(),
             value: sellTypeValue,
-            items:
-            _propertyTypeList.map<DropdownMenuItem<String>>((PropertyType value) {
+            items: _propertyTypeList
+                .map<DropdownMenuItem<String>>((PropertyType value) {
               return DropdownMenuItem<String>(
                 value: value.id.toString(),
                 child: Center(child: Text(value.name)),
@@ -681,8 +804,6 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
     );
   }
-
-
 
   Widget dropDownRoomCount() {
     return Padding(
@@ -704,9 +825,8 @@ class _FilterScreenState extends State<FilterScreen> {
             dropdownColor: Color.fromRGBO(226, 229, 235, 1),
             isExpanded: true,
             underline: Container(),
-            value:roomCountValue ,
-            items:
-            _roomCountList.map<DropdownMenuItem<String>>((String value) {
+            value: roomCountValue,
+            items: _roomCountList.map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Center(child: Text(value)),
@@ -720,8 +840,4 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
     );
   }
-
-
-
-
 }

@@ -4,14 +4,14 @@
 
 import 'dart:convert';
 
-SearchResultModel searchResultModeFromJson(String str) =>
-    SearchResultModel.fromJson(json.decode(str));
+SearchResultResponse searchResultModeFromJson(String str) =>
+    SearchResultResponse.fromJson(json.decode(str));
 
-String searchResultModeToJson(SearchResultModel data) =>
+String searchResultModeToJson(SearchResultResponse data) =>
     json.encode(data.toJson());
 
-class SearchResultModel {
-  SearchResultModel({
+class SearchResultResponse {
+  SearchResultResponse({
     this.data,
     this.links,
     this.meta,
@@ -21,8 +21,8 @@ class SearchResultModel {
   Links links;
   Meta meta;
 
-  factory SearchResultModel.fromJson(Map<String, dynamic> json) =>
-      SearchResultModel(
+  factory SearchResultResponse.fromJson(Map<String, dynamic> json) =>
+      SearchResultResponse(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         links: Links.fromJson(json["links"]),
         meta: Meta.fromJson(json["meta"]),

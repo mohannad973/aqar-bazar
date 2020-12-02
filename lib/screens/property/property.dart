@@ -5,10 +5,12 @@ import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/models/best_deals_model.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
+import 'package:aqar_bazar/providers/add_to_fav_provider.dart';
 import 'package:aqar_bazar/providers/cancel_request_provider.dart';
 import 'package:aqar_bazar/providers/comments_provider.dart';
 import 'package:aqar_bazar/providers/request_property_provider.dart';
 import 'package:aqar_bazar/providers/single_property_provider.dart';
+import 'package:aqar_bazar/providers/user_requests_provider.dart';
 import 'package:aqar_bazar/screens/property/add_comment.dart';
 import 'package:aqar_bazar/screens/property/comments.dart';
 import 'package:aqar_bazar/screens/property/contact_host_screen.dart';
@@ -32,6 +34,7 @@ class PropertyPage extends StatefulWidget {
   Datum property;
   SingleProperty singleProperty;
 
+  int index=-1;
   PropertyPage({this.property});
 
   @override
@@ -41,10 +44,15 @@ class PropertyPage extends StatefulWidget {
 class _PropertyPageState extends State<PropertyPage> {
   List<Comment> commentsList = [];
 
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    print('rr2 '+widget.property.viewLink);
+
     Provider.of<SinglePropertyProvider>(context, listen: false)
         .getPropertyInfo(widget.property.viewLink);
     Provider.of<CommentsProvider>(context,listen: false).getComments(1, widget.property.id.toString());
@@ -388,7 +396,8 @@ class _PropertyPageState extends State<PropertyPage> {
                                       SizedBox(
                                         height: 15,
                                       ),
-                                      singleProperty.isBooked || Provider.of<RequestPropertyProvider>(context).isRequested()
+                                      singleProperty.isBooked
+                                          // || Provider.of<RequestPropertyProvider>(context).isRequested()
                                           ? Container(
                                               width: width,
                                               child: Center(
@@ -423,6 +432,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                                       ),
                                                       width: width * 0.4,
                                                     ),
+                                                    Provider.of<CancelRequestProvider>(context).isLoading()?Center(child: CircularProgressIndicator(backgroundColor: fBlue,)):
                                                     Container(
                                                       child: Center(
                                                         child: RaisedButton(
@@ -433,14 +443,26 @@ class _PropertyPageState extends State<PropertyPage> {
                                                           //         .width /
                                                           //         4,
                                                           //     vertical: 12),
-                                                          onPressed: () {
-                                                            Provider.of<RequestPropertyProvider>(
-                                                                context,
-                                                                listen: false)
-                                                                .cancelRequest(
-                                                                singleProperty.id
-                                                                    .toString()
-                                                                    .trim());
+                                                          onPressed: () async{
+                                                            // Provider.of<RequestPropertyProvider>(
+                                                            //     context,
+                                                            //     listen: false)
+                                                            //     .cancelRequest(
+                                                            //     singleProperty.id
+                                                            //         .toString()
+                                                            //         .trim());
+
+                                                            bool cancelled = await Provider.of<CancelRequestProvider>(context,listen: false).cancelRequest(singleProperty.requestId.toString());
+
+                                                            if(cancelled){
+                                                              print('cancelled7');
+                                                              Provider.of<SinglePropertyProvider>(context,listen: false).singleProperty.isBooked=false;
+                                                              // Provider.of<RequestPropertyProvider>(context).setRequested(false);
+
+                                                            }else{
+                                                              print('cancelled8');
+                                                            }
+
                                                           },
                                                           child: Text(
                                                             Applocalizations.of(context).translate("cancel_book"),
@@ -469,7 +491,9 @@ class _PropertyPageState extends State<PropertyPage> {
                                                 ),
                                               ),
                                             )
-                                          : Center(
+                                          :
+                                      Provider.of<RequestPropertyProvider>(context).isLoading()?Center(child: CircularProgressIndicator(backgroundColor: fBlue,)):
+                                      Center(
                                               child: RaisedButton(
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal:
@@ -493,6 +517,7 @@ class _PropertyPageState extends State<PropertyPage> {
                                                           .succressResponse !=
                                                       null;
                                                   if (booked) {
+                                                    Provider.of<SinglePropertyProvider>(context,listen: false).singleProperty.isBooked=true;
                                                     final snackBar = SnackBar(
                                                         content: Text(Provider
                                                                 .of<RequestPropertyProvider>(
@@ -1011,7 +1036,7 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
                                 //                 rating: list.rating))));
                               },
                               child: Text(
-                                Applocalizations.of(context).translate("book_now"),
+                               Provider.of<SinglePropertyProvider>(context).singleProperty.sellingType==0?'For Rent':'For Sell',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
@@ -1033,17 +1058,42 @@ class FullScreenCustomSliverAppBar extends SliverPersistentHeaderDelegate {
         Positioned(
             top: 15,
             left: 15,
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Center(
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
+            child: Container(
+              width: MediaQuery.of(context).size.width*0.94,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Center(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Center(
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.favorite_border,
+                        ),
+                        onPressed: () async{
+                          bool added = await Provider.of<AddToFavProvider>(context,listen: false).addToFav(propertyInfo.id.toString());
+                          if(added){
+                            _showToast(context);
+                          }
+
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ))
       ],
@@ -1083,3 +1133,12 @@ Widget horizantalLine(){
 // ),
 // ]),
 // ),
+
+void _showToast(BuildContext context) {
+  final scaffold = Scaffold.of(context);
+  scaffold.showSnackBar(
+    SnackBar(
+      content: const Text('Offer Added To Favourites'),
+    ),
+  );
+}

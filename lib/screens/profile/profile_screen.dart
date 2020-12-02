@@ -57,7 +57,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     .profilePicture ==
                                 null
                             ? AssetImage(
-                                'assets/images/free-profile-photo-whatsapp-4.png')
+                                'assets/images/profile.jpg')
                             : Image.network(
                                 Provider.of<USerProfileProvider>(context)
                                     .userProfileResponse
@@ -137,11 +137,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(
                               height: 20,
                             ),
-                            profileListItem(
-                                Applocalizations.of(context).translate("payments"), LineAwesomeIcons.money_bill),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            // profileListItem(
+                            //     Applocalizations.of(context).translate("payments"), LineAwesomeIcons.money_bill),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
                             InkWell(
                                 onTap: () {
                                   Provider.of<PreferencesProvider>(context,

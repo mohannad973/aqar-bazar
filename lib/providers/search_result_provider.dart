@@ -1,4 +1,5 @@
 import 'package:aqar_bazar/Network/Api.dart';
+import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -9,11 +10,13 @@ class SearchResultProvider with ChangeNotifier {
 
   Api api = new Api();
 
+  SessionManager sessionManager = SessionManager();
+
   List<Datum> data = [];
-  SearchResultModel searchResult = SearchResultModel();
+  SearchResultResponse searchResult = SearchResultResponse();
   List<Datum> filterData = [];
 
-  Future<SearchResultModel> search(
+  Future<SearchResultResponse> search(
       {String furnished,
       String type,
       String city,
@@ -27,6 +30,10 @@ class SearchResultProvider with ChangeNotifier {
 
     print("teeeeeeest");
     try {
+      String token =await sessionManager.getAuthToken();
+      String cookie =await sessionManager.getSessionToken();
+      String lang =await sessionManager.getLang();
+      String currency = await sessionManager.getCurrency()==null?"USD": await sessionManager.getCurrency();
       print('test5');
       Response response = await api.search(
           furnished: furnished,
@@ -36,7 +43,11 @@ class SearchResultProvider with ChangeNotifier {
           bathrooms: bathrooms,
           category: category,
           price: price,
-          capacity: capacity);
+          capacity: capacity,
+      token: token,
+     cookie: cookie,
+      lang: lang,
+      currency:currency);
 
       if (response != null) {
         print('test6');
@@ -71,7 +82,7 @@ class SearchResultProvider with ChangeNotifier {
     }
   }
 
-  Future<SearchResultModel> filter(
+  Future<SearchResultResponse> filter(
       {String furnished,
       String type,
       String rooms,
@@ -88,12 +99,21 @@ class SearchResultProvider with ChangeNotifier {
     }
 
     try {
+
+      String token =await sessionManager.getAuthToken();
+      String cookie =await sessionManager.getSessionToken();
+      String lang =await sessionManager.getLang();
+      String currency = await sessionManager.getCurrency()==null?"USD": await sessionManager.getCurrency();
+
       Response response = await api.filter(
           furnished: furnished,
           type: type,
           rooms: rooms,
           price: price,
-          capacity: capacity,page: page);
+          capacity: capacity,page: page,  token: token,
+          cookie: cookie,
+          lang: lang,
+      currency:currency);
 
       if (response != null) {
         print('filter : ' + response.body);
