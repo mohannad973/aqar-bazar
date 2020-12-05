@@ -68,10 +68,12 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
     var width = MediaQuery.of(context).size.width;
     var userRequestProvider = Provider.of<UserRequestProvider>(context);
     return Scaffold(
+
       appBar: AppBar(title: Text(Applocalizations.of(context).translate("my_requested_property"),),),
       body:
           userRequestProvider.isLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):
               userRequestProvider.allRequestsList.isEmpty?Center(child: Container(
+
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -84,7 +86,9 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
               )):
 
       SingleChildScrollView(
-        child: Expanded(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          color: Colors.black,
           child: ListView.builder(
               controller: _controller,
                shrinkWrap: true,

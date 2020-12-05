@@ -3,11 +3,13 @@ import 'package:aqar_bazar/models/like_comment_response.dart';
 import 'package:aqar_bazar/providers/add_comment_provider.dart';
 import 'package:aqar_bazar/providers/add_to_fav_provider.dart';
 import 'package:aqar_bazar/providers/all_properties_provider.dart';
+import 'package:aqar_bazar/providers/book_property_provider.dart';
 import 'package:aqar_bazar/providers/cancel_request_provider.dart';
 import 'package:aqar_bazar/providers/category_list_provider.dart';
 import 'package:aqar_bazar/providers/comments_provider.dart';
 import 'package:aqar_bazar/providers/contact_host_provider.dart';
 import 'package:aqar_bazar/providers/contact_us_provider.dart';
+import 'package:aqar_bazar/providers/date_provider.dart';
 import 'package:aqar_bazar/providers/favourites_provider.dart';
 import 'package:aqar_bazar/providers/like_comment_provider.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
@@ -82,6 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
     locale = await sessionManager.getLocale();
     lang = await sessionManager.getLang();
     currency = await sessionManager.getCurrency();
+
+    print('ppp2 '+lang);
 
     if(currency == null){
       sessionManager.setCurrency('USD');
@@ -170,6 +174,10 @@ class _MyHomePageState extends State<MyHomePage> {
             create: (_) => FavouritesProvider()),
         ChangeNotifierProvider<AddToFavProvider>(
             create: (_) => AddToFavProvider()),
+        ChangeNotifierProvider<DateProvider>(
+            create: (_) => DateProvider()),
+        ChangeNotifierProvider<BookPropertyProvider>(
+            create: (_) => BookPropertyProvider()),
 
 
       ],

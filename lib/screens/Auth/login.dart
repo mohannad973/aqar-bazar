@@ -40,10 +40,49 @@ class _LogInState extends State<LogIn> {
   }
 
 
+  String token='';
+  String locale;
+  String lang;
+  String currency;
+
+
+
+
+
+
+
+  _getPreferences() async{
+    SessionManager sessionManager = SessionManager();
+
+    locale = await sessionManager.getLocale();
+    lang = await sessionManager.getLang();
+    currency = await sessionManager.getCurrency();
+
+
+
+    if(currency == null){
+      sessionManager.setCurrency('USD');
+    }else{
+      sessionManager.setCurrency(currency);
+    }
+
+    if(lang == null) {
+      sessionManager.setLang('en');
+      print('login-lang');
+    }else{
+      print('login-lang '+lang);
+      sessionManager.setLang(lang);
+    }
+
+
+    print('main token' + (token==null).toString());
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _getPreferences();
    _getSessionManager();
   }
 

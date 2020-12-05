@@ -1,5 +1,6 @@
 import 'package:aqar_bazar/Network/Api.dart';
 import 'package:aqar_bazar/Utils/session_manager.dart';
+import 'package:aqar_bazar/models/book_success_response.dart';
 import 'package:aqar_bazar/models/cancel_request_response.dart';
 import 'package:aqar_bazar/models/succes_string_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/log_in_response.dart';
@@ -14,14 +15,14 @@ class BookPropertyProvider with ChangeNotifier {
   Api api = Api();
 
   bool requested= false;
-  SuccessStringResponse succressResponse;
+  BookSuccessResponse succressResponse;
 
   SessionManager sessionManager = SessionManager();
 
 
   String message;
 
-  Future<SuccessStringResponse> bookProperty(String id ,String from , String to , String amount,String sellType) async {
+  Future<bool> bookProperty(String id ,String from , String to , String amount,String sellType) async {
     setLoading(true);
     try {
       String token = await sessionManager.getAuthToken();
@@ -29,22 +30,24 @@ class BookPropertyProvider with ChangeNotifier {
 
       succressResponse = await api.bookProperty(token,id,cookie,from,to,amount,sellType);
 
+      print('book response '+succressResponse.toString());
+
 
       if (succressResponse != null) {
 
         setRequested(true);
 
         setLoading(false);
-        return succressResponse;
+        return true;
       }
 
 
       setLoading(false);
-      return null;
+      return false;
     } catch (e) {
-
+      print('book4 '+e.toString());
       setLoading(false);
-      return null;
+      return false;
     }
   }
 

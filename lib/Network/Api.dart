@@ -1,5 +1,6 @@
 import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/models/add_comment_model.dart';
+import 'package:aqar_bazar/models/book_success_response.dart';
 import 'package:aqar_bazar/models/cancel_request_response.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/contact_us_response.dart';
@@ -530,19 +531,22 @@ class Api {
         "to":to
 
       }, headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
         'Cookie': cookie,
         'Authorization': 'Bearer $token',
       });
-
+      print('book1 '+ response.statusCode.toString());
       if (response.statusCode == 200) {
-        return successStringResponseFromJson(response.body);
-      } else {
 
+        print('book5 '+response.toString());
+        print('book6 '+response.body.toString());
+        print('book7 '+bookSuccessResponseFromJson(response.body).toString());
+        return bookSuccessResponseFromJson(response.body);
+      } else {
+        print('book2 '+ id+" "+ from+ " "+ to + " "+amount+ " "+ sellType);
         return null;
       }
     } catch (e) {
+      print('book3 '+ e.toString());
       print('error ' + e.toString());
     }
   }

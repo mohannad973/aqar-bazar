@@ -269,7 +269,7 @@ class _NewHomeState extends State<NewHome> {
                   onTap: () {
                     secureStorage.deleteAllSecureStorage();
                     SessionManager sessionManager = SessionManager();
-                    sessionManager.clearSessionManager();
+                    // sessionManager.clearSessionManager();
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => LogIn()));
                   },

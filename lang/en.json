@@ -138,7 +138,13 @@
     "message-sent": "message sent successfully",
 
 
-    "contact-host" : "message sent to host"
+    "contact-host" : "message sent to host",
+    "start-date" : "Start Date",
+    "end-date" : "End Date",
+
+    "fillDate" : "Please fill the start date and end date",
+    "pick-date": "Pick a Date"
+
 
 
 

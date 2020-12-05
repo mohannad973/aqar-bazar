@@ -44,6 +44,8 @@ class AllPropertiesProvider with ChangeNotifier {
 
 
 
+      print('ppp1 '+await sessionManager.getLang() );
+
 
       searchResultModel = await api.getAllProperties( cookie, page,lang,currency);
 

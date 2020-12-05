@@ -74,12 +74,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        settingsItem(Applocalizations.of(context).translate("notification"), Icons.notifications),
-                        Divider(
-                          color: Colors.grey,
-                          indent: 10,
-                          endIndent: 10,
-                        ),
+                        // settingsItem(Applocalizations.of(context).translate("notification"), Icons.notifications),
+                        // Divider(
+                        //   color: Colors.grey,
+                        //   indent: 10,
+                        //   endIndent: 10,
+                        // ),
                         InkWell(
                           child: settingsItem(Applocalizations.of(context).translate("Country"), Icons.location_city),
                           onTap: () {
