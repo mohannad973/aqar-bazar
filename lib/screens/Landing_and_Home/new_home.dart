@@ -24,6 +24,7 @@ import 'package:aqar_bazar/screens/favourites/favourites_screen.dart';
 import 'package:aqar_bazar/screens/filter/filter.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:aqar_bazar/screens/my_bookings/my_bookings_screen.dart';
+import 'package:aqar_bazar/screens/notification/notification_screen.dart';
 import 'package:aqar_bazar/screens/profile/profile_screen.dart';
 import 'package:aqar_bazar/screens/property_list_screen/property_list_screen.dart';
 import 'package:aqar_bazar/test.dart';
@@ -63,18 +64,17 @@ class _NewHomeState extends State<NewHome> {
   bool successLogin = false;
 
   _performLogin() async{
-    print('pr1');
+
     String email = await secureStorage.readEmail('email');
     String  pass = await secureStorage.readPass('pass');
 
-    print('pr2 '+email + " "+ pass);
 
     final bool user = await Provider
         .of<LogInProvider>(
         context,
         listen: false)
         .logIn(email, pass);
-    print('pr3 '+user.toString());
+
     if(user){
       successLogin = true;
 
@@ -194,6 +194,26 @@ class _NewHomeState extends State<NewHome> {
                 ),
                 GestureDetector(
                   child: ListTile(
+                    leading: Text(
+                      Applocalizations.of(context).translate("notification"),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[600],
+                          letterSpacing: 0.5),
+                    ),
+                    trailing:
+                    Icon(Icons.notifications, color: Theme.of(context).primaryColor),
+                  ),
+                  onTap: () {
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => NotificationScreen()));
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(),
+                ),
+                GestureDetector(
+                  child: ListTile(
                     leading: GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -212,7 +232,9 @@ class _NewHomeState extends State<NewHome> {
                     trailing:
                     Icon(Icons.book, color: Theme.of(context).primaryColor),
                   ),
-                  onTap: () {},
+                  onTap: () {
+
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -270,6 +292,7 @@ class _NewHomeState extends State<NewHome> {
                     secureStorage.deleteAllSecureStorage();
                     SessionManager sessionManager = SessionManager();
                     // sessionManager.clearSessionManager();
+                    sessionManager.setAuthToken(null);
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => LogIn()));
                   },

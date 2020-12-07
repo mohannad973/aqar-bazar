@@ -4,6 +4,7 @@ import 'package:aqar_bazar/Utils/session_manager.dart';
 import 'package:aqar_bazar/localization/app_localization.dart';
 import 'package:aqar_bazar/providers/login_provider.dart';
 import 'package:aqar_bazar/providers/search_result_provider.dart';
+import 'package:aqar_bazar/screens/Auth/forget_password.dart';
 import 'package:aqar_bazar/screens/Auth/signup.dart';
 import 'package:aqar_bazar/screens/Landing_and_Home/new_home.dart';
 import 'package:flutter/material.dart';
@@ -27,55 +28,43 @@ class _LogInState extends State<LogIn> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  _getSessionManager()async{
+  _getSessionManager() async {
     print('token3333');
     SessionManager sessionManager = SessionManager();
-    if(await sessionManager.getAuthToken()==null){
+    if (await sessionManager.getAuthToken() == null) {
       print('token4444');
+    } else {
+      print('token5555' + await sessionManager.getAuthToken());
     }
-    else{
-      print('token5555'+await sessionManager.getAuthToken());
-    }
-
   }
 
-
-  String token='';
+  String token = '';
   String locale;
   String lang;
   String currency;
 
-
-
-
-
-
-
-  _getPreferences() async{
+  _getPreferences() async {
     SessionManager sessionManager = SessionManager();
 
     locale = await sessionManager.getLocale();
     lang = await sessionManager.getLang();
     currency = await sessionManager.getCurrency();
 
-
-
-    if(currency == null){
+    if (currency == null) {
       sessionManager.setCurrency('USD');
-    }else{
+    } else {
       sessionManager.setCurrency(currency);
     }
 
-    if(lang == null) {
+    if (lang == null) {
       sessionManager.setLang('en');
       print('login-lang');
-    }else{
-      print('login-lang '+lang);
+    } else {
+      print('login-lang ' + lang);
       sessionManager.setLang(lang);
     }
 
-
-    print('main token' + (token==null).toString());
+    print('main token' + (token == null).toString());
   }
 
   @override
@@ -83,12 +72,11 @@ class _LogInState extends State<LogIn> {
     // TODO: implement initState
     super.initState();
     _getPreferences();
-   _getSessionManager();
+    _getSessionManager();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
@@ -123,7 +111,8 @@ class _LogInState extends State<LogIn> {
                               height: 0.0,
                             ),
                             Text(
-                              Applocalizations.of(context).translate("signInBtn"),
+                              Applocalizations.of(context)
+                                  .translate("signInBtn"),
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
@@ -148,8 +137,10 @@ class _LogInState extends State<LogIn> {
                               child: Column(
                                 children: [
                                   TextFormField(
-                                    decoration: inputDecoration()
-                                        .copyWith(hintText:  Applocalizations.of(context).translate("email"),),
+                                    decoration: inputDecoration().copyWith(
+                                      hintText: Applocalizations.of(context)
+                                          .translate("email"),
+                                    ),
                                     controller: emailController,
                                     onChanged: (val) {
                                       setState(() => email = val);
@@ -165,16 +156,18 @@ class _LogInState extends State<LogIn> {
                                     },
                                     validator: passwordValidator(),
                                     obscureText: true,
-                                    decoration: inputDecoration()
-                                        .copyWith(hintText: Applocalizations.of(context).translate("password"),),
+                                    decoration: inputDecoration().copyWith(
+                                      hintText: Applocalizations.of(context)
+                                          .translate("password"),
+                                    ),
                                     controller: passwordController,
                                   ),
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  Provider.of<LogInProvider>(context,
-                                              )
-                                          .isLoading()
+                                  Provider.of<LogInProvider>(
+                                    context,
+                                  ).isLoading()
                                       ? CircularProgressIndicator(
                                           backgroundColor: Colors.blue,
                                         )
@@ -200,12 +193,19 @@ class _LogInState extends State<LogIn> {
                                                           listen: false)
                                                   .logIn(email, password);
 
-                                              print('00000'+user.toString());
+                                              print('00000' + user.toString());
 
                                               if (user) {
-                                                secureStorage.deleteAllSecureStorage();
-                                                secureStorage.writeSecureEmail('email', emailController.text.trim());
-                                                secureStorage.writeSecurePass('pass', passwordController.text.trim());
+                                                secureStorage
+                                                    .deleteAllSecureStorage();
+                                                secureStorage.writeSecureEmail(
+                                                    'email',
+                                                    emailController.text
+                                                        .trim());
+                                                secureStorage.writeSecurePass(
+                                                    'pass',
+                                                    passwordController.text
+                                                        .trim());
 
                                                 // Provider.of<SearchResultProvider>(context,listen: false)
                                                 //     .search(furnished: "",category: "",capacity: "",price: "",bathrooms: "",rooms: "",city: "",type: "");
@@ -218,7 +218,8 @@ class _LogInState extends State<LogIn> {
                                               } else {
                                                 // Scaffold.of(context).showSnackBar(SnackBar(content: Text("Wrong"),));
                                               }
-                                              FocusScope.of(context).requestFocus(FocusNode());
+                                              FocusScope.of(context)
+                                                  .requestFocus(FocusNode());
                                             }
                                             _signInKey.currentState.save();
                                           },
@@ -227,7 +228,8 @@ class _LogInState extends State<LogIn> {
                                             color: Colors.white,
                                           ),
                                           label: Text(
-                                            Applocalizations.of(context).translate("signInBtn"),
+                                            Applocalizations.of(context)
+                                                .translate("signInBtn"),
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
@@ -257,12 +259,9 @@ class _LogInState extends State<LogIn> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Center(
                 child: GestureDetector(
-                  onTap: (){
-                    Navigator.of(context)
-                        .pushReplacement(
-                      MaterialPageRoute(
-                          builder: (_) =>
-                              SignUp()),
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (_) => SignUp()),
                     );
                   },
                   child: RichText(
@@ -272,9 +271,13 @@ class _LogInState extends State<LogIn> {
                         color: Colors.grey,
                       ),
                       children: <TextSpan>[
-                        TextSpan(text:  Applocalizations.of(context).translate("dont have account"),),
                         TextSpan(
-                          text: Applocalizations.of(context).translate("signUpBtn"),
+                          text: Applocalizations.of(context)
+                              .translate("dont have account"),
+                        ),
+                        TextSpan(
+                          text: Applocalizations.of(context)
+                              .translate("signUpBtn"),
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.blue,
@@ -286,6 +289,24 @@ class _LogInState extends State<LogIn> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 30,
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPassword()));
+              },
+              child: Center(
+                child: Text(
+                  Applocalizations.of(context).translate("forget-pass"),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

@@ -83,8 +83,6 @@ class _PropertyPageState extends State<PropertyPage> {
 
     var singleProperty =
         Provider.of<SinglePropertyProvider>(context).singleProperty;
-    print('tsst isbooked '+ singleProperty.isBooked.toString());
-    print('single property : ' + widget.property.viewLink);
     return SafeArea(
       child: Scaffold(
         body: Provider.of<SinglePropertyProvider>(context).isLoading()

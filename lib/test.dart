@@ -54,6 +54,8 @@ class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     var userRequestProvider = Provider.of<UserRequestProvider>(context);
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
 
       return Scaffold(
         appBar: AppBar(
@@ -61,6 +63,19 @@ class _TestScreenState extends State<TestScreen> {
         ),
         body:
         userRequestProvider.isFirstLoading()?Center(child: CircularProgressIndicator(backgroundColor: darkBlue,)):
+        userRequestProvider.allRequestsList.isEmpty?
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height:height-200 ,
+              width: width,
+              child: Image.asset('assets/images/empty-lst.jpg'),
+            ),
+            Text(Applocalizations.of(context).translate('empty-request'))
+          ],
+        )
+            :
         Column(
           children: <Widget>[
 

@@ -21,9 +21,11 @@ class CategoryListProvider with ChangeNotifier {
   Future<SearchResultResponse> getPropertyByType(
       {String category, int page}) async {
     if (page == 1) {
+      print('pagination1'+page.toString());
       setFirstLoad(true);
       data.clear();
     } else {
+      print('pagination2'+page.toString());
       setLoading(true);
     }
 
@@ -44,7 +46,7 @@ class CategoryListProvider with ChangeNotifier {
         currency:currency
       );
 
-      if (response != null) {
+      if (response != null && page == 1) {
         searchResult = searchResultModeFromJson(response.body);
 
         data = searchResult.data;
@@ -56,6 +58,19 @@ class CategoryListProvider with ChangeNotifier {
           setLoading(false);
         }
         return searchResult;
+      }else if(response != null && page>1){
+        searchResult = searchResultModeFromJson(response.body);
+
+        data .addAll(searchResult.data);
+        notifyListeners();
+
+        if (page == 1) {
+          setFirstLoad(false);
+        } else {
+          setLoading(false);
+        }
+        return searchResult;
+
       }
 
       if (searchResult == null) {

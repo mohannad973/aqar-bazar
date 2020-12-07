@@ -28,8 +28,9 @@ class AllPropertiesProvider with ChangeNotifier {
     int page2 = page;
     print('the page :'+ page.toString());
     if (page == 1) {
-      setFirstLoad(true);
       allProperties.clear();
+      setFirstLoad(true);
+
     }
     else{
       setLoading(true);

@@ -5,11 +5,13 @@ import 'package:aqar_bazar/models/cancel_request_response.dart';
 import 'package:aqar_bazar/models/comments_response.dart';
 import 'package:aqar_bazar/models/contact_us_response.dart';
 import 'package:aqar_bazar/models/like_comment_response.dart';
+import 'package:aqar_bazar/models/notification_response_model.dart';
 import 'package:aqar_bazar/models/single_property_response.dart';
 import 'package:aqar_bazar/models/succes_string_response.dart';
 import 'package:aqar_bazar/models/user_requests_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/log_in_response.dart';
 import 'package:aqar_bazar/screens/Auth/models/register_success_response.dart';
+import 'package:aqar_bazar/screens/Auth/models/reset_password_response.dart';
 import 'package:aqar_bazar/screens/filter/search_result_model.dart';
 import 'package:aqar_bazar/screens/profile/models/user_profile_model.dart';
 import 'package:http/http.dart' as http;
@@ -439,7 +441,7 @@ class Api {
     }
   }
 
-  Future getNotifications(String token, String cookie) async {
+  Future getNotifications2(String token, String cookie) async {
     try {
       final String apiUrl = baseUrl + '/v1/notifications';
       final response = await http.get(apiUrl, headers: {
@@ -550,5 +552,78 @@ class Api {
       print('error ' + e.toString());
     }
   }
+
+
+
+
+  Future forgetPassword(
+      String email) async {
+    try {
+      String url = baseUrl + '/v1/forgotPassword';
+
+      final response = await http.post(url, body: {
+        'email': email
+      });
+
+      if (response.statusCode == 200) {
+        return successStringResponseFromJson(response.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('error ' + e.toString());
+    }
+  }
+
+
+  Future resetPassword(
+      String code,String password , String cPassword) async {
+    try {
+      String url = baseUrl + '/v1/resetPassword';
+
+      final response = await http.post(url, body: {
+        'code': code,
+        'password':password,
+        'c_password': cPassword
+      });
+
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('error23 ' + e.toString());
+    }
+  }
+
+
+
+
+  Future getNotification(String token) async {
+
+    try {
+      String url = baseUrl + '/v1/notifications';
+
+      final response = await http.get(url, headers: {
+        'Authorization': 'Bearer $token',
+      });
+
+
+      print('notes8 '+token);
+      print('notes9 '+response.body.toString());
+
+      if (response.statusCode == 200) {
+        return notificationResponseFromJson(response.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('error note ' + e.toString());
+    }
+  }
+
+
+
 
 }
